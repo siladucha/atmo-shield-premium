@@ -128,6 +128,40 @@ class ResultsScreenHRV extends StatelessWidget {
                           ),
                         ),
                       ),
+                      // Warning for Quick Mode
+                      if (result.mode.name == 'quick') ...[
+                        const SizedBox(height: 12),
+                        Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: Colors.orange.withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(
+                              color: Colors.orange.withOpacity(0.3),
+                              width: 1,
+                            ),
+                          ),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.info_outline,
+                                color: Colors.orange[700],
+                                size: 20,
+                              ),
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: Text(
+                                  'Quick Mode: HRV accuracy may be lower. Use Accurate Mode (60s) for reliable HRV measurements.',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.orange[900],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ],
                   ),
                 ),

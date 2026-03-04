@@ -156,34 +156,40 @@ class MeasurementOrchestrator extends ChangeNotifier {
   }
 
   Future<void> _completeMeasurement() async {
+    // Stop timers and stream
     _measurementTimer?.cancel();
     _qualityTimer?.cancel();
     await _intensitySubscription?.cancel();
+    
+    // Dispose camera immediately to avoid multiple dispose calls
+    _cameraService.dispose();
 
     _setState(MeasurementState.processing);
 
     try {
       // Calculate actual sampling rate from collected data
       final samplingRate = _intensityValues.length ~/ totalSeconds;
-      debugPrint('Processing ${_intensityValues.length} samples over $totalSeconds seconds (${samplingRate} FPS)');
+      debugPrint('Processing ${_intensityValues.length} samples over $totalSeconds seconds ($samplingRate FPS)');
       
-      // Process signal
+      // Process signal (always calculate HRV, even for Quick mode)
       final result = _signalProcessor.processMeasurement(
         _intensityValues,
         samplingRate,
-        _currentMode == MeasurementMode.accurate,
+        true, // Always calculate HRV
       );
 
       if (result['success'] == true) {
         // Measurement successful
         debugPrint('Measurement complete: BPM=${result['bpm']}, RMSSD=${result['rmssd']}');
+        _setState(MeasurementState.complete);
       } else {
-        _handleError(result['error'] ?? 'Processing failed');
+        // Processing failed, but don't call _handleError (camera already disposed)
+        debugPrint('Processing failed: ${result['error']}');
+        _setState(MeasurementState.error);
       }
-
-      _setState(MeasurementState.complete);
     } catch (e) {
-      _handleError('Processing error: $e');
+      debugPrint('Processing error: $e');
+      _setState(MeasurementState.error);
     }
   }
 
@@ -191,10 +197,12 @@ class MeasurementOrchestrator extends ChangeNotifier {
     if (_state != MeasurementState.complete) return null;
 
     final samplingRate = _intensityValues.length ~/ totalSeconds;
+    
+    // Process signal again to get fresh results (always calculate HRV)
     final processingResult = _signalProcessor.processMeasurement(
       _intensityValues,
       samplingRate,
-      _currentMode == MeasurementMode.accurate,
+      true, // Always calculate HRV
     );
 
     if (processingResult['success'] != true) return null;
