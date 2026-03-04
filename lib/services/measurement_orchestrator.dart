@@ -31,6 +31,9 @@ class MeasurementOrchestrator extends ChangeNotifier {
   Timer? _measurementTimer;
   Timer? _qualityTimer;
   StreamSubscription? _intensitySubscription;
+  
+  // Cached result to avoid reprocessing
+  MeasurementResult? _cachedResult;
 
   // Getters
   MeasurementState get state => _state;
@@ -59,6 +62,7 @@ class MeasurementOrchestrator extends ChangeNotifier {
       _intensityValues.clear();
       _elapsedSeconds = 0;
       _qualityValidator.reset();
+      _cachedResult = null; // Clear cached result
 
       // Initialize camera
       await _cameraService.initialize(mode);
@@ -179,42 +183,33 @@ class MeasurementOrchestrator extends ChangeNotifier {
       );
 
       if (result['success'] == true) {
-        // Measurement successful
+        // Measurement successful - cache the result
+        _cachedResult = MeasurementResult(
+          id: DateTime.now().millisecondsSinceEpoch.toString(),
+          timestamp: DateTime.now(),
+          mode: _currentMode!,
+          bpm: result['bpm'] as int,
+          rmssd: result['rmssd'] as double?,
+          quality: _currentQuality,
+        );
         debugPrint('Measurement complete: BPM=${result['bpm']}, RMSSD=${result['rmssd']}');
         _setState(MeasurementState.complete);
       } else {
         // Processing failed, but don't call _handleError (camera already disposed)
         debugPrint('Processing failed: ${result['error']}');
+        _cachedResult = null;
         _setState(MeasurementState.error);
       }
     } catch (e) {
       debugPrint('Processing error: $e');
+      _cachedResult = null;
       _setState(MeasurementState.error);
     }
   }
 
   MeasurementResult? getResult() {
-    if (_state != MeasurementState.complete) return null;
-
-    final samplingRate = _intensityValues.length ~/ totalSeconds;
-    
-    // Process signal again to get fresh results (always calculate HRV)
-    final processingResult = _signalProcessor.processMeasurement(
-      _intensityValues,
-      samplingRate,
-      true, // Always calculate HRV
-    );
-
-    if (processingResult['success'] != true) return null;
-
-    return MeasurementResult(
-      id: DateTime.now().millisecondsSinceEpoch.toString(),
-      timestamp: DateTime.now(),
-      mode: _currentMode!,
-      bpm: processingResult['bpm'] as int,
-      rmssd: processingResult['rmssd'] as double?,
-      quality: _currentQuality,
-    );
+    // Return cached result (already processed in _completeMeasurement)
+    return _cachedResult;
   }
 
   void cancelMeasurement() {
@@ -244,7 +239,8 @@ class MeasurementOrchestrator extends ChangeNotifier {
     _measurementTimer?.cancel();
     _qualityTimer?.cancel();
     _intensitySubscription?.cancel();
-    _cameraService.dispose();
+    // Don't dispose camera here - it's already disposed in _completeMeasurement or _handleError
+    // _cameraService.dispose();
     super.dispose();
   }
 
