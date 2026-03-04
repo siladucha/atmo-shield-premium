@@ -26,7 +26,7 @@ class SignalProcessor {
     return filtered;
   }
 
-  // Detect peaks with adaptive threshold
+  // Detect peaks with adaptive threshold and prominence check
   List<int> detectPeaks(List<double> signal, int samplingRate) {
     if (signal.isEmpty) return [];
 
@@ -36,13 +36,16 @@ class SignalProcessor {
     double mean = signal.reduce((a, b) => a + b) / signal.length;
     double amplitude = maxVal - minVal;
     
-    // Adaptive threshold based on signal characteristics
-    // For low brightness signals, use lower threshold multiplier
-    double thresholdMultiplier = mean < 50 ? 0.05 : 0.1;
+    // Adaptive threshold: 15% of amplitude (increased from 10%)
+    // For very dark signals, use 8% minimum
+    double thresholdMultiplier = mean < 50 ? 0.08 : 0.15;
     double threshold = mean + (amplitude * thresholdMultiplier);
 
-    // Minimum peak separation: 300ms (200 BPM max)
-    int minSeparation = max(3, (samplingRate * 0.3).round());
+    // Minimum peak separation: 400ms (150 BPM max) - increased from 300ms
+    int minSeparation = max(3, (samplingRate * 0.4).round());
+    
+    // Prominence threshold: peak must be 15% higher than surrounding valleys
+    double prominenceThreshold = amplitude * 0.15;
 
     List<int> peaks = [];
 
@@ -56,6 +59,16 @@ class SignalProcessor {
           signal[i] >= signal[i + 2];
 
       if (isPeak) {
+        // Check prominence: peak must be significantly higher than neighbors
+        double leftValley = min(signal[i - 1], signal[i - 2]);
+        double rightValley = min(signal[i + 1], signal[i + 2]);
+        double minValley = min(leftValley, rightValley);
+        double prominence = signal[i] - minValley;
+        
+        if (prominence < prominenceThreshold) {
+          continue; // Skip low-prominence peaks (likely noise/dicrotic notch)
+        }
+        
         // Check minimum separation
         if (peaks.isEmpty || (i - peaks.last) >= minSeparation) {
           peaks.add(i);
@@ -63,12 +76,13 @@ class SignalProcessor {
       }
     }
 
-    debugPrint('Detected ${peaks.length} peaks (threshold: ${threshold.toStringAsFixed(1)}, amplitude: ${amplitude.toStringAsFixed(1)}, mean: ${mean.toStringAsFixed(1)}, multiplier: $thresholdMultiplier)');
+    debugPrint('Detected ${peaks.length} peaks (threshold: ${threshold.toStringAsFixed(1)}, prominence: ${prominenceThreshold.toStringAsFixed(1)}, amplitude: ${amplitude.toStringAsFixed(1)}, mean: ${mean.toStringAsFixed(1)}, multiplier: $thresholdMultiplier)');
     
-    // If too few peaks, try with even lower threshold
+    // If too few peaks, try with lower threshold but keep prominence check
     if (peaks.length < 5 && amplitude > 10) {
       debugPrint('Too few peaks, retrying with lower threshold...');
-      threshold = mean + (amplitude * 0.03); // Very sensitive
+      threshold = mean + (amplitude * 0.05); // More sensitive
+      prominenceThreshold = amplitude * 0.12; // Slightly lower prominence
       peaks.clear();
       
       for (int i = 2; i < signal.length - 2; i++) {
@@ -77,8 +91,16 @@ class SignalProcessor {
             signal[i] >= signal[i + 1];
 
         if (isPeak) {
-          if (peaks.isEmpty || (i - peaks.last) >= minSeparation) {
-            peaks.add(i);
+          // Still check prominence
+          double leftValley = min(signal[i - 1], signal[i - 2]);
+          double rightValley = min(signal[i + 1], signal[i + 2]);
+          double minValley = min(leftValley, rightValley);
+          double prominence = signal[i] - minValley;
+          
+          if (prominence >= prominenceThreshold) {
+            if (peaks.isEmpty || (i - peaks.last) >= minSeparation) {
+              peaks.add(i);
+            }
           }
         }
       }
@@ -127,7 +149,7 @@ class SignalProcessor {
     return bpm;
   }
 
-  // Calculate RMSSD for HRV
+  // Calculate RMSSD for HRV with relaxed filtering
   double? calculateRMSSD(List<int> peaks, int samplingRate) {
     if (peaks.length < 5) {
       debugPrint('Not enough peaks for RMSSD calculation (need at least 5)');
@@ -157,14 +179,14 @@ class SignalProcessor {
         ? sortedIbis[sortedIbis.length ~/ 2]
         : (sortedIbis[sortedIbis.length ~/ 2 - 1] + sortedIbis[sortedIbis.length ~/ 2]) / 2;
 
-    // Filter outliers: keep only IBIs within 20% of median (stricter)
+    // Filter outliers: keep IBIs within 30% of median (relaxed from 20%)
     List<double> filteredIbis = ibis.where((ibi) {
       double deviation = (ibi - medianIBI).abs() / medianIBI;
-      return deviation < 0.2;
+      return deviation < 0.3;
     }).toList();
 
-    if (filteredIbis.length < 3) {
-      debugPrint('Not enough IBIs after outlier filtering (got ${filteredIbis.length} from ${ibis.length})');
+    if (filteredIbis.length < 15) {
+      debugPrint('Not enough IBIs after outlier filtering (got ${filteredIbis.length} from ${ibis.length}, need at least 15)');
       return null;
     }
 
@@ -179,8 +201,8 @@ class SignalProcessor {
       }
     }
 
-    if (diffs.length < 2) {
-      debugPrint('Not enough valid successive differences (got ${diffs.length})');
+    if (diffs.length < 10) {
+      debugPrint('Not enough valid successive differences (got ${diffs.length}, need at least 10)');
       return null;
     }
 
@@ -194,7 +216,7 @@ class SignalProcessor {
       return null;
     }
 
-    debugPrint('Calculated RMSSD: ${rmssd.toStringAsFixed(1)} ms (from ${diffs.length} diffs, ${filteredIbis.length} filtered IBIs)');
+    debugPrint('Calculated RMSSD: ${rmssd.toStringAsFixed(1)} ms (from ${diffs.length} diffs, ${filteredIbis.length} filtered IBIs out of ${ibis.length} total)');
     return rmssd;
   }
 
