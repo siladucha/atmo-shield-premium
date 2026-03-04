@@ -9,6 +9,37 @@
 # packages, and plugins designed to encourage good coding practices.
 include: package:flutter_lints/flutter.yaml
 
+analyzer:
+  exclude:
+    # Exclude old prototype files with missing dependencies
+    - lib/main_old_prototype.dart
+    - lib/main_simple.dart
+    - lib/main_generator.dart
+    - lib/old_main.dart
+    - lib/screens/poc_screen.dart
+    - lib/services/health_data_service.dart
+    - lib/services/notification_service.dart
+    - lib/services/notification_service_simple.dart
+    - lib/services/settings_service.dart
+    - lib/services/shield_service.dart
+    - lib/models/baseline_data.dart
+    - lib/models/baseline_data.g.dart
+    - lib/models/hrv_reading.dart
+    - lib/models/hrv_reading.g.dart
+    - lib/models/stress_event.dart
+    - lib/models/stress_event.g.dart
+    - lib/generators/**
+    - lib/services/data_generation_service.dart
+    - lib/screens/generation_screen.dart
+    - lib/screens/progress_screen.dart
+    - lib/screens/dashboard_screen.dart
+    - lib/screens/main_screen.dart
+    - lib/widgets/shield_status_card.dart
+    - lib/widgets/quick_actions_panel.dart
+    - lib/widgets/recent_events_list.dart
+    - lib/utils/data_normalizer.dart
+    - lib/native/healthkit_bridge.dart
+
 linter:
   # The lint rules applied to this project can be customized in the
   # section below to disable rules from the `package:flutter_lints/flutter.yaml`
