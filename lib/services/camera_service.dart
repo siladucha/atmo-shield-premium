@@ -169,13 +169,23 @@ class CameraService {
   }
 
   Future<void> dispose() async {
-    await _controller?.stopImageStream();
-    await _controller?.setFlashMode(FlashMode.off);
-    await _controller?.dispose();
-    await _intensityController?.close();
-    _controller = null;
-    _intensityController = null;
-    debugPrint('Camera disposed');
+    try {
+      // Check if controller is initialized before stopping stream
+      if (_controller?.value.isInitialized == true) {
+        await _controller?.stopImageStream();
+        await _controller?.setFlashMode(FlashMode.off);
+      }
+      await _controller?.dispose();
+      await _intensityController?.close();
+      _controller = null;
+      _intensityController = null;
+      debugPrint('Camera disposed');
+    } catch (e) {
+      debugPrint('Camera disposal error (safe to ignore): $e');
+      // Clean up anyway
+      _controller = null;
+      _intensityController = null;
+    }
   }
 
   CameraController? get controller => _controller;

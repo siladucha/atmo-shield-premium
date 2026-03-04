@@ -239,8 +239,8 @@ class MeasurementOrchestrator extends ChangeNotifier {
     _measurementTimer?.cancel();
     _qualityTimer?.cancel();
     _intensitySubscription?.cancel();
-    // Don't dispose camera here - it's already disposed in _completeMeasurement or _handleError
-    // _cameraService.dispose();
+    // Safe to call dispose - it checks if camera is initialized
+    _cameraService.dispose();
     super.dispose();
   }
 
