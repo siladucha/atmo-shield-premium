@@ -148,7 +148,7 @@ class MeasurementOrchestrator extends ChangeNotifier {
     );
     _qualityMessage = _qualityValidator.getQualityMessage(
       _currentQuality,
-      variance,
+      cameraVariance,
       meanBrightness,
     );
     
