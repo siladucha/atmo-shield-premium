@@ -188,5 +188,16 @@ class CameraService {
     }
   }
 
+  // Ensure flash is on (iOS may turn it off due to heat/battery)
+  Future<void> ensureFlashOn() async {
+    try {
+      if (_controller?.value.isInitialized == true) {
+        await _controller?.setFlashMode(FlashMode.torch);
+      }
+    } catch (e) {
+      debugPrint('Failed to re-enable flash: $e');
+    }
+  }
+
   CameraController? get controller => _controller;
 }

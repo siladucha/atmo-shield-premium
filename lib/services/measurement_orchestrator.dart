@@ -138,6 +138,12 @@ class MeasurementOrchestrator extends ChangeNotifier {
     final double? meanRed = _latestIntensityData!['meanRed'] as double?;
     final double? meanBlue = _latestIntensityData!['meanBlue'] as double?;
 
+    // Check if flash turned off (brightness dropped significantly)
+    if (meanBrightness < 60 && _elapsedSeconds > 5) {
+      debugPrint('⚠️ Flash may have turned off (brightness: ${meanBrightness.toStringAsFixed(1)}), attempting to re-enable...');
+      _cameraService.ensureFlashOn();
+    }
+
     // Log quality metrics for debugging
     if (_elapsedSeconds % 5 == 0) {
       debugPrint('Quality check: brightness=${meanBrightness.toStringAsFixed(1)}, variance=${cameraVariance.toStringAsFixed(2)}, R=${meanRed?.toStringAsFixed(1)}, G=${meanBrightness.toStringAsFixed(1)}, B=${meanBlue?.toStringAsFixed(1)}');
