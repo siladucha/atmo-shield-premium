@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>ATMO Partnership Proposal - Menachem Genut</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet"/>
+    <style>
+        @media print {
+            body { 
+                width: 1280px !important; 
+                height: 720px !important; 
+                margin: 0 !important;
+                padding: 0 !important;
+                overflow: visible !important;
+            }
+            .slide { 
+                page-break-after: always; 
+                display: flex !important;
+                flex-direction: column;
+                width: 100% !important;
+                height: 100vh !important;
+            }
+            .nav-buttons, .slide-indicator { display: none !important; }
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0F172A;
+            color: #E2E8F0;
+            width: 1280px;
+            height: 720px;
+            overflow: hidden;
+        }
+        
+        h1, h2, h3, h4, h5 {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        .text-emerald-glow {
+            color: #10B981;
+            text-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+        }
+        
+        .text-blue-glow {
+            color: #3B82F6;
+            text-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+        }
+        
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+        }
+        
+        .glass-panel-highlight {
+            background: rgba(16, 185, 129, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 12px;
+            box-shadow: 0 0 30px rgba(16, 185, 129, 0.1);
+        }
+        
+        .profile-img-placeholder {
+            background-color: #1e293b;
+            border: 2px solid #3B82F6;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+        }
+        
+        .tag {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .vision-quote-line {
+            width: 4px;
+            background-color: #3B82F6;
+            border-radius: 2px;
+        }
+        
+        .bg-grid-pattern {
+            background-image: radial-gradient(circle, #334155 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.05;
+        }
+        
+        .slide {
+            display: none;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .nav-buttons {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .nav-btn {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #E2E8F0;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-btn:hover {
+            background: rgba(59, 130, 246, 0.3);
+            border-color: #3B82F6;
+        }
+        
+        .slide-indicator {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1000;
+            color: #94a3b8;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+<!-- Navigation -->
+<div class="nav-buttons">
+    <button class="nav-btn" onclick="previousSlide()">← Previous</button>
+    <button class="nav-btn" onclick="nextSlide()">Next →</button>
+</div>
+<div class="slide-indicator">
+    <span id="slideCounter">1 / 4</span>
+</div>
+
+<!-- Slide 1: Strategic Partnership Opportunity -->
+<div class="slide active" id="slide1">
+    <div class="flex flex-col w-full h-full p-10 relative">
+        <!-- Background Elements -->
+        <div class="absolute inset-0 bg-grid-pattern pointer-events-none"></div>
+        <div class="absolute top-0 right-0 w-1/3 h-1/3 bg-blue-900 opacity-10 rounded-full filter blur-3xl transform translate-x-1/4 -translate-y-1/4"></div>
+        <div class="absolute bottom-0 left-0 w-1/4 h-1/4 bg-green-900 opacity-10 rounded-full filter blur-3xl transform -translate-x-1/4 translate-y-1/4"></div>
+        
+        <!-- Header -->
+        <header class="flex justify-between items-end mb-8 z-10 border-b border-gray-800 pb-4">
+            <div>
+                <div class="flex items-center gap-3 mb-1">
+                    <i class="fas fa-brain text-emerald-glow text-3xl"></i>
+                    <h1 class="text-4xl font-bold tracking-tight text-white">ATMO</h1>
+                </div>
+                <p class="text-gray-400 text-sm font-medium tracking-wider uppercase">Strategic Partnership Proposal</p>
+            </div>
+            <div class="text-right">
+                <p class="text-emerald-400 font-semibold">For Menachem Genut</p>
+                <p class="text-gray-400 text-sm">January 27, 2026</p>
+            </div>
+        </header>
+        
+        <!-- Main Content -->
+        <div class="flex flex-1 gap-8 z-10">
+            <!-- Left Column: Partnership Vision -->
+            <div class="w-6/12 flex flex-col gap-6">
+                <div class="glass-panel p-6 flex-1 flex flex-col justify-center border-l-4 border-blue-500">
+                    <div class="flex items-center gap-3 mb-3 text-blue-400">
+                        <i class="fas fa-handshake"></i>
+                        <h3 class="text-xl font-bold uppercase tracking-wide">Partnership Vision</h3>
+                    </div>
+                    <p class="text-2xl font-light leading-snug text-white mb-4">
+                        Combining <span class="font-semibold text-blue-200">ATMO's HRV stress prediction</span> with your <span class="font-semibold text-emerald-200">health-tech expertise</span> to accelerate market penetration.
+                    </p>
+                    <div class="border-t border-gray-700 pt-4 mt-auto">
+                        <p class="text-gray-400 text-sm mb-2 font-semibold">STRATEGIC SYNERGIES:</p>
+                        <ul class="space-y-2">
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-plus text-emerald-500 mt-1"></i>
+                                <span class="text-gray-300 text-sm">Your <strong>health-tech expertise</strong> + Our <strong>HRV algorithms</strong></span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-plus text-emerald-500 mt-1"></i>
+                                <span class="text-gray-300 text-sm">Your <strong>Israeli medtech network</strong> + Our <strong>US market presence</strong></span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-plus text-emerald-500 mt-1"></i>
+                                <span class="text-gray-300 text-sm">Your <strong>advisory guidance</strong> + Our <strong>execution capability</strong></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Column: Technology Focus -->
+            <div class="w-6/12 flex flex-col gap-6">
+                <div class="glass-panel p-6 flex-1 border-t-3 border-emerald-500 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-4 opacity-10">
+                        <i class="fas fa-heartbeat text-8xl text-emerald-500"></i>
+                    </div>
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <div class="flex items-center gap-3 mb-2 text-emerald-400">
+                                <i class="fas fa-brain"></i>
+                                <h3 class="text-xl font-bold uppercase tracking-wide">Non-invasive Vagal Tone Optimization</h3>
+                            </div>
+                            <p class="text-lg text-gray-200 w-3/4">
+                                Your <span class="text-white font-semibold">deep tech background</span> and <span class="text-white font-semibold">health monitoring expertise</span> perfectly complement our predictive wellness platform.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Technology Stack -->
+                    <div class="mt-6 space-y-4">
+                        <div class="flex items-center justify-between bg-gray-800 bg-opacity-40 rounded-lg p-3">
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-heart-pulse text-red-400"></i>
+                                <span class="text-white font-medium">ATMO: HRV Prediction</span>
+                            </div>
+                            <span class="text-emerald-400 text-sm">15-60min advance warning</span>
+                        </div>
+                        <div class="flex items-center justify-between bg-gray-800 bg-opacity-40 rounded-lg p-3">
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-user-md text-blue-400"></i>
+                                <span class="text-white font-medium">Advisory: Health-Tech Strategy</span>
+                            </div>
+                            <span class="text-emerald-400 text-sm">Market guidance</span>
+                        </div>
+                        <div class="flex items-center justify-between bg-gray-800 bg-opacity-40 rounded-lg p-3">
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-network-wired text-purple-400"></i>
+                                <span class="text-white font-medium">Network: Israeli Medtech</span>
+                            </div>
+                            <span class="text-emerald-400 text-sm">Strategic connections</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer: Your Track Record -->
+        <div class="mt-8 z-10">
+            <h3 class="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4 pl-1">Your Proven Track Record</h3>
+            <div class="grid grid-cols-3 gap-6">
+                <div class="bg-gray-800 bg-opacity-30 border border-gray-700 rounded-lg p-4 flex items-center gap-4">
+                    <div class="h-10 w-10 rounded-full bg-blue-900 bg-opacity-50 flex items-center justify-center text-blue-400">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-sm">Two Successful Exits</h4>
+                        <p class="text-xs text-gray-400 mt-0.5">Oramir ($21M) + ApNano (undisclosed)</p>
+                    </div>
+                </div>
+                <div class="bg-gray-800 bg-opacity-30 border border-gray-700 rounded-lg p-4 flex items-center gap-4">
+                    <div class="h-10 w-10 rounded-full bg-emerald-900 bg-opacity-50 flex items-center justify-center text-emerald-400">
+                        <i class="fas fa-microscope"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-sm">Deep Tech Expertise</h4>
+                        <p class="text-xs text-gray-400 mt-0.5">PhD Technion + 2,733 citations</p>
+                    </div>
+                </div>
+                <div class="bg-gray-800 bg-opacity-30 border border-gray-700 rounded-lg p-4 flex items-center gap-4">
+                    <div class="h-10 w-10 rounded-full bg-purple-900 bg-opacity-50 flex items-center justify-center text-purple-400">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-sm">Health-Tech Experience</h4>
+                        <p class="text-xs text-gray-400 mt-0.5">Wearables & AI-driven monitoring</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 2: Market Opportunity & Advisory Role -->
+<div class="slide" id="slide2">
+    <div class="flex flex-col w-full h-full p-10 relative">
+        <!-- Background Elements -->
+        <div class="absolute top-0 left-0 w-1/3 h-1/3 bg-blue-900 opacity-10 rounded-full filter blur-3xl transform -translate-x-1/4 -translate-y-1/4"></div>
+        <div class="absolute bottom-0 right-0 w-1/3 h-1/3 bg-green-900 opacity-10 rounded-full filter blur-3xl transform translate-x-1/4 translate-y-1/4"></div>
+        
+        <!-- Header -->
+        <header class="flex justify-between items-end mb-10 z-10 border-b border-gray-800 pb-4 shrink-0">
+            <div>
+                <div class="flex items-center gap-3 mb-1">
+                    <i class="fas fa-brain text-emerald-glow text-3xl"></i>
+                    <h1 class="text-4xl font-bold tracking-tight text-white">ATMO</h1>
+                </div>
+                <p class="text-gray-400 text-sm font-medium tracking-wider uppercase">Market Strategy & Advisory Partnership</p>
+            </div>
+            <div class="text-right">
+                <p class="text-white text-xl font-semibold tracking-wide">Path to <span class="text-emerald-glow">$451B Health Market</span></p>
+            </div>
+        </header>
+        
+        <!-- Main Content Grid -->
+        <div class="flex flex-1 gap-12 z-10 h-full">
+            <!-- Left Column: Business Strategy -->
+            <div class="w-7/12 flex flex-col relative">
+                <h3 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-6 pl-1">Strategic Business Development</h3>
+                <div class="flex flex-col gap-6 relative h-full">
+                    <!-- Phase 1: Advisory Integration -->
+                    <div class="relative z-10">
+                        <div class="glass-panel p-5 flex items-start gap-5 border-l-4 border-blue-500 relative z-10">
+                            <div class="flex-shrink-0 h-12 w-12 rounded-full bg-blue-900 bg-opacity-40 flex items-center justify-center border border-blue-500 text-blue-400 z-10">
+                                <i class="fas fa-user-tie"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-center mb-1">
+                                    <h4 class="text-lg font-bold text-white">Advisory Partnership <span class="text-blue-400 text-sm font-normal ml-2">(Immediate)</span></h4>
+                                    <span class="bg-blue-900 bg-opacity-50 text-blue-300 text-xs px-2 py-1 rounded border border-blue-800">Board Advisor</span>
+                                </div>
+                                <p class="text-gray-400 text-sm mb-2">Strategic guidance on health-tech market positioning, Israeli ecosystem connections, and technical validation.</p>
+                                <div class="flex items-center gap-2">
+                                    <i class="fas fa-check text-blue-500 text-xs"></i>
+                                    <p class="text-gray-500 text-xs uppercase font-semibold tracking-wide">Equity + Advisory Fee</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Phase 2: Network Activation -->
+                    <div class="relative z-10">
+                        <div class="glass-panel p-5 flex items-start gap-5 border-l-4 border-emerald-500 relative z-10">
+                            <div class="flex-shrink-0 h-12 w-12 rounded-full bg-emerald-900 bg-opacity-40 flex items-center justify-center border border-emerald-500 text-emerald-400 z-10">
+                                <i class="fas fa-network-wired"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-center mb-1">
+                                    <h4 class="text-lg font-bold text-white">Israeli Market Entry <span class="text-emerald-400 text-sm font-normal ml-2">(6 months)</span></h4>
+                                    <span class="bg-emerald-900 bg-opacity-50 text-emerald-300 text-xs px-2 py-1 rounded border border-emerald-800">Network Access</span>
+                                </div>
+                                <p class="text-gray-400 text-sm mb-2">Leverage your medtech connections for partnerships with Israeli healthcare institutions and research centers.</p>
+                                <div class="flex items-center gap-2">
+                                    <i class="fas fa-globe text-emerald-500 text-xs"></i>
+                                    <p class="text-gray-500 text-xs uppercase font-semibold tracking-wide">Dual Market Strategy</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Phase 3: Investment & Scale -->
+                    <div class="relative z-10">
+                        <div class="glass-panel p-5 flex items-start gap-5 border-l-4 border-purple-500 relative z-10 bg-opacity-80 border-white border-opacity-10">
+                            <div class="flex-shrink-0 h-12 w-12 rounded-full bg-purple-900 bg-opacity-40 flex items-center justify-center border border-purple-500 text-purple-400 z-10">
+                                <i class="fas fa-rocket"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-center mb-1">
+                                    <h4 class="text-lg font-bold text-white">Angel Investment <span class="text-purple-400 text-sm font-normal ml-2">(12 months)</span></h4>
+                                    <span class="bg-purple-900 bg-opacity-50 text-purple-300 text-xs px-2 py-1 rounded border border-purple-800">$50-100k</span>
+                                </div>
+                                <p class="text-gray-400 text-sm mb-2">Personal angel investment to accelerate development and market expansion based on proven traction.</p>
+                                <div class="flex items-center gap-2">
+                                    <i class="fas fa-chart-line text-purple-500 text-xs"></i>
+                                    <p class="text-gray-500 text-xs uppercase font-semibold tracking-wide">Growth Capital</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Column: Market & Partnership Benefits -->
+            <div class="w-5/12 flex flex-col gap-6">
+                <!-- Market Opportunity -->
+                <div class="glass-panel p-8 flex flex-col items-center justify-center text-center relative overflow-hidden flex-1">
+                    <div class="absolute inset-0 flex items-center justify-center opacity-10">
+                        <div class="w-48 h-48 rounded-full border-4 border-dashed border-emerald-500 animate-spin-slow" style="animation-duration: 20s;"></div>
+                    </div>
+                    <h3 class="text-gray-400 text-sm font-bold uppercase tracking-widest mb-2">Total Addressable Market</h3>
+                    <div class="mb-2">
+                        <span class="text-6xl font-bold text-white tracking-tighter">$451B</span>
+                    </div>
+                    <p class="text-emerald-400 font-medium text-lg">Global Health Market</p>
+                    <div class="mt-6 w-full grid grid-cols-2 gap-4">
+                        <div class="bg-gray-800 bg-opacity-50 rounded p-3">
+                            <p class="text-2xl font-bold text-white">18.6%</p>
+                            <p class="text-xs text-gray-500 uppercase">Digital Health CAGR</p>
+                        </div>
+                        <div class="bg-gray-800 bg-opacity-50 rounded p-3">
+                            <p class="text-2xl font-bold text-white">2x</p>
+                            <p class="text-xs text-gray-500 uppercase">Market Access</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Advisory Benefits -->
+                <div class="glass-panel p-6 border border-emerald-500 border-opacity-30 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-emerald-500 opacity-5 rounded-full blur-xl -mr-10 -mt-10"></div>
+                    <div class="flex items-center gap-3 mb-3">
+                        <i class="fas fa-lightbulb text-emerald-400 text-xl"></i>
+                        <h3 class="text-white font-bold text-lg">Advisory Value</h3>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex gap-4 items-start">
+                            <div class="bg-gray-800 p-2 rounded-lg border border-gray-700">
+                                <i class="fas fa-compass text-blue-400 text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-blue-300 font-bold text-sm mb-1">Strategic Direction</h4>
+                                <p class="text-gray-300 text-xs leading-relaxed">Your experience guides product-market fit and prevents costly mistakes.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4 items-start">
+                            <div class="bg-gray-800 p-2 rounded-lg border border-gray-700">
+                                <i class="fas fa-users text-emerald-400 text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-emerald-300 font-bold text-sm mb-1">Network Access</h4>
+                                <p class="text-gray-300 text-xs leading-relaxed">Direct connections to Israeli medtech ecosystem and potential partners.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 3: Investment Structure & Timeline -->
+<div class="slide" id="slide3">
+    <div class="flex flex-col w-full h-full p-10 relative">
+        <!-- Background Elements -->
+        <div class="absolute top-0 right-0 w-1/3 h-1/3 bg-blue-900 opacity-10 rounded-full filter blur-3xl transform translate-x-1/4 -translate-y-1/4"></div>
+        <div class="absolute bottom-0 left-0 w-1/3 h-1/3 bg-green-900 opacity-10 rounded-full filter blur-3xl transform -translate-x-1/4 translate-y-1/4"></div>
+        
+        <!-- Header -->
+        <header class="flex justify-between items-end mb-8 z-10 border-b border-gray-800 pb-4 shrink-0">
+            <div>
+                <div class="flex items-center gap-3 mb-1">
+                    <i class="fas fa-brain text-emerald-glow text-3xl"></i>
+                    <h1 class="text-4xl font-bold tracking-tight text-white">ATMO</h1>
+                </div>
+                <p class="text-gray-400 text-sm font-medium tracking-wider uppercase">Investment Structure & Development Timeline</p>
+            </div>
+            <div class="text-right">
+                <p class="text-white text-xl font-semibold tracking-wide">Advisory + Angel <span class="text-emerald-glow">Partnership Model</span></p>
+            </div>
+        </header>
+        
+        <!-- Main Content Grid -->
+        <div class="flex flex-1 gap-8 z-10 h-full">
+            <!-- Left Column: Investment Structure -->
+            <div class="w-1/2 flex flex-col gap-6">
+                <!-- Top Card: Partnership Structure -->
+                <div class="glass-panel-highlight p-6 flex flex-row items-center justify-between">
+                    <div>
+                        <h3 class="text-sm font-bold text-emerald-400 uppercase tracking-widest mb-1">Partnership Structure</h3>
+                        <div class="flex items-baseline">
+                            <span class="text-4xl font-bold text-white tracking-tighter">Advisory + Angel</span>
+                        </div>
+                        <p class="text-gray-400 text-sm mt-1">Phased engagement model</p>
+                    </div>
+                    <div class="text-right border-l border-emerald-900 pl-6">
+                        <div class="mb-2">
+                            <p class="text-xs text-gray-400 uppercase">Phase 1</p>
+                            <p class="text-lg font-bold text-white">Board Advisor</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-400 uppercase">Phase 2</p>
+                            <p class="text-lg font-bold text-white">Angel Investor</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Bottom Card: What You Provide -->
+                <div class="glass-panel p-6 flex-1 flex flex-col">
+                    <h3 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">Your Contribution</h3>
+                    <div class="space-y-4 flex-1">
+                        <div class="bg-gray-800 bg-opacity-40 rounded-lg p-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <h4 class="text-white font-bold">Health-Tech Expertise</h4>
+                                <span class="text-blue-400 text-sm">Strategic Guidance</span>
+                            </div>
+                            <ul class="text-gray-300 text-sm space-y-1">
+                                <li>• Product-market fit validation</li>
+                                <li>• Technical architecture review</li>
+                                <li>• Regulatory pathway guidance</li>
+                            </ul>
+                        </div>
+                        <div class="bg-gray-800 bg-opacity-40 rounded-lg p-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <h4 class="text-white font-bold">Israeli Network Access</h4>
+                                <span class="text-emerald-400 text-sm">Market Entry</span>
+                            </div>
+                            <ul class="text-gray-300 text-sm space-y-1">
+                                <li>• Medtech ecosystem connections</li>
+                                <li>• Research institution partnerships</li>
+                                <li>• Potential customer introductions</li>
+                            </ul>
+                        </div>
+                        <div class="bg-gray-800 bg-opacity-40 rounded-lg p-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <h4 class="text-white font-bold">Angel Investment</h4>
+                                <span class="text-purple-400 text-sm">$50-100k</span>
+                            </div>
+                            <ul class="text-gray-300 text-sm space-y-1">
+                                <li>• Growth capital for expansion</li>
+                                <li>• Validation for future rounds</li>
+                                <li>• Strategic investor credibility</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Column: Development Timeline -->
+            <div class="w-1/2 flex flex-col">
+                <div class="glass-panel p-8 h-full relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-blue-500 opacity-5 rounded-full blur-2xl -mr-10 -mt-10"></div>
+                    <h3 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-8 pl-1">18-Month Partnership Timeline</h3>
+                    <div class="relative pl-6 space-y-8">
+                        <!-- Timeline Track -->
+                        <div class="absolute left-5 top-5 bottom-5 w-0.5 bg-gray-600"></div>
+                        
+                        <!-- Milestone 1 -->
+                        <div class="relative flex items-start gap-4">
+                            <div class="absolute -left-6 top-1.5 w-3 h-3 rounded-full bg-blue-500 border-2 border-gray-900"></div>
+                            <div class="bg-gray-800 bg-opacity-50 p-4 rounded-lg border border-gray-700 w-full">
+                                <div class="flex justify-between items-center mb-1">
+                                    <h4 class="font-bold text-white text-base">Advisory Onboarding</h4>
+                                    <span class="text-xs font-mono text-blue-400 bg-blue-900 bg-opacity-30 px-2 py-0.5 rounded">Q1 2026</span>
+                                </div>
+                                <p class="text-gray-400 text-sm">Board advisor role, strategic planning, Israeli market research and network mapping.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Milestone 2 -->
+                        <div class="relative flex items-start gap-4">
+                            <div class="absolute -left-6 top-1.5 w-3 h-3 rounded-full bg-emerald-500 border-2 border-gray-900"></div>
+                            <div class="bg-gray-800 bg-opacity-50 p-4 rounded-lg border border-gray-700 w-full">
+                                <div class="flex justify-between items-center mb-1">
+                                    <h4 class="font-bold text-white text-base">Market Validation</h4>
+                                    <span class="text-xs font-mono text-emerald-400 bg-emerald-900 bg-opacity-30 px-2 py-0.5 rounded">Q2 2026</span>
+                                </div>
+                                <p class="text-gray-400 text-sm">Israeli pilot programs, partnership development, traction metrics validation.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Milestone 3 -->
+                        <div class="relative flex items-start gap-4">
+                            <div class="absolute -left-6 top-1.5 w-3 h-3 rounded-full bg-purple-500 border-2 border-gray-900"></div>
+                            <div class="bg-gray-800 bg-opacity-50 p-4 rounded-lg border border-gray-700 w-full">
+                                <div class="flex justify-between items-center mb-1">
+                                    <h4 class="font-bold text-white text-base">Angel Investment</h4>
+                                    <span class="text-xs font-mono text-purple-400 bg-purple-900 bg-opacity-30 px-2 py-0.5 rounded">Q3 2026</span>
+                                </div>
+                                <p class="text-gray-400 text-sm">$50-100k angel round based on proven traction and market validation.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Milestone 4 -->
+                        <div class="relative flex items-start gap-4">
+                            <div class="absolute -left-6 top-1.5 w-3 h-3 rounded-full bg-yellow-500 border-2 border-gray-900"></div>
+                            <div class="bg-gray-800 bg-opacity-50 p-4 rounded-lg border border-gray-700 w-full">
+                                <div class="flex justify-between items-center mb-1">
+                                    <h4 class="font-bold text-white text-base">Scale & Series A Prep</h4>
+                                    <span class="text-xs font-mono text-yellow-400 bg-yellow-900 bg-opacity-30 px-2 py-0.5 rounded">Q4 2026</span>
+                                </div>
+                                <p class="text-gray-400 text-sm">Dual market expansion, Series A preparation with your network connections.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8 pt-6 border-t border-gray-700 flex items-center justify-between text-sm">
+                        <p class="text-gray-400">Target Outcome:</p>
+                        <div class="flex items-center gap-2 text-white font-semibold">
+                            <i class="fas fa-rocket text-emerald-400"></i>
+                            <p>Series A Ready</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 4: Partnership Proposal & Next Steps -->
+<div class="slide" id="slide4">
+    <div class="flex flex-col w-full h-full p-10 relative">
+        <!-- Background Elements -->
+        <div class="absolute inset-0 bg-grid-pattern pointer-events-none"></div>
+        <div class="absolute top-0 left-0 w-1/3 h-1/3 bg-blue-900 opacity-10 rounded-full filter blur-3xl transform -translate-x-1/4 -translate-y-1/4"></div>
+        <div class="absolute bottom-0 right-0 w-1/3 h-1/3 bg-green-900 opacity-10 rounded-full filter blur-3xl transform translate-x-1/4 translate-y-1/4"></div>
+        
+        <!-- Header -->
+        <header class="flex justify-between items-end mb-10 z-10 border-b border-gray-800 pb-4 shrink-0">
+            <div>
+                <div class="flex items-center gap-3 mb-1">
+                    <i class="fas fa-brain text-emerald-glow text-3xl"></i>
+                    <h1 class="text-4xl font-bold tracking-tight text-white">ATMO</h1>
+                </div>
+                <p class="text-gray-400 text-sm font-medium tracking-wider uppercase">Partnership Proposal</p>
+            </div>
+            <div class="text-right">
+                <p class="text-white text-xl font-semibold tracking-wide">Building the Future of <span class="text-blue-glow">Preventive Health Tech</span></p>
+            </div>
+        </header>
+        
+        <!-- Main Content Grid -->
+        <div class="flex flex-1 gap-8 z-10 h-full">
+            <!-- Left Column: Menachem's Profile & Expertise -->
+            <div class="w-7/12 flex flex-col gap-6">
+                <!-- Menachem's Profile -->
+                <div class="glass-panel p-6 flex items-start gap-6 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-4 opacity-5">
+                        <i class="fas fa-atom text-8xl text-blue-500"></i>
+                    </div>
+                    <div class="flex-shrink-0">
+                        <div class="w-32 h-32 rounded-xl profile-img-placeholder flex items-center justify-center bg-gray-800">
+                            <i class="fas fa-user-graduate text-5xl text-blue-400"></i>
+                        </div>
+                    </div>
+                    <div class="flex-1 z-10">
+                        <div class="mb-1">
+                            <h4 class="text-sm text-blue-400 font-bold uppercase tracking-wider mb-1">Strategic Partner</h4>
+                            <h3 class="text-2xl font-bold text-white">Menachem Genut, PhD</h3>
+                            <p class="text-gray-400 text-sm">Nanotech Entrepreneur & Health-Tech Expert</p>
+                        </div>
+                        <div class="h-px bg-gray-700 w-full my-4"></div>
+                        <p class="text-gray-300 text-sm mb-4 leading-relaxed">
+                            Proven track record with two successful exits, deep expertise in nanotechnology and health monitoring systems. Perfect strategic advisor for ATMO's expansion into advanced health-tech markets.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <div class="tag">
+                                <i class="fas fa-microscope text-blue-400 text-xs"></i>
+                                <span>Nanotechnology</span>
+                            </div>
+                            <div class="tag">
+                                <i class="fas fa-heartbeat text-emerald-400 text-xs"></i>
+                                <span>Health Monitoring</span>
+                            </div>
+                            <div class="tag">
+                                <i class="fas fa-chart-line text-purple-400 text-xs"></i>
+                                <span>Two Exits</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Shared Vision -->
+                <div class="glass-panel p-8 flex-1 flex flex-col justify-center relative">
+                    <div class="flex gap-6 h-full items-center">
+                        <div class="vision-quote-line h-full opacity-50"></div>
+                        <div>
+                            <div class="flex items-center gap-2 mb-4">
+                                <i class="fas fa-lightbulb text-emerald-400"></i>
+                                <h4 class="text-sm text-emerald-400 font-bold uppercase tracking-widest">Shared Vision</h4>
+                            </div>
+                            <p class="text-3xl font-light text-white leading-tight mb-2">
+                                "Combining <span class="text-blue-400 font-bold">strategic expertise</span> with <span class="text-emerald-400 font-bold">predictive algorithms</span> to create the next generation of preventive healthcare."
+                            </p>
+                            <p class="text-gray-400 text-sm mt-4">Together, we're not just monitoring health – we're predicting and preventing health issues before they occur.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Column: Partnership Proposal -->
+            <div class="w-5/12 flex flex-col">
+                <div class="glass-panel-highlight p-8 h-full flex flex-col justify-between relative overflow-hidden">
+                    <div class="absolute -top-20 -right-20 w-64 h-64 bg-emerald-500 opacity-10 rounded-full blur-3xl"></div>
+                    
+                    <!-- Top Section: Partnership Proposal -->
+                    <div class="relative z-10">
+                        <div class="mb-6">
+                            <div class="inline-block px-3 py-1 bg-emerald-900 bg-opacity-50 border border-emerald-700 rounded-full mb-4">
+                                <p class="text-emerald-400 text-xs font-bold uppercase tracking-wide">Strategic Partnership</p>
+                            </div>
+                            <h3 class="text-white text-3xl font-bold leading-tight">
+                                Let's Build the Future of <br/> <span class="text-emerald-glow">Health Monitoring</span> Together
+                            </h3>
+                        </div>
+                        <p class="text-gray-300 leading-relaxed mb-8 border-l-2 border-gray-600 pl-4">
+                            Your expertise in <strong class="text-white">health-tech strategy</strong> and <strong class="text-white">Israeli medtech ecosystem</strong> combined with our <strong class="text-white">HRV prediction platform</strong> creates an unbeatable combination.
+                        </p>
+                    </div>
+                    
+                    <!-- Bottom Section: Next Steps -->
+                    <div class="bg-gray-900 bg-opacity-60 rounded-xl p-6 border border-gray-700 relative z-10">
+                        <h4 class="text-white font-bold mb-4 flex items-center gap-2">
+                            <i class="fas fa-handshake text-emerald-400"></i>
+                            Next Steps
+                        </h4>
+                        <ul class="space-y-4 mb-6">
+                            <li class="flex items-center gap-3">
+                                <div class="w-6 h-6 rounded-full bg-emerald-900 flex items-center justify-center text-emerald-400 text-xs border border-emerald-700">1</div>
+                                <p class="text-gray-300 text-sm">Advisory discussion: <span class="text-white font-semibold">Strategic roadmap alignment</span></p>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <div class="w-6 h-6 rounded-full bg-emerald-900 flex items-center justify-center text-emerald-400 text-xs border border-emerald-700">2</div>
+                                <p class="text-gray-300 text-sm">Network mapping: <span class="text-white font-semibold">Israeli market opportunities</span></p>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <div class="w-6 h-6 rounded-full bg-emerald-900 flex items-center justify-center text-emerald-400 text-xs border border-emerald-700">3</div>
+                                <p class="text-gray-300 text-sm">Partnership terms: <span class="text-white font-semibold">Advisory + angel structure</span></p>
+                            </li>
+                        </ul>
+                        <div class="flex items-center justify-between pt-4 border-t border-gray-700">
+                            <div>
+                                <p class="text-xs text-gray-500 uppercase">Contact</p>
+                                <p class="text-white font-mono text-sm">max.breger@gmail.com</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-xs text-gray-500 uppercase">Timeline</p>
+                                <p class="text-white font-mono text-sm">2 weeks</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Decorative Element -->
+                    <div class="absolute bottom-8 right-8 text-emerald-500 opacity-20 text-6xl transform rotate-[-45deg]">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let currentSlide = 1;
+    const totalSlides = 4;
+    
+    function showSlide(n) {
+        const slides = document.querySelectorAll('.slide');
+        slides.forEach(slide => slide.classList.remove('active'));
+        
+        if (n > totalSlides) currentSlide = 1;
+        if (n < 1) currentSlide = totalSlides;
+        
+        document.getElementById(`slide${currentSlide}`).classList.add('active');
+        document.getElementById('slideCounter').textContent = `${currentSlide} / ${totalSlides}`;
+    }
+    
+    function nextSlide() {
+        currentSlide++;
+        showSlide(currentSlide);
+    }
+    
+    function previousSlide() {
+        currentSlide--;
+        showSlide(currentSlide);
+    }
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowRight' || e.key === ' ') {
+            nextSlide();
+        } else if (e.key === 'ArrowLeft') {
+            previousSlide();
+        }
+    });
+    
+    // Initialize
+    showSlide(1);
+</script>
+
+</body>
+</html>

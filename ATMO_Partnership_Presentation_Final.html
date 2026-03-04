@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>ATMO Partnership Proposal - Menachem Genut</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0F172A;
+            color: #E2E8F0;
+            width: 1280px;
+            height: 720px;
+            overflow: hidden;
+        }
+        
+        h1, h2, h3, h4, h5 {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        .text-emerald-glow {
+            color: #10B981;
+            text-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+        }
+        
+        .text-blue-glow {
+            color: #3B82F6;
+            text-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+        }
+        
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+        }
+        
+        .glass-panel-highlight {
+            background: rgba(16, 185, 129, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 12px;
+            box-shadow: 0 0 30px rgba(16, 185, 129, 0.1);
+        }
+        
+        .profile-img-placeholder {
+            background-color: #1e293b;
+            border: 2px solid #3B82F6;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+        }
+        
+        .tag {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .vision-quote-line {
+            width: 4px;
+            background-color: #3B82F6;
+            border-radius: 2px;
+        }
+        
+        .bg-grid-pattern {
+            background-image: radial-gradient(circle, #334155 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.05;
+        }
+        
+        .slide {
+            display: none;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .nav-buttons {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .nav-btn {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #E2E8F0;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-btn:hover {
+            background: rgba(59, 130, 246, 0.3);
+            border-color: #3B82F6;
+        }
+        
+        .slide-indicator {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1000;
+            color: #94a3b8;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+<!-- Navigation -->
+<div class="nav-buttons">
+    <button class="nav-btn" onclick="previousSlide()">← Previous</button>
+    <button class="nav-btn" onclick="nextSlide()">Next →</button>
+</div>
+<div class="slide-indicator">
+    <span id="slideCounter">1 / 4</span>
+</div>
+
+<!-- Slide 1: Strategic Partnership Opportunity -->
+<div class="slide active" id="slide1">
+    <div class="flex flex-col w-full h-full p-10 relative">
+        <!-- Background Elements -->
+        <div class="absolute inset-0 bg-grid-pattern pointer-events-none"></div>
+        <div class="absolute top-0 right-0 w-1/3 h-1/3 bg-blue-900 opacity-10 rounded-full filter blur-3xl transform translate-x-1/4 -translate-y-1/4"></div>
+        <div class="absolute bottom-0 left-0 w-1/4 h-1/4 bg-green-900 opacity-10 rounded-full filter blur-3xl transform -translate-x-1/4 translate-y-1/4"></div>
+        
+        <!-- Header -->
+        <header class="flex justify-between items-end mb-8 z-10 border-b border-gray-800 pb-4">
+            <div>
+                <div class="flex items-center gap-3 mb-1">
+                    <i class="fas fa-brain text-emerald-glow text-3xl"></i>
+                    <h1 class="text-4xl font-bold tracking-tight text-white">ATMO</h1>
+                </div>
+                <p class="text-gray-400 text-sm font-medium tracking-wider uppercase">Strategic Partnership Proposal</p>
+            </div>
+            <div class="text-right">
+                <p class="text-emerald-400 font-semibold">For Menachem Genut</p>
+                <p class="text-gray-400 text-sm">Health-Tech Synergy Opportunity</p>
+            </div>
+        </header>
+        
+        <!-- Main Content -->
+        <div class="flex flex-1 gap-8 z-10">
+            <!-- Left Column: Partnership Vision -->
+            <div class="w-6/12 flex flex-col gap-6">
+                <div class="glass-panel p-6 flex-1 flex flex-col justify-center border-l-4 border-blue-500">
+                    <div class="flex items-center gap-3 mb-3 text-blue-400">
+                        <i class="fas fa-handshake"></i>
+                        <h3 class="text-xl font-bold uppercase tracking-wide">Partnership Vision</h3>
+                    </div>
+                    <p class="text-2xl font-light leading-snug text-white mb-4">
+                        Combining <span class="font-semibold text-blue-200">ATMO's HRV stress prediction</span> with your <span class="font-semibold text-emerald-200">wearable expertise</span> to create the next-generation health monitoring platform.
+                    </p>
+                    <div class="border-t border-gray-700 pt-4 mt-auto">
+                        <p class="text-gray-400 text-sm mb-2 font-semibold">SYNERGY OPPORTUNITIES:</p>
+                        <ul class="space-y-2">
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-plus text-emerald-500 mt-1"></i>
+                                <span class="text-gray-300 text-sm">Your <strong>YOPI wearable tech</strong> + Our <strong>HRV algorithms</strong></span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-plus text-emerald-500 mt-1"></i>
+                                <span class="text-gray-300 text-sm">Your <strong>Israeli medtech network</strong> + Our <strong>US market presence</strong></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Column: Technology Convergence -->
+            <div class="w-6/12 flex flex-col gap-6">
+                <div class="glass-panel p-6 flex-1 border-t-3 border-emerald-500 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-4 opacity-10">
+                        <i class="fas fa-microchip text-8xl text-emerald-500"></i>
+                    </div>
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <div class="flex items-center gap-3 mb-2 text-emerald-400">
+                                <i class="fas fa-atom"></i>
+                                <h3 class="text-xl font-bold uppercase tracking-wide">Technology Convergence</h3>
+                            </div>
+                            <p class="text-lg text-gray-200 w-3/4">
+                                Your <span class="text-white font-semibold">nanotechnology</span> and <span class="text-white font-semibold">AI expertise</span> perfectly complement our predictive health platform.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Complementary Technologies -->
+                    <div class="mt-6 space-y-4">
+                        <div class="flex items-center justify-between bg-gray-800 bg-opacity-40 rounded-lg p-3">
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-heart-pulse text-red-400"></i>
+                                <span class="text-white font-medium">ATMO: HRV Prediction</span>
+                            </div>
+                            <span class="text-emerald-400 text-sm">15-60min advance warning</span>
+                        </div>
+                        <div class="flex items-center justify-between bg-gray-800 bg-opacity-40 rounded-lg p-3">
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-tshirt text-blue-400"></i>
+                                <span class="text-white font-medium">YOPI: Sweat/VO2 Monitoring</span>
+                            </div>
+                            <span class="text-emerald-400 text-sm">Real-time biomarkers</span>
+                        </div>
+                        <div class="flex items-center justify-between bg-gray-800 bg-opacity-40 rounded-lg p-3">
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-brain text-purple-400"></i>
+                                <span class="text-white font-medium">Combined: AI Health Platform</span>
+                            </div>
+                            <span class="text-emerald-400 text-sm">Comprehensive wellness</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer: Your Track Record -->
+        <div class="mt-8 z-10">
+            <h3 class="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4 pl-1">Your Proven Track Record</h3>
+            <div class="grid grid-cols-3 gap-6">
+                <div class="bg-gray-800 bg-opacity-30 border border-gray-700 rounded-lg p-4 flex items-center gap-4">
+                    <div class="h-10 w-10 rounded-full bg-blue-900 bg-opacity-50 flex items-center justify-center text-blue-400">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-sm">Two Successful Exits</h4>
+                        <p class="text-xs text-gray-400 mt-0.5">Oramir ($21M) + ApNano (undisclosed)</p>
+                    </div>
+                </div>
+                <div class="bg-gray-800 bg-opacity-30 border border-gray-700 rounded-lg p-4 flex items-center gap-4">
+                    <div class="h-10 w-10 rounded-full bg-emerald-900 bg-opacity-50 flex items-center justify-center text-emerald-400">
+                        <i class="fas fa-microscope"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-sm">Deep Tech Expertise</h4>
+                        <p class="text-xs text-gray-400 mt-0.5">PhD Technion + 2,733 citations</p>
+                    </div>
+                </div>
+                <div class="bg-gray-800 bg-opacity-30 border border-gray-700 rounded-lg p-4 flex items-center gap-4">
+                    <div class="h-10 w-10 rounded-full bg-purple-900 bg-opacity-50 flex items-center justify-center text-purple-400">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-sm">Active in Health-Tech</h4>
+                        <p class="text-xs text-gray-400 mt-0.5">YOPI Tech Co-founder/CTO</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 2: Market Opportunity & Synergy -->
+<div class="slide" id="slide2">
+    <div class="flex flex-col w-full h-full p-10 relative">
+        <!-- Background Elements -->
+        <div class="absolute top-0 left-0 w-1/3 h-1/3 bg-blue-900 opacity-10 rounded-full filter blur-3xl transform -translate-x-1/4 -translate-y-1/4"></div>
+        <div class="absolute bottom-0 right-0 w-1/3 h-1/3 bg-green-900 opacity-10 rounded-full filter blur-3xl transform translate-x-1/4 translate-y-1/4"></div>
+        
+        <!-- Header -->
+        <header class="flex justify-between items-end mb-10 z-10 border-b border-gray-800 pb-4 shrink-0">
+            <div>
+                <div class="flex items-center gap-3 mb-1">
+                    <i class="fas fa-brain text-emerald-glow text-3xl"></i>
+                    <h1 class="text-4xl font-bold tracking-tight text-white">ATMO</h1>
+                </div>
+                <p class="text-gray-400 text-sm font-medium tracking-wider uppercase">Market Strategy & Synergy</p>
+            </div>
+            <div class="text-right">
+                <p class="text-white text-xl font-semibold tracking-wide">Combined Path to <span class="text-emerald-glow">$451B Health Market</span></p>
+            </div>
+        </header>
+        
+        <!-- Main Content Grid -->
+        <div class="flex flex-1 gap-12 z-10 h-full">
+            <!-- Left Column: Combined Business Model -->
+            <div class="w-7/12 flex flex-col relative">
+                <h3 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-6 pl-1">Combined Business Strategy</h3>
+                <div class="flex flex-col gap-6 relative h-full">
+                    <!-- Phase 1: Technology Integration -->
+                    <div class="relative z-10">
+                        <div class="glass-panel p-5 flex items-start gap-5 border-l-4 border-blue-500 relative z-10">
+                            <div class="flex-shrink-0 h-12 w-12 rounded-full bg-blue-900 bg-opacity-40 flex items-center justify-center border border-blue-500 text-blue-400 z-10">
+                                <i class="fas fa-cogs"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-center mb-1">
+                                    <h4 class="text-lg font-bold text-white">Tech Integration <span class="text-blue-400 text-sm font-normal ml-2">(6 months)</span></h4>
+                                    <span class="bg-blue-900 bg-opacity-50 text-blue-300 text-xs px-2 py-1 rounded border border-blue-800">Joint R&D</span>
+                                </div>
+                                <p class="text-gray-400 text-sm mb-2">Integrate ATMO's HRV algorithms with YOPI's wearable platform for comprehensive health monitoring.</p>
+                                <div class="flex items-center gap-2">
+                                    <i class="fas fa-check text-blue-500 text-xs"></i>
+                                    <p class="text-gray-500 text-xs uppercase font-semibold tracking-wide">Shared IP Development</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Phase 2: Market Expansion -->
+                    <div class="relative z-10">
+                        <div class="glass-panel p-5 flex items-start gap-5 border-l-4 border-emerald-500 relative z-10">
+                            <div class="flex-shrink-0 h-12 w-12 rounded-full bg-emerald-900 bg-opacity-40 flex items-center justify-center border border-emerald-500 text-emerald-400 z-10">
+                                <i class="fas fa-globe"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-center mb-1">
+                                    <h4 class="text-lg font-bold text-white">Dual Market Entry <span class="text-emerald-400 text-sm font-normal ml-2">(Year 1-2)</span></h4>
+                                    <span class="bg-emerald-900 bg-opacity-50 text-emerald-300 text-xs px-2 py-1 rounded border border-emerald-800">US + Israel</span>
+                                </div>
+                                <p class="text-gray-400 text-sm mb-2">Launch in US (ATMO's strength) and Israel (your network) simultaneously for rapid validation.</p>
+                                <div class="flex items-center gap-2">
+                                    <i class="fas fa-chart-line text-emerald-500 text-xs"></i>
+                                    <p class="text-gray-500 text-xs uppercase font-semibold tracking-wide">Accelerated Growth</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Phase 3: Enterprise Scale -->
+                    <div class="relative z-10">
+                        <div class="glass-panel p-5 flex items-start gap-5 border-l-4 border-purple-500 relative z-10 bg-opacity-80 border-white border-opacity-10">
+                            <div class="flex-shrink-0 h-12 w-12 rounded-full bg-purple-900 bg-opacity-40 flex items-center justify-center border border-purple-500 text-purple-400 z-10">
+                                <i class="fas fa-building"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-center mb-1">
+                                    <h4 class="text-lg font-bold text-white">Enterprise Platform <span class="text-purple-400 text-sm font-normal ml-2">(Year 2-3)</span></h4>
+                                    <span class="bg-purple-900 bg-opacity-50 text-purple-300 text-xs px-2 py-1 rounded border border-purple-800">B2B Healthcare</span>
+                                </div>
+                                <p class="text-gray-400 text-sm mb-2">Target hospitals, insurance companies, and corporate wellness programs with integrated solution.</p>
+                                <div class="flex items-center gap-2">
+                                    <i class="fas fa-star text-purple-500 text-xs"></i>
+                                    <p class="text-gray-500 text-xs uppercase font-semibold tracking-wide">Enterprise Revenue</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Column: Market & Partnership Benefits -->
+            <div class="w-5/12 flex flex-col gap-6">
+                <!-- Market Opportunity -->
+                <div class="glass-panel p-8 flex flex-col items-center justify-center text-center relative overflow-hidden flex-1">
+                    <div class="absolute inset-0 flex items-center justify-center opacity-10">
+                        <div class="w-48 h-48 rounded-full border-4 border-dashed border-emerald-500 animate-spin-slow" style="animation-duration: 20s;"></div>
+                    </div>
+                    <h3 class="text-gray-400 text-sm font-bold uppercase tracking-widest mb-2">Combined TAM</h3>
+                    <div class="mb-2">
+                        <span class="text-6xl font-bold text-white tracking-tighter">$451B</span>
+                    </div>
+                    <p class="text-emerald-400 font-medium text-lg">Global Health Market</p>
+                    <div class="mt-6 w-full grid grid-cols-2 gap-4">
+                        <div class="bg-gray-800 bg-opacity-50 rounded p-3">
+                            <p class="text-2xl font-bold text-white">18.6%</p>
+                            <p class="text-xs text-gray-500 uppercase">Digital Health CAGR</p>
+                        </div>
+                        <div class="bg-gray-800 bg-opacity-50 rounded p-3">
+                            <p class="text-2xl font-bold text-white">2x</p>
+                            <p class="text-xs text-gray-500 uppercase">Market Coverage</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Partnership Benefits -->
+                <div class="glass-panel p-6 border border-emerald-500 border-opacity-30 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-emerald-500 opacity-5 rounded-full blur-xl -mr-10 -mt-10"></div>
+                    <div class="flex items-center gap-3 mb-3">
+                        <i class="fas fa-handshake text-emerald-400 text-xl"></i>
+                        <h3 class="text-white font-bold text-lg">Partnership Benefits</h3>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex gap-4 items-start">
+                            <div class="bg-gray-800 p-2 rounded-lg border border-gray-700">
+                                <i class="fas fa-rocket text-blue-400 text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-blue-300 font-bold text-sm mb-1">Accelerated Development</h4>
+                                <p class="text-gray-300 text-xs leading-relaxed">Your hardware expertise reduces our development time by 12+ months.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4 items-start">
+                            <div class="bg-gray-800 p-2 rounded-lg border border-gray-700">
+                                <i class="fas fa-network-wired text-emerald-400 text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-emerald-300 font-bold text-sm mb-1">Network Synergy</h4>
+                                <p class="text-gray-300 text-xs leading-relaxed">Access to Israeli medtech ecosystem + US market connections.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 3: Joint Investment & Development Plan -->
+<div class="slide" id="slide3">
+    <div class="flex flex-col w-full h-full p-10 relative">
+        <!-- Background Elements -->
+        <div class="absolute top-0 right-0 w-1/3 h-1/3 bg-blue-900 opacity-10 rounded-full filter blur-3xl transform translate-x-1/4 -translate-y-1/4"></div>
+        <div class="absolute bottom-0 left-0 w-1/3 h-1/3 bg-green-900 opacity-10 rounded-full filter blur-3xl transform -translate-x-1/4 translate-y-1/4"></div>
+        
+        <!-- Header -->
+        <header class="flex justify-between items-end mb-8 z-10 border-b border-gray-800 pb-4 shrink-0">
+            <div>
+                <div class="flex items-center gap-3 mb-1">
+                    <i class="fas fa-brain text-emerald-glow text-3xl"></i>
+                    <h1 class="text-4xl font-bold tracking-tight text-white">ATMO</h1>
+                </div>
+                <p class="text-gray-400 text-sm font-medium tracking-wider uppercase">Joint Investment & Development</p>
+            </div>
+            <div class="text-right">
+                <p class="text-white text-xl font-semibold tracking-wide">Combined Resources for <span class="text-emerald-glow">Accelerated Growth</span></p>
+            </div>
+        </header>
+        
+        <!-- Main Content Grid -->
+        <div class="flex flex-1 gap-8 z-10 h-full">
+            <!-- Left Column: Investment Structure -->
+            <div class="w-1/2 flex flex-col gap-6">
+                <!-- Top Card: Joint Investment -->
+                <div class="glass-panel-highlight p-6 flex flex-row items-center justify-between">
+                    <div>
+                        <h3 class="text-sm font-bold text-emerald-400 uppercase tracking-widest mb-1">Joint Investment</h3>
+                        <div class="flex items-baseline">
+                            <span class="text-4xl font-bold text-white tracking-tighter">$100k + YOPI</span>
+                        </div>
+                        <p class="text-gray-400 text-sm mt-1">Strategic Partnership Structure</p>
+                    </div>
+                    <div class="text-right border-l border-emerald-900 pl-6">
+                        <div class="mb-2">
+                            <p class="text-xs text-gray-400 uppercase">Partnership Model</p>
+                            <p class="text-lg font-bold text-white">Joint Venture</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-400 uppercase">Shared Equity</p>
+                            <p class="text-lg font-bold text-white">50/50 Split</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Bottom Card: Resource Allocation -->
+                <div class="glass-panel p-6 flex-1 flex flex-col">
+                    <h3 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">Combined Resources</h3>
+                    <div class="space-y-4 flex-1">
+                        <div class="bg-gray-800 bg-opacity-40 rounded-lg p-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <h4 class="text-white font-bold">ATMO Contribution</h4>
+                                <span class="text-blue-400 text-sm">$100k + Software</span>
+                            </div>
+                            <ul class="text-gray-300 text-sm space-y-1">
+                                <li>• HRV prediction algorithms</li>
+                                <li>• US market presence</li>
+                                <li>• Mobile app platform</li>
+                            </ul>
+                        </div>
+                        <div class="bg-gray-800 bg-opacity-40 rounded-lg p-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <h4 class="text-white font-bold">Your Contribution</h4>
+                                <span class="text-emerald-400 text-sm">YOPI Tech + Network</span>
+                            </div>
+                            <ul class="text-gray-300 text-sm space-y-1">
+                                <li>• Wearable hardware expertise</li>
+                                <li>• Israeli medtech connections</li>
+                                <li>• AI/ML development experience</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Column: Development Roadmap -->
+            <div class="w-1/2 flex flex-col">
+                <div class="glass-panel p-8 h-full relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-blue-500 opacity-5 rounded-full blur-2xl -mr-10 -mt-10"></div>
+                    <h3 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-8 pl-1">12-Month Joint Development Plan</h3>
+                    <div class="relative pl-6 space-y-8">
+                        <!-- Timeline Track -->
+                        <div class="absolute left-5 top-5 bottom-5 w-0.5 bg-gray-600"></div>
+                        
+                        <!-- Milestone 1 -->
+                        <div class="relative flex items-start gap-4">
+                            <div class="absolute -left-6 top-1.5 w-3 h-3 rounded-full bg-blue-500 border-2 border-gray-900"></div>
+                            <div class="bg-gray-800 bg-opacity-50 p-4 rounded-lg border border-gray-700 w-full">
+                                <div class="flex justify-between items-center mb-1">
+                                    <h4 class="font-bold text-white text-base">Technology Integration</h4>
+                                    <span class="text-xs font-mono text-blue-400 bg-blue-900 bg-opacity-30 px-2 py-0.5 rounded">Q1 2025</span>
+                                </div>
+                                <p class="text-gray-400 text-sm">Integrate ATMO's HRV algorithms with YOPI's wearable platform. Joint R&D team formation.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Milestone 2 -->
+                        <div class="relative flex items-start gap-4">
+                            <div class="absolute -left-6 top-1.5 w-3 h-3 rounded-full bg-emerald-500 border-2 border-gray-900"></div>
+                            <div class="bg-gray-800 bg-opacity-50 p-4 rounded-lg border border-gray-700 w-full">
+                                <div class="flex justify-between items-center mb-1">
+                                    <h4 class="font-bold text-white text-base">Prototype & Testing</h4>
+                                    <span class="text-xs font-mono text-emerald-400 bg-emerald-900 bg-opacity-30 px-2 py-0.5 rounded">Q2 2025</span>
+                                </div>
+                                <p class="text-gray-400 text-sm">Beta testing in both US and Israeli markets. Clinical validation studies.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Milestone 3 -->
+                        <div class="relative flex items-start gap-4">
+                            <div class="absolute -left-6 top-1.5 w-3 h-3 rounded-full bg-purple-500 border-2 border-gray-900"></div>
+                            <div class="bg-gray-800 bg-opacity-50 p-4 rounded-lg border border-gray-700 w-full">
+                                <div class="flex justify-between items-center mb-1">
+                                    <h4 class="font-bold text-white text-base">Market Launch</h4>
+                                    <span class="text-xs font-mono text-purple-400 bg-purple-900 bg-opacity-30 px-2 py-0.5 rounded">Q3-Q4 2025</span>
+                                </div>
+                                <p class="text-gray-400 text-sm">Simultaneous launch in US and Israel. Target: $50k+ MRR by end of year.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8 pt-6 border-t border-gray-700 flex items-center justify-between text-sm">
+                        <p class="text-gray-400">Combined Runway:</p>
+                        <div class="flex items-center gap-2 text-white font-semibold">
+                            <i class="fas fa-rocket text-emerald-400"></i>
+                            <p>18 Months to Series A</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 4: Partnership Proposal & Next Steps -->
+<div class="slide" id="slide4">
+    <div class="flex flex-col w-full h-full p-10 relative">
+        <!-- Background Elements -->
+        <div class="absolute inset-0 bg-grid-pattern pointer-events-none"></div>
+        <div class="absolute top-0 left-0 w-1/3 h-1/3 bg-blue-900 opacity-10 rounded-full filter blur-3xl transform -translate-x-1/4 -translate-y-1/4"></div>
+        <div class="absolute bottom-0 right-0 w-1/3 h-1/3 bg-green-900 opacity-10 rounded-full filter blur-3xl transform translate-x-1/4 translate-y-1/4"></div>
+        
+        <!-- Header -->
+        <header class="flex justify-between items-end mb-10 z-10 border-b border-gray-800 pb-4 shrink-0">
+            <div>
+                <div class="flex items-center gap-3 mb-1">
+                    <i class="fas fa-brain text-emerald-glow text-3xl"></i>
+                    <h1 class="text-4xl font-bold tracking-tight text-white">ATMO</h1>
+                </div>
+                <p class="text-gray-400 text-sm font-medium tracking-wider uppercase">Partnership Proposal</p>
+            </div>
+            <div class="text-right">
+                <p class="text-white text-xl font-semibold tracking-wide">Building the Future of <span class="text-blue-glow">Preventive Health Tech</span></p>
+            </div>
+        </header>
+        
+        <!-- Main Content Grid -->
+        <div class="flex flex-1 gap-8 z-10 h-full">
+            <!-- Left Column: Menachem's Profile & Expertise -->
+            <div class="w-7/12 flex flex-col gap-6">
+                <!-- Menachem's Profile -->
+                <div class="glass-panel p-6 flex items-start gap-6 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-4 opacity-5">
+                        <i class="fas fa-atom text-8xl text-blue-500"></i>
+                    </div>
+                    <div class="flex-shrink-0">
+                        <div class="w-32 h-32 rounded-xl profile-img-placeholder flex items-center justify-center bg-gray-800">
+                            <i class="fas fa-user-graduate text-5xl text-blue-400"></i>
+                        </div>
+                    </div>
+                    <div class="flex-1 z-10">
+                        <div class="mb-1">
+                            <h4 class="text-sm text-blue-400 font-bold uppercase tracking-wider mb-1">Strategic Partner</h4>
+                            <h3 class="text-2xl font-bold text-white">Menachem Genut, PhD</h3>
+                            <p class="text-gray-400 text-sm">Nanotech Entrepreneur & YOPI Co-founder</p>
+                        </div>
+                        <div class="h-px bg-gray-700 w-full my-4"></div>
+                        <p class="text-gray-300 text-sm mb-4 leading-relaxed">
+                            Proven track record with two successful exits, deep expertise in nanotechnology, wearables, and AI-driven health monitoring. Perfect complement to ATMO's software-first approach.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <div class="tag">
+                                <i class="fas fa-microscope text-blue-400 text-xs"></i>
+                                <span>Nanotechnology</span>
+                            </div>
+                            <div class="tag">
+                                <i class="fas fa-tshirt text-emerald-400 text-xs"></i>
+                                <span>Wearables</span>
+                            </div>
+                            <div class="tag">
+                                <i class="fas fa-chart-line text-purple-400 text-xs"></i>
+                                <span>Two Exits</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Shared Vision -->
+                <div class="glass-panel p-8 flex-1 flex flex-col justify-center relative">
+                    <div class="flex gap-6 h-full items-center">
+                        <div class="vision-quote-line h-full opacity-50"></div>
+                        <div>
+                            <div class="flex items-center gap-2 mb-4">
+                                <i class="fas fa-lightbulb text-emerald-400"></i>
+                                <h4 class="text-sm text-emerald-400 font-bold uppercase tracking-widest">Shared Vision</h4>
+                            </div>
+                            <p class="text-3xl font-light text-white leading-tight mb-2">
+                                "Combining <span class="text-blue-400 font-bold">hardware innovation</span> with <span class="text-emerald-400 font-bold">predictive algorithms</span> to create the next generation of preventive healthcare."
+                            </p>
+                            <p class="text-gray-400 text-sm mt-4">Together, we're not just monitoring health – we're predicting and preventing health issues before they occur.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Column: Partnership Proposal -->
+            <div class="w-5/12 flex flex-col">
+                <div class="glass-panel-highlight p-8 h-full flex flex-col justify-between relative overflow-hidden">
+                    <div class="absolute -top-20 -right-20 w-64 h-64 bg-emerald-500 opacity-10 rounded-full blur-3xl"></div>
+                    
+                    <!-- Top Section: Partnership Proposal -->
+                    <div class="relative z-10">
+                        <div class="mb-6">
+                            <div class="inline-block px-3 py-1 bg-emerald-900 bg-opacity-50 border border-emerald-700 rounded-full mb-4">
+                                <p class="text-emerald-400 text-xs font-bold uppercase tracking-wide">Strategic Partnership</p>
+                            </div>
+                            <h3 class="text-white text-3xl font-bold leading-tight">
+                                Let's Build the Future of <br/> <span class="text-emerald-glow">Health Monitoring</span> Together
+                            </h3>
+                        </div>
+                        <p class="text-gray-300 leading-relaxed mb-8 border-l-2 border-gray-600 pl-4">
+                            Your expertise in <strong class="text-white">wearable technology</strong> and <strong class="text-white">Israeli medtech ecosystem</strong> combined with our <strong class="text-white">HRV prediction platform</strong> creates an unbeatable combination.
+                        </p>
+                    </div>
+                    
+                    <!-- Bottom Section: Next Steps -->
+                    <div class="bg-gray-900 bg-opacity-60 rounded-xl p-6 border border-gray-700 relative z-10">
+                        <h4 class="text-white font-bold mb-4 flex items-center gap-2">
+                            <i class="fas fa-handshake text-emerald-400"></i>
+                            Next Steps
+                        </h4>
+                        <ul class="space-y-4 mb-6">
+                            <li class="flex items-center gap-3">
+                                <div class="w-6 h-6 rounded-full bg-emerald-900 flex items-center justify-center text-emerald-400 text-xs border border-emerald-700">1</div>
+                                <p class="text-gray-300 text-sm">Technical deep-dive: <span class="text-white font-semibold">ATMO + YOPI integration</span></p>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <div class="w-6 h-6 rounded-full bg-emerald-900 flex items-center justify-center text-emerald-400 text-xs border border-emerald-700">2</div>
+                                <p class="text-gray-300 text-sm">Partnership structure: <span class="text-white font-semibold">Joint venture terms</span></p>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <div class="w-6 h-6 rounded-full bg-emerald-900 flex items-center justify-center text-emerald-400 text-xs border border-emerald-700">3</div>
+                                <p class="text-gray-300 text-sm">Market strategy: <span class="text-white font-semibold">US + Israel launch plan</span></p>
+                            </li>
+                        </ul>
+                        <div class="flex items-center justify-between pt-4 border-t border-gray-700">
+                            <div>
+                                <p class="text-xs text-gray-500 uppercase">Contact</p>
+                                <p class="text-white font-mono text-sm">founder@neuroyoga.app</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-xs text-gray-500 uppercase">Timeline</p>
+                                <p class="text-white font-mono text-sm">2 weeks</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Decorative Element -->
+                    <div class="absolute bottom-8 right-8 text-emerald-500 opacity-20 text-6xl transform rotate-[-45deg]">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let currentSlide = 1;
+    const totalSlides = 4;
+    
+    function showSlide(n) {
+        const slides = document.querySelectorAll('.slide');
+        slides.forEach(slide => slide.classList.remove('active'));
+        
+        if (n > totalSlides) currentSlide = 1;
+        if (n < 1) currentSlide = totalSlides;
+        
+        document.getElementById(`slide${currentSlide}`).classList.add('active');
+        document.getElementById('slideCounter').textContent = `${currentSlide} / ${totalSlides}`;
+    }
+    
+    function nextSlide() {
+        currentSlide++;
+        showSlide(currentSlide);
+    }
+    
+    function previousSlide() {
+        currentSlide--;
+        showSlide(currentSlide);
+    }
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowRight' || e.key === ' ') {
+            nextSlide();
+        } else if (e.key === 'ArrowLeft') {
+            previousSlide();
+        }
+    });
+    
+    // Initialize
+    showSlide(1);
+</script>
+
+</body>
+</html>

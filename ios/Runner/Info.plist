@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleDisplayName</key>
+	<string>ATMO Shield Premium</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>atmo_shield_premium</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>$(FLUTTER_BUILD_NAME)</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>UIMainStoryboardFile</key>
+	<string>Main</string>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
+	
+	<!-- HealthKit Permissions -->
+	<key>NSHealthShareUsageDescription</key>
+	<string>ATMO Shield analyzes heart rate variability patterns for wellness insights and personalized NeuroYoga recommendations. This is for wellness purposes only, not medical diagnosis.</string>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>ATMO saves wellness analysis results to Health app for your progress tracking</string>
+	
+	<!-- Camera Permission for PPG -->
+	<key>NSCameraUsageDescription</key>
+	<string>ATMO uses your camera with flash to measure heart rate variability through photoplethysmography (PPG) for wellness monitoring</string>
+	
+	<!-- Motion Permission -->
+	<key>NSMotionUsageDescription</key>
+	<string>ATMO may use motion data to improve measurement accuracy</string>
+	
+	<!-- Calendar Integration (Optional) -->
+	<key>NSCalendarsUsageDescription</key>
+	<string>ATMO checks calendar for smart wellness notification timing around important events</string>
+	
+	<!-- Background Processing -->
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>processing</string>
+	</array>
+	
+	<!-- Background Task Identifiers -->
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<array>
+		<string>dev.flutter.background.refresh</string>
+	</array>
+	
+	<!-- Required Device Capabilities -->
+	<key>UIRequiredDeviceCapabilities</key>
+	<array>
+		<string>healthkit</string>
+	</array>
+	
+	<!-- Minimum iOS Version -->
+	<key>MinimumOSVersion</key>
+	<string>16.0</string>
+	
+	<!-- Privacy - Location (if needed for context) -->
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>ATMO may use location for contextual stress analysis (optional feature)</string>
+	
+	<!-- App Transport Security -->
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<false/>
+	</dict>
+	
+	<!-- Supported URL Schemes -->
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>atmo.shield.premium</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>atmoshield</string>
+			</array>
+		</dict>
+	</array>
+</dict>
+</plist>

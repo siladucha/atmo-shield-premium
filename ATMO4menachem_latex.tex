@@ -1,0 +1,210 @@
+\documentclass[aspectratio=169, xcolor=table]{beamer}
+
+% --- Пакуты ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{helvet}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{tabularx}
+\usepackage{booktabs}
+
+% --- Цветовая схема (Light Professional) ---
+\definecolor{bgwhite}{HTML}{FFFFFF}
+\definecolor{darkgreen}{HTML}{059669}
+\definecolor{darkblue}{HTML}{1E40AF}
+\definecolor{lightgray}{HTML}{F8FAFC}
+\definecolor{textdark}{HTML}{1F2937}
+
+% --- Настройки Beamer ---
+\setbeamercolor{background canvas}{bg=bgwhite}
+\setbeamercolor{normal text}{fg=textdark}
+\setbeamercolor{title}{fg=darkgreen}
+\setbeamercolor{structure}{fg=darkgreen}
+
+\setbeamertemplate{navigation symbols}{} % Убрать иконки навигации
+\setbeamertemplate{headline}{} 
+\setbeamertemplate{footline}{
+    \begin{beamercolorbox}[wd=\paperwidth,ht=4ex,dp=2ex,leftskip=1.4cm,rightskip=1.4cm]{footline}
+        \scriptsize \color{textdark} ATMO // Private Pitch Deck \hfill \theslideindex
+    \end{beamercolorbox}
+}
+
+% --- Кастомные команды ---
+\newcommand{\glowemerald}[1]{{\color{darkgreen}\textbf{#1}}}
+\newcommand{\glowblue}[1]{{\color{darkblue}\textbf{#1}}}
+
+\begin{document}
+
+% --- SLIDE 1: PROBLEM & SOLUTION ---
+\begin{frame}
+    \begin{columns}[T]
+        \begin{column}{0.5\textwidth}
+            \vspace{0.5cm}
+            {\Large \glowemerald{ATMO}} \\
+            \vspace{0.2cm}
+            {\scriptsize \color{darkgreen} OFFLINE BIOFEEDBACK FOR VNS REGULATION} \\
+            \vspace{1cm}
+            {\large \glowblue{The Invisible Crisis}} \\
+            \vspace{0.3cm}
+            {\Large Stress costs the global economy \\ \glowblue{\$1 Trillion} annually.} \\
+            \vspace{0.5cm}
+            \begin{itemize}
+                \item \small \color{textdark} \textbf{Privacy Risk:} Cloud-dependent data.
+                \item \small \color{textdark} \textbf{Hardware Lock:} Proprietary sensors.
+            \end{itemize}
+        \end{column}
+        
+        \begin{column}{0.45\textwidth}
+            \vspace{0.8cm}
+            \fcolorbox{darkgreen}{lightgray}{
+                \begin{minipage}{\textwidth}
+                    \vspace{0.3cm}
+                    \hspace{0.3cm} {\large \glowemerald{The ATMO Edge}} \\
+                    \vspace{0.2cm}
+                    \hspace{0.3cm} {\small Clinical-Grade Vagal Tone Optimization.} \\
+                    \vspace{0.4cm}
+                    \begin{columns}
+                        \column{0.45\textwidth}
+                        \centering \glowemerald{21-46\%} \\ \tiny RECOVERY BOOST
+                        \column{0.45\textwidth}
+                        \centering \glowblue{100\%} \\ \tiny OFFLINE \& SECURE
+                    \end{columns}
+                    \vspace{0.4cm}
+                    \hspace{0.3cm} \scriptsize \color{textdark} Turn any wearable into a clinical tool.
+                    \vspace{0.3cm}
+                \end{minipage}
+            }
+            \vspace{0.5cm}
+            \begin{flushright}
+                \tiny \color{textgray} PREPARED FOR \\ \small \textbf{Menachem Genut, PhD}
+            \end{flushright}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% --- SLIDE 2: MARKET STRATEGY ---
+\begin{frame}
+    {\Large \glowemerald{Market Evolution}} \\
+    \vspace{0.1cm}
+    {\scriptsize \glowblue{SCALABLE PATH TO \$50B MARKET}} \\
+    \vspace{0.8cm}
+    
+    \begin{columns}[T]
+        \column{0.3\textwidth}
+        \fcolorbox{darkblue}{lightgray}{
+            \begin{minipage}{\textwidth}
+                \vspace{0.2cm} \centering \textbf{\small 1. B2C Launch} \\
+                \vspace{0.2cm} \scriptsize \color{textdark} Biohackers \& High-performers. \\
+                \vspace{0.4cm} \glowblue{\$10 / mo} \vspace{0.2cm}
+            \end{minipage}
+        }
+        \column{0.3\textwidth}
+        \fcolorbox{darkgreen}{lightgray}{
+            \begin{minipage}{\textwidth}
+                \vspace{0.2cm} \centering \textbf{\small 2. B2B2C Scale} \\
+                \vspace{0.2cm} \scriptsize \color{textdark} Corporate wellness programs. \\
+                \vspace{0.4cm} \glowemerald{Volume Licensing} \vspace{0.2cm}
+            \end{minipage}
+        }
+        \column{0.3\textwidth}
+        \fcolorbox{gray}{lightgray}{
+            \begin{minipage}{\textwidth}
+                \vspace{0.2cm} \centering \textbf{\small 3. B2B Insurance} \\
+                \vspace{0.2cm} \scriptsize \color{textdark} PMPM Preventive Care. \\
+                \vspace{0.4cm} \glowblue{Scalable PMPM} \vspace{0.2cm}
+            \end{minipage}
+        }
+    \end{columns}
+    
+    \vspace{1cm}
+    \fcolorbox{darkgreen}{lightgray}{
+        \begin{minipage}{0.95\textwidth}
+            \vspace{0.2cm}
+            \begin{columns}
+                \column{0.7\textwidth}
+                \glowemerald{Zero Logistics Strategy} \\
+                \scriptsize \color{textdark} No hardware manufacturing = Instant global scalability.
+                \column{0.2\textwidth}
+                \centering \tiny TAM \\ \Large \textbf{\$50B+}
+            \end{columns}
+            \vspace{0.2cm}
+        \end{minipage}
+    }
+\end{frame}
+
+% --- SLIDE 3: INVESTMENT & BUDGET ---
+\begin{frame}
+    \begin{columns}[T]
+        \column{0.6\textwidth}
+        {\Large \glowemerald{6-Month Sprint}} \\
+        {\scriptsize \glowblue{INVESTMENT ASK: \$100,000}} \\
+        \vspace{0.5cm}
+        \renewcommand{\arraystretch}{1.5}
+        \begin{tabularx}{\textwidth}{l r X}
+            \rowcolor{lightgray} \scriptsize \color{darkgreen} Budget Item & \scriptsize \color{darkgreen} 6-Mo Total & \scriptsize \color{darkgreen} Strategic Purpose \\
+            \small Founder Runway & \small \textbf{\$54,000} & \scriptsize Algorithm \& R\&D. \\
+            \small US Market Testing & \small \textbf{\$24,000} & \scriptsize CAC Validation. \\
+            \small Legal \& IP & \small \textbf{\$21,000} & \scriptsize US Entity \& IP. \\
+            \small Hardware \& Ops & \small \glowemerald{\$9,000} & \scriptsize Ref. Devices \& Cloud. \\
+            \midrule
+            \rowcolor{lightgray} \textbf{\small Total Budget} & \textbf{\small \$108,000} & \scriptsize \color{textdark} *Incl. \$8k founder offset \\
+        \end{tabularx}
+        
+        \column{0.35\textwidth}
+        \vspace{0.2cm}
+        \fcolorbox{darkblue}{lightgray}{
+            \begin{minipage}{\textwidth}
+                \vspace{0.2cm}
+                \centering \tiny \color{textdark} MONTHLY BURN \\ \Large \glowblue{\$18.0k} \vspace{0.2cm}
+            \end{minipage}
+        }
+        \vspace{0.4cm}
+        \glowemerald{Milestones @ Mo 6} \\
+        \vspace{0.2cm}
+        \scriptsize
+        $\checkmark$ App Store \& Google Play \\
+        $\checkmark$ \$5,000+ MRR (US Market) \\
+        $\checkmark$ 2 B2B Pilot LOIs \\
+        \vspace{0.5cm}
+        \fcolorbox{darkgreen}{lightgray}{
+            \begin{minipage}{\textwidth}
+                \vspace{0.1cm} \centering \glowemerald{SAFE: \$1M CAP} \\ \tiny \centering Equity: 20\% \vspace{0.1cm}
+            \end{minipage}
+        }
+    \end{columns}
+\end{frame}
+
+% --- SLIDE 4: PARTNERSHIP ---
+\begin{frame}
+    \centering
+    \vspace{0.5cm}
+    {\Huge Building the \glowemerald{Resilience} Infrastructure} \\
+    \vspace{1cm}
+    \fcolorbox{darkgreen}{lightgray}{
+        \begin{minipage}{0.7\textwidth}
+            \vspace{0.4cm}
+            \centering \large \textit{"Your investment is the catalyst to turn a proven methodology into a commercial asset."} \\
+            \vspace{0.4cm}
+        \end{minipage}
+    }
+    \vspace{1cm}
+    \begin{columns}[T]
+        \column{0.4\textwidth}
+        \fcolorbox{darkblue}{lightgray}{
+            \begin{minipage}{\textwidth}
+                \vspace{0.2cm} \centering \glowblue{Founder \& Engineer} \\ 
+                \scriptsize \centering Algorithm expert in VNS regulation. \vspace{0.2cm}
+            \end{minipage}
+        }
+        \column{0.4\textwidth}
+        \fcolorbox{darkgreen}{lightgray}{
+            \begin{minipage}{\textwidth}
+                \vspace{0.2cm} \centering \glowemerald{Strategic Partnership} \\
+                \scriptsize \centering For Menachem Genut \vspace{0.2cm}
+            \end{minipage}
+        }
+    \end{columns}
+\end{frame}
+
+\end{document}
