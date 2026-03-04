@@ -57,6 +57,10 @@ class MeasurementOrchestrator extends ChangeNotifier {
 
   Future<void> startMeasurement(MeasurementMode mode) async {
     try {
+      debugPrint('═══════════════════════════════════════════════════════');
+      debugPrint('🚀 STARTING MEASUREMENT: ${mode.displayName} (${mode.duration}s)');
+      debugPrint('═══════════════════════════════════════════════════════');
+      
       _setState(MeasurementState.initializing);
       _currentMode = mode;
       _intensityValues.clear();
@@ -66,15 +70,17 @@ class MeasurementOrchestrator extends ChangeNotifier {
 
       // Initialize camera
       await _cameraService.initialize(mode);
+      debugPrint('✅ Camera initialized');
 
       // Start capturing
       _setState(MeasurementState.capturing);
+      debugPrint('📹 Starting capture...');
 
       // Subscribe to intensity stream
       _intensitySubscription = _cameraService.intensityStream.listen(
         _onIntensityData,
         onError: (error) {
-          debugPrint('Intensity stream error: $error');
+          debugPrint('❌ Intensity stream error: $error');
           _handleError('Camera stream error');
         },
       );
@@ -93,6 +99,7 @@ class MeasurementOrchestrator extends ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
+      debugPrint('❌ Failed to start measurement: $e');
       _handleError('Failed to start measurement: $e');
     }
   }
@@ -112,7 +119,13 @@ class MeasurementOrchestrator extends ChangeNotifier {
   void _onTimerTick(Timer timer) {
     _elapsedSeconds++;
     
+    // Log progress every 5 seconds
+    if (_elapsedSeconds % 5 == 0) {
+      debugPrint('⏱️  Progress: ${_elapsedSeconds}s / ${totalSeconds}s (${_intensityValues.length} samples collected)');
+    }
+    
     if (_elapsedSeconds >= totalSeconds) {
+      debugPrint('⏱️  Time complete! Starting processing...');
       _completeMeasurement();
     }
     
@@ -140,13 +153,13 @@ class MeasurementOrchestrator extends ChangeNotifier {
 
     // Check if flash turned off (brightness dropped significantly)
     if (meanBrightness < 60 && _elapsedSeconds > 5) {
-      debugPrint('⚠️ Flash may have turned off (brightness: ${meanBrightness.toStringAsFixed(1)}), attempting to re-enable...');
+      debugPrint('⚠️  Flash may have turned off (brightness: ${meanBrightness.toStringAsFixed(1)}), attempting to re-enable...');
       _cameraService.ensureFlashOn();
     }
 
-    // Log quality metrics for debugging
-    if (_elapsedSeconds % 5 == 0) {
-      debugPrint('Quality check: brightness=${meanBrightness.toStringAsFixed(1)}, variance=${cameraVariance.toStringAsFixed(2)}, R=${meanRed?.toStringAsFixed(1)}, G=${meanBrightness.toStringAsFixed(1)}, B=${meanBlue?.toStringAsFixed(1)}');
+    // Log quality metrics every 10 seconds
+    if (_elapsedSeconds % 10 == 0) {
+      debugPrint('📊 Quality @${_elapsedSeconds}s: brightness=${meanBrightness.toStringAsFixed(1)}, variance=${cameraVariance.toStringAsFixed(2)}, R=${meanRed?.toStringAsFixed(1)}, G=${meanBrightness.toStringAsFixed(1)}, B=${meanBlue?.toStringAsFixed(1)}');
     }
 
     // Assess quality with color information
@@ -166,20 +179,26 @@ class MeasurementOrchestrator extends ChangeNotifier {
   }
 
   Future<void> _completeMeasurement() async {
+    debugPrint('═══════════════════════════════════════════════════════');
+    debugPrint('🔄 PROCESSING MEASUREMENT');
+    debugPrint('═══════════════════════════════════════════════════════');
+    
     // Stop timers and stream
     _measurementTimer?.cancel();
     _qualityTimer?.cancel();
     await _intensitySubscription?.cancel();
     
     // Dispose camera immediately to avoid multiple dispose calls
-    _cameraService.dispose();
+    await _cameraService.dispose();
 
     _setState(MeasurementState.processing);
 
     try {
       // Calculate actual sampling rate from collected data
       final samplingRate = _intensityValues.length ~/ totalSeconds;
-      debugPrint('Processing ${_intensityValues.length} samples over $totalSeconds seconds ($samplingRate FPS)');
+      debugPrint('📊 Collected ${_intensityValues.length} samples over $totalSeconds seconds');
+      debugPrint('📊 Actual sampling rate: $samplingRate FPS');
+      debugPrint('📊 Final quality: ${_currentQuality.displayName}');
       
       // Process signal (always calculate HRV, even for Quick mode)
       final result = _signalProcessor.processMeasurement(
@@ -197,17 +216,33 @@ class MeasurementOrchestrator extends ChangeNotifier {
           bpm: result['bpm'] as int,
           rmssd: result['rmssd'] as double?,
           quality: _currentQuality,
+          peakCount: result['peakCount'] as int,
+          sampleCount: _intensityValues.length,
+          samplingRate: samplingRate.toDouble(),
+          signalMean: result['signalMean'] as double,
+          signalVariance: result['signalVariance'] as double,
+          signalAmplitude: result['signalAmplitude'] as double,
         );
-        debugPrint('Measurement complete: BPM=${result['bpm']}, RMSSD=${result['rmssd']}');
+        debugPrint('═══════════════════════════════════════════════════════');
+        debugPrint('✅ MEASUREMENT COMPLETE');
+        debugPrint('   BPM: ${result['bpm']}');
+        debugPrint('   RMSSD: ${result['rmssd']?.toStringAsFixed(1) ?? "N/A"} ms');
+        debugPrint('   Peaks: ${result['peakCount']}');
+        debugPrint('   Quality: ${_currentQuality.displayName}');
+        debugPrint('═══════════════════════════════════════════════════════');
         _setState(MeasurementState.complete);
       } else {
         // Processing failed, but don't call _handleError (camera already disposed)
-        debugPrint('Processing failed: ${result['error']}');
+        debugPrint('═══════════════════════════════════════════════════════');
+        debugPrint('❌ PROCESSING FAILED: ${result['error']}');
+        debugPrint('═══════════════════════════════════════════════════════');
         _cachedResult = null;
         _setState(MeasurementState.error);
       }
     } catch (e) {
-      debugPrint('Processing error: $e');
+      debugPrint('═══════════════════════════════════════════════════════');
+      debugPrint('❌ PROCESSING ERROR: $e');
+      debugPrint('═══════════════════════════════════════════════════════');
       _cachedResult = null;
       _setState(MeasurementState.error);
     }
@@ -227,7 +262,7 @@ class MeasurementOrchestrator extends ChangeNotifier {
   }
 
   void _handleError(String message) {
-    debugPrint('Measurement error: $message');
+    debugPrint('Error: $message');
     _measurementTimer?.cancel();
     _qualityTimer?.cancel();
     _intensitySubscription?.cancel();
@@ -245,7 +280,7 @@ class MeasurementOrchestrator extends ChangeNotifier {
     _measurementTimer?.cancel();
     _qualityTimer?.cancel();
     _intensitySubscription?.cancel();
-    // Safe to call dispose - it checks if camera is initialized
+    // Safe to call dispose - it has guard flag
     _cameraService.dispose();
     super.dispose();
   }

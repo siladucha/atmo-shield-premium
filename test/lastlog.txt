@@ -3,13 +3,16 @@
 FlutterView implements focusItemsInRect: - caching for linear focus movement is limited as long as this view is on screen.
 Dart execution mode: JIT
 🍎 iOS AppDelegate запускается...
-flutter: The Dart VM service is listening on http://127.0.0.1:58703/CV8x1cMti-M=/
 [SynthData] ATMOHealthKitWriter plugin registered
 ✅ ATMOHealthKitWriter plugin registered
+flutter: The Dart VM service is listening on http://127.0.0.1:59672/fxbiMs-QuyE=/
 flutter: 📷 [CameraPermissionsManager] Loaded cached permission: true
 flutter: 📷 [CameraPermissionsManager] ✅ Has cached permission
-<0x12a252f80> Gesture: System gesture gate timed out.
-{"msg":"#Warning Error reading file", "file":"\/\/private\/var\/Managed Preferences\/mobile\/com.apple.CoreMotion.plist", "error":"Error Domain=NSCocoaErrorDomain Code=257 \"The file “com.apple.CoreMotion.plist” couldn’t be opened because you don’t have permission to view it.\" UserInfo={NSFilePath=\/\/private\/var\/Managed Preferences\/mobile\/com.apple.CoreMotion.plist, NSURL=file:\/\/\/\/private\/var\/Managed%20Preferences\/mobile\/com.apple.CoreMotion.plist, NSUnderlyingError=0x12bd2d1d0 {Error Domain=NSPOSIXErrorDomain Code=1 \"Operation not permitted\"}}"}
+<0x1029eae40> Gesture: System gesture gate timed out.
+flutter: ═══════════════════════════════════════════════════════
+flutter: 🚀 STARTING MEASUREMENT: Quick Mode (30s)
+flutter: ═══════════════════════════════════════════════════════
+{"msg":"#Warning Error reading file", "file":"\/\/private\/var\/Managed Preferences\/mobile\/com.apple.CoreMotion.plist", "error":"Error Domain=NSCocoaErrorDomain Code=257 \"The file “com.apple.CoreMotion.plist” couldn’t be opened because you don’t have permission to view it.\" UserInfo={NSFilePath=\/\/private\/var\/Managed Preferences\/mobile\/com.apple.CoreMotion.plist, NSURL=file:\/\/\/\/private\/var\/Managed%20Preferences\/mobile\/com.apple.CoreMotion.plist, NSUnderlyingError=0x11a43da10 {Error Domain=NSPOSIXErrorDomain Code=1 \"Operation not permitted\"}}"}
 <<<< FigXPCUtilities >>>> signalled err=-17281 at <>:308
 <<<< FigCaptureSourceRemote >>>> Fig assert: "err == 0 " at bail (FigCaptureSourceRemote.m:569) - (err=-17281)
 <<<< FigXPCUtilities >>>> signalled err=-17281 at <>:308
@@ -21,208 +24,56 @@ flutter: 📷 [CameraPermissionsManager] ✅ Has cached permission
 <<<< FigXPCUtilities >>>> signalled err=-17281 at <>:308
 <<<< FigCaptureSourceRemote >>>> Fig assert: "err == 0 " at bail (FigCaptureSourceRemote.m:569) - (err=-17281)
 flutter: Camera initialized successfully
-flutter: Camera: 14.7 green, 0.27 var, 10 FPS
-flutter: Camera: 14.8 green, 0.20 var, 13 FPS
-flutter: Camera: 14.6 green, 0.29 var, 24 FPS
-flutter: Quality check: brightness=14.6, variance=0.00, R=209.0, G=14.6, B=13.9
-flutter: Camera: 14.7 green, 0.27 var, 24 FPS
-flutter: Camera: 14.7 green, 0.25 var, 24 FPS
-flutter: Camera: 14.7 green, 0.24 var, 24 FPS
-flutter: Camera: 14.7 green, 0.25 var, 24 FPS
-flutter: Quality check: brightness=14.7, variance=0.00, R=196.2, G=14.7, B=13.7
-flutter: Camera: 14.7 green, 0.27 var, 24 FPS
-flutter: Camera: 14.9 green, 0.36 var, 24 FPS
-flutter: Camera: 15.0 green, 0.44 var, 24 FPS
-flutter: Camera: 14.7 green, 0.25 var, 24 FPS
-flutter: Quality check: brightness=58.4, variance=7626.41, R=235.0, G=58.4, B=235.0
-flutter: Camera: 72.9 green, 120.48 var, 25 FPS
-flutter: Camera: 90.2 green, 150.06 var, 24 FPS
-flutter: Camera: 14.8 green, 0.22 var, 24 FPS
-flutter: Camera: 14.8 green, 0.24 var, 24 FPS
-flutter: Quality check: brightness=14.7, variance=0.00, R=196.8, G=14.7, B=13.9
-flutter: Camera: 14.6 green, 0.29 var, 24 FPS
-flutter: Camera: 14.7 green, 0.25 var, 24 FPS
-flutter: Camera: 14.8 green, 0.25 var, 24 FPS
-flutter: Camera: 14.9 green, 0.40 var, 24 FPS
-flutter: Quality check: brightness=15.0, variance=0.00, R=197.6, G=15.0, B=13.8
-flutter: Camera: 15.3 green, 0.68 var, 24 FPS
-flutter: Camera: 15.5 green, 0.83 var, 24 FPS
-flutter: Camera: 15.8 green, 1.05 var, 24 FPS
-flutter: Camera: 14.8 green, 0.26 var, 24 FPS
-flutter: Processing 697 samples over 30 seconds (23 FPS)
-flutter: Detected 5 peaks (threshold: 34.8, amplitude: 219.3, mean: 23.9, multiplier: 0.05)
-flutter: Calculated BPM: 99 from 5 peaks (3 valid IBIs)
-flutter: Measurement complete: BPM=99, RMSSD=null
-flutter: Detected 5 peaks (threshold: 34.8, amplitude: 219.3, mean: 23.9, multiplier: 0.05)
-flutter: Calculated BPM: 99 from 5 peaks (3 valid IBIs)
+flutter: ✅ Camera initialized
+flutter: 📹 Starting capture...
+flutter: Camera: 72.4 green, 2.36 var, 7 FPS
+flutter: Camera: 72.8 green, 2.26 var, 24 FPS
+flutter: Camera: 70.5 green, 2.25 var, 24 FPS
+flutter: ⏱️  Progress: 5s / 30s (94 samples collected)
+flutter: Camera: 70.8 green, 2.09 var, 24 FPS
+flutter: Camera: 70.8 green, 2.13 var, 24 FPS
+flutter: Camera: 70.3 green, 2.28 var, 24 FPS
+flutter: Camera: 70.5 green, 2.15 var, 24 FPS
+flutter: ⏱️  Progress: 10s / 30s (214 samples collected)
+flutter: 📊 Quality @10s: brightness=70.5, variance=2.19, R=200.0, G=70.5, B=17.3
+flutter: Camera: 69.8 green, 2.34 var, 24 FPS
+flutter: Camera: 70.7 green, 2.17 var, 24 FPS
+flutter: Camera: 69.5 green, 2.36 var, 24 FPS
+flutter: Camera: 69.8 green, 2.33 var, 24 FPS
+flutter: ⏱️  Progress: 15s / 30s (334 samples collected)
+flutter: Camera: 70.6 green, 2.22 var, 24 FPS
+flutter: Camera: 69.5 green, 2.45 var, 24 FPS
+flutter: Camera: 70.4 green, 2.25 var, 24 FPS
+flutter: Camera: 69.1 green, 2.50 var, 24 FPS
+flutter: ⏱️  Progress: 20s / 30s (454 samples collected)
+flutter: 📊 Quality @20s: brightness=69.4, variance=2.45, R=196.0, G=69.4, B=17.5
+flutter: Camera: 70.0 green, 2.15 var, 24 FPS
+flutter: Camera: 69.8 green, 2.35 var, 24 FPS
+flutter: Camera: 70.4 green, 2.22 var, 24 FPS
+flutter: Camera: 70.1 green, 2.35 var, 24 FPS
+flutter: ⏱️  Progress: 25s / 30s (574 samples collected)
+flutter: Camera: 70.1 green, 2.20 var, 24 FPS
+flutter: Camera: 70.7 green, 2.08 var, 24 FPS
+flutter: Camera: 70.6 green, 2.20 var, 24 FPS
+flutter: Camera: 70.0 green, 2.15 var, 24 FPS
+flutter: ⏱️  Progress: 30s / 30s (694 samples collected)
+flutter: ⏱️  Time complete! Starting processing...
+flutter: ═══════════════════════════════════════════════════════
+flutter: 🔄 PROCESSING MEASUREMENT
+flutter: ═══════════════════════════════════════════════════════
 <<<< FigXPCUtilities >>>> signalled err=-17281 at <>:308
 <<<< FigCaptureSourceRemote >>>> Fig assert: "err == 0 " at bail (FigCaptureSourceRemote.m:569) - (err=-17281)
 <<<< FigXPCUtilities >>>> signalled err=-17281 at <>:308
 <<<< FigCaptureSourceRemote >>>> Fig assert: "err == 0 " at bail (FigCaptureSourceRemote.m:569) - (err=-17281)
 flutter: Camera disposed
-<<<< FigXPCUtilities >>>> signalled err=-17281 at <>:308
-<<<< FigCaptureSourceRemote >>>> Fig assert: "err == 0 " at bail (FigCaptureSourceRemote.m:569) - (err=-17281)
-<<<< FigXPCUtilities >>>> signalled err=-17281 at <>:308
-<<<< FigCaptureSourceRemote >>>> Fig assert: "err == 0 " at bail (FigCaptureSourceRemote.m:569) - (err=-17281)
-<<<< FigXPCUtilities >>>> signalled err=-17281 at <>:308
-<<<< FigCaptureSourceRemote >>>> Fig assert: "err == 0 " at bail (FigCaptureSourceRemote.m:569) - (err=-17281)
-<<<< FigXPCUtilities >>>> signalled err=-17281 at <>:308
-<<<< FigCaptureSourceRemote >>>> Fig assert: "err == 0 " at bail (FigCaptureSourceRemote.m:569) - (err=-17281)
-<<<< FigXPCUtilities >>>> signalled err=-17281 at <>:308
-<<<< FigCaptureSourceRemote >>>> Fig assert: "err == 0 " at bail (FigCaptureSourceRemote.m:569) - (err=-17281)
-flutter: Camera initialized successfully
-flutter: Camera: 14.7 green, 0.24 var, 9 FPS
-flutter: Camera: 14.7 green, 0.25 var, 24 FPS
-flutter: Camera: 14.7 green, 0.24 var, 24 FPS
-flutter: Quality check: brightness=14.8, variance=0.00, R=191.9, G=14.8, B=14.1
-flutter: Camera: 14.7 green, 0.26 var, 24 FPS
-flutter: Camera: 14.8 green, 0.25 var, 24 FPS
-flutter: Camera: 14.7 green, 0.25 var, 24 FPS
-flutter: Camera: 14.7 green, 0.26 var, 24 FPS
-flutter: Quality check: brightness=14.7, variance=0.00, R=195.5, G=14.7, B=13.8
-flutter: Camera: 14.7 green, 0.26 var, 24 FPS
-flutter: Camera: 14.8 green, 0.23 var, 24 FPS
-flutter: Camera: 172.9 green, 1107.80 var, 26 FPS
-flutter: Camera: 168.8 green, 1606.97 var, 30 FPS
-flutter: Quality check: brightness=153.0, variance=3.65, R=155.2, G=153.0, B=150.4
-flutter: Camera: 147.8 green, 2226.17 var, 30 FPS
-flutter: Camera: 172.5 green, 1441.85 var, 30 FPS
-flutter: Camera: 93.3 green, 10.30 var, 29 FPS
-flutter: Camera: 109.7 green, 8.85 var, 24 FPS
-flutter: Camera: 101.3 green, 9.76 var, 24 FPS
-flutter: Quality check: brightness=101.6, variance=0.49, R=100.8, G=101.6, B=92.1
-flutter: Camera: 89.3 green, 12.21 var, 24 FPS
-flutter: Camera: 104.7 green, 7.88 var, 24 FPS
-flutter: Camera: 103.5 green, 10.60 var, 24 FPS
-flutter: Camera: 102.0 green, 12.26 var, 24 FPS
-flutter: Quality check: brightness=101.9, variance=0.03, R=102.3, G=101.9, B=92.8
-flutter: Camera: 97.8 green, 13.14 var, 24 FPS
-flutter: Camera: 89.1 green, 13.49 var, 24 FPS
-flutter: Camera: 85.1 green, 29.32 var, 24 FPS
-flutter: Camera: 80.9 green, 453.09 var, 24 FPS
-flutter: Quality check: brightness=80.7, variance=0.45, R=78.4, G=80.7, B=65.7
-flutter: Camera: 80.6 green, 627.48 var, 24 FPS
-flutter: Camera: 76.8 green, 240.63 var, 24 FPS
-flutter: Camera: 214.2 green, 95.47 var, 24 FPS
-flutter: Camera: 138.7 green, 105.97 var, 30 FPS
-flutter: Quality check: brightness=138.9, variance=0.02, R=141.1, G=138.9, B=131.8
-flutter: Camera: 139.1 green, 93.97 var, 30 FPS
-flutter: Camera: 139.1 green, 93.73 var, 30 FPS
-flutter: Camera: 139.1 green, 93.72 var, 30 FPS
-flutter: Camera: 139.0 green, 94.34 var, 30 FPS
-flutter: Camera: 139.1 green, 94.58 var, 30 FPS
-flutter: Quality check: brightness=139.0, variance=0.00, R=141.1, G=139.0, B=131.8
-flutter: Camera: 139.0 green, 94.00 var, 30 FPS
-flutter: Camera: 139.1 green, 93.78 var, 30 FPS
-flutter: Camera: 139.0 green, 94.88 var, 30 FPS
-flutter: Camera: 141.0 green, 75.96 var, 30 FPS
-flutter: Camera: 138.8 green, 71.88 var, 30 FPS
-flutter: Quality check: brightness=138.9, variance=0.01, R=141.2, G=138.9, B=130.9
-flutter: Camera: 139.0 green, 72.30 var, 30 FPS
-flutter: Camera: 139.0 green, 72.58 var, 30 FPS
-flutter: Camera: 139.0 green, 72.13 var, 30 FPS
-flutter: Camera: 139.6 green, 73.33 var, 30 FPS
-flutter: Camera: 54.3 green, 50.93 var, 27 FPS
-flutter: Quality check: brightness=126.1, variance=2537.56, R=159.1, G=126.1, B=154.3
-flutter: Camera: 14.8 green, 0.22 var, 24 FPS
-flutter: Camera: 14.7 green, 0.26 var, 24 FPS
-flutter: Camera: 14.8 green, 0.26 var, 24 FPS
-flutter: Camera: 14.7 green, 0.24 var, 24 FPS
-flutter: Quality check: brightness=14.7, variance=0.00, R=202.8, G=14.7, B=15.4
-flutter: Camera: 14.8 green, 0.28 var, 24 FPS
-flutter: Camera: 14.7 green, 0.29 var, 24 FPS
-flutter: Camera: 14.8 green, 0.26 var, 24 FPS
-flutter: Camera: 14.8 green, 0.25 var, 24 FPS
-flutter: Processing 1537 samples over 60 seconds (25 FPS)
-flutter: Detected 42 peaks (threshold: 108.0, amplitude: 194.7, mean: 88.6, multiplier: 0.1)
-flutter: Calculated BPM: 125 from 42 peaks (38 valid IBIs)
-flutter: Calculated RMSSD: 62.0 ms (from 5 diffs, 6 filtered IBIs)
-flutter: Measurement complete: BPM=125, RMSSD=61.96773353931867
-flutter: Detected 42 peaks (threshold: 108.0, amplitude: 194.7, mean: 88.6, multiplier: 0.1)
-flutter: Calculated BPM: 125 from 42 peaks (38 valid IBIs)
-flutter: Calculated RMSSD: 62.0 ms (from 5 diffs, 6 filtered IBIs)
-<<<< FigXPCUtilities >>>> signalled err=-17281 at <>:308
-<<<< FigCaptureSourceRemote >>>> Fig assert: "err == 0 " at bail (FigCaptureSourceRemote.m:569) - (err=-17281)
-<<<< FigXPCUtilities >>>> signalled err=-17281 at <>:308
-<<<< FigCaptureSourceRemote >>>> Fig assert: "err == 0 " at bail (FigCaptureSourceRemote.m:569) - (err=-17281)
-flutter: Camera disposed
-Got a keyboard will change frame notification, but keyboard was not even present.
-Got a keyboard will change frame notification, but keyboard was not even present.
-Got a keyboard will change frame notification, but keyboard was not even present.
-Got a keyboard will change frame notification, but keyboard was not even present.
-Got a keyboard will change frame notification, but keyboard was not even present.
-Got a keyboard will change frame notification, but keyboard was not even present.
-Got a keyboard will change frame notification, but keyboard was not even present.
-Got a keyboard will change frame notification, but keyboard was not even present.
-Got a keyboard will change frame notification, but keyboard was not even present.
-Got a keyboard will hide notification, but keyboard was not even present.
-Got a keyboard will hide notification, but keyboard was not even present.
-Got a keyboard did hide notification, but keyboard was not even present.
-Got a keyboard will change frame notification, but keyboard was not even present.
-Got a keyboard will hide notification, but keyboard was not even present.
-Got a keyboard will hide notification, but keyboard was not even present.
-Got a keyboard did hide notification, but keyboard was not even present.
-Got a keyboard will change frame notification, but keyboard was not even present.
-Got a keyboard will change frame notification, but keyboard was not even present.
-Got a keyboard will change frame notification, but keyboard was not even present.
-Got a keyboard will change frame notification, but keyboard was not even present.
-Got a keyboard will change frame notification, but keyboard was not even present.
-Got a keyboard will hide notification, but keyboard was not even present.
-Got a keyboard will hide notification, but keyboard was not even present.
-Got a keyboard did hide notification, but keyboard was not even present.
-Got a keyboard will change frame notification, but keyboard was not even present.
-Got a keyboard will hide notification, but keyboard was not even present.
-Got a keyboard will hide notification, but keyboard was not even present.
-Got a keyboard did hide notification, but keyboard was not even present.
-Got a keyboard will change frame notification, but keyboard was not even present.
-Got a keyboard will change frame notification, but keyboard was not even present.
-Got a keyboard will change frame notification, but keyboard was not even present.
-Got a keyboard will hide notification, but keyboard was not even present.
-Got a keyboard will hide notification, but keyboard was not even present.
-Got a keyboard did hide notification, but keyboard was not even present.
-Got a keyboard will change frame notification, but keyboard was not even present.
-Got a keyboard will hide notification, but keyboard was not even present.
-Got a keyboard will hide notification, but keyboard was not even present.
-Got a keyboard did hide notification, but keyboard was not even present.
-Tracking element window has a non-placeholder input view: (null)
-Tracking element window has a non-placeholder input view: (null)
-Tracking element window has a non-placeholder input view: (null)
-Tracking element window has a non-placeholder input view: (null)
-Tracking element window has a non-placeholder input view: (null)
-Tracking element window has a non-placeholder input view: (null)
-Tracking element window has a non-placeholder input view: (null)
-Tracking element window has a non-placeholder input view: (null)
-Tracking element window has a non-placeholder input view: (null)
-Tracking element window has a non-placeholder input view: (null)
-Tracking element window has a non-placeholder input view: (null)
-Tracking element window has a non-placeholder input view: (null)
-Tracking element window has a non-placeholder input view: (null)
-Tracking element window has a non-placeholder input view: (null)
-Tracking element window has a non-placeholder input view: (null)
-Tracking element window has a non-placeholder input view: (null)
-Tracking element window has a non-placeholder input view: (null)
-Tracking element window has a non-placeholder input view: (null)
-Tracking element window has a non-placeholder input view: (null)
-Tracking element window has a non-placeholder input view: (null)
-<<<< FigXPCUtilities >>>> signalled err=-17281 at <>:308
-<<<< FigCaptureSourceRemote >>>> Fig assert: "err == 0 " at bail (FigCaptureSourceRemote.m:569) - (err=-17281)
-<<<< FigXPCUtilities >>>> signalled err=-17281 at <>:308
-<<<< FigCaptureSourceRemote >>>> Fig assert: "err == 0 " at bail (FigCaptureSourceRemote.m:569) - (err=-17281)
-<<<< FigXPCUtilities >>>> signalled err=-17281 at <>:308
-<<<< FigCaptureSourceRemote >>>> Fig assert: "err == 0 " at bail (FigCaptureSourceRemote.m:569) - (err=-17281)
-<<<< FigXPCUtilities >>>> signalled err=-17281 at <>:308
-<<<< FigCaptureSourceRemote >>>> Fig assert: "err == 0 " at bail (FigCaptureSourceRemote.m:569) - (err=-17281)
-<<<< FigXPCUtilities >>>> signalled err=-17281 at <>:308
-<<<< FigCaptureSourceRemote >>>> Fig assert: "err == 0 " at bail (FigCaptureSourceRemote.m:569) - (err=-17281)
-flutter: Camera initialized successfully
-flutter: Camera: 14.7 green, 0.25 var, 19 FPS
-flutter: Camera: 14.6 green, 0.27 var, 24 FPS
-flutter: Camera: 14.7 green, 0.27 var, 24 FPS
-flutter: Camera: 14.8 green, 0.23 var, 24 FPS
-flutter: Quality check: brightness=14.7, variance=0.00, R=189.2, G=14.7, B=13.9
-flutter: Camera: 14.7 green, 0.26 var, 10 FPS
-flutter: Camera: 14.7 green, 0.23 var, 24 FPS
-flutter: Camera: 14.8 green, 0.24 var, 24 FPS
-flutter: Quality check: brightness=14.8, variance=0.00, R=194.6, G=14.8, B=13.9
-flutter: Camera: 14.8 green, 0.28 var, 24 FPS
-Message from debugger: Terminated due to signal 9
+flutter: 📊 Collected 694 samples over 30 seconds
+flutter: 📊 Actual sampling rate: 23 FPS
+flutter: 📊 Final quality: Fair
+flutter: Signal stats: min=-3.7, max=160.4, mean=0.0, amplitude=164.1, variance=280.11
+flutter: Detected 1 peaks (threshold: -0.15, prominence: 32.82, amplitude: 164.10, p90: -0.31)
+flutter: Too few peaks, retrying with lower threshold...
+flutter: Retry found 1 peaks with threshold -0.09
+flutter: Signal processing error: Exception: Not enough peaks detected (need at least 3, got 1)
+flutter: ═══════════════════════════════════════════════════════
+flutter: ❌ PROCESSING FAILED: Exception: Not enough peaks detected (need at least 3, got 1)
+flutter: ═══════════════════════════════════════════════════════

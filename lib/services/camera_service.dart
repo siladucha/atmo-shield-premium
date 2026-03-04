@@ -76,8 +76,8 @@ class CameraService {
     final int width = image.width;
     final int height = image.height;
     
-    // Calculate ROI: 10% of sensor width (increased from 5%), clamped to 100-200px, centered
-    final int roiSize = (width * 0.1).round().clamp(100, 200);
+    // Calculate ROI: 5% of sensor width (reduced from 10%), clamped to 50-100px, centered
+    final int roiSize = (width * 0.05).round().clamp(50, 100);
     final int startX = (width - roiSize) ~/ 2;
     final int startY = (height - roiSize) ~/ 2;
 
@@ -168,15 +168,35 @@ class CameraService {
     };
   }
 
+  bool _isDisposed = false;
+
   Future<void> dispose() async {
+    if (_isDisposed) {
+      debugPrint('⚠️ Camera already disposed, skipping');
+      return;
+    }
+    
+    _isDisposed = true;
+    
     try {
       // Check if controller is initialized before stopping stream
       if (_controller?.value.isInitialized == true) {
-        await _controller?.stopImageStream();
-        await _controller?.setFlashMode(FlashMode.off);
+        try {
+          await _controller?.stopImageStream();
+        } catch (e) {
+          debugPrint('Error stopping image stream (safe to ignore): $e');
+        }
+        
+        try {
+          await _controller?.setFlashMode(FlashMode.off);
+        } catch (e) {
+          debugPrint('Error turning off flash (safe to ignore): $e');
+        }
       }
+      
       await _controller?.dispose();
       await _intensityController?.close();
+      
       _controller = null;
       _intensityController = null;
       debugPrint('Camera disposed');

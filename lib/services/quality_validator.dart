@@ -73,17 +73,17 @@ class QualityValidator {
 
     // 5. Check signal strength
     // Strong variance indicates good pulsatile signal
-    if (variance >= 3.0) {
+    if (variance >= 10.0) {
       return QualityLevel.good; // Strong signal
     }
 
     // Moderate variance = fair signal (still usable)
-    if (variance >= 1.0) {
+    if (variance >= 3.0) {
       return QualityLevel.fair;
     }
 
     // Weak but detectable signal
-    return QualityLevel.fair;
+    return QualityLevel.poor; // Too weak
   }
 
   String getQualityMessage(QualityLevel level, double variance, double brightness) {
@@ -97,9 +97,9 @@ class QualityValidator {
           return 'Adjust finger position';
         }
         if (variance < 2.0) {
-          return 'Reduce finger pressure';
+          return 'Reduce finger pressure or adjust position';
         }
-        return 'Place finger on camera';
+        return 'Place finger firmly on camera';
         
       case QualityLevel.fair:
         if (_brightnessHistory.length >= 5) {

@@ -6,105 +6,116 @@ class SignalProcessor {
   List<double> filteredSignal = [];
   List<int> peakIndices = [];
 
-  // Simple moving average filter for MVP
-  List<double> applyMovingAverageFilter(List<double> signal, {int windowSize = 5}) {
-    if (signal.length < windowSize) return signal;
-
-    List<double> filtered = [];
+  // Simple but robust band-pass filter
+  List<double> applyBandPassFilter(List<double> signal, int samplingRate) {
+    if (signal.length < 10) return signal;
     
-    for (int i = 0; i < signal.length; i++) {
-      int start = max(0, i - windowSize ~/ 2);
-      int end = min(signal.length, i + windowSize ~/ 2 + 1);
-      
+    // Step 1: Remove DC component (subtract mean)
+    double mean = signal.reduce((a, b) => a + b) / signal.length;
+    List<double> centered = signal.map((v) => v - mean).toList();
+    
+    // Step 2: Light smoothing to remove high-frequency noise
+    // Very small window to preserve pulse
+    int windowSize = 3; // Minimal smoothing
+    List<double> smoothed = [];
+    
+    for (int i = 0; i < centered.length; i++) {
+      int start = max(0, i - 1);
+      int end = min(centered.length, i + 2);
       double sum = 0;
       for (int j = start; j < end; j++) {
-        sum += signal[j];
+        sum += centered[j];
       }
-      filtered.add(sum / (end - start));
+      smoothed.add(sum / (end - start));
     }
     
-    return filtered;
+    return smoothed;
   }
 
   // Detect peaks with adaptive threshold and prominence check
   List<int> detectPeaks(List<double> signal, int samplingRate) {
     if (signal.isEmpty) return [];
 
-    // Calculate statistics
-    double minVal = signal.reduce(min);
+    // Signal is centered around 0 after filtering
     double maxVal = signal.reduce(max);
-    double mean = signal.reduce((a, b) => a + b) / signal.length;
+    double minVal = signal.reduce(min);
     double amplitude = maxVal - minVal;
     
-    // Adaptive threshold: 15% of amplitude (increased from 10%)
-    // For very dark signals, use 8% minimum
-    double thresholdMultiplier = mean < 50 ? 0.08 : 0.15;
-    double threshold = mean + (amplitude * thresholdMultiplier);
-
-    // Minimum peak separation: 400ms (150 BPM max) - increased from 300ms
-    int minSeparation = max(3, (samplingRate * 0.4).round());
+    if (amplitude < 1.0) {
+      debugPrint('Signal amplitude too small: ${amplitude.toStringAsFixed(2)}');
+      return [];
+    }
     
-    // Prominence threshold: peak must be 15% higher than surrounding valleys
-    double prominenceThreshold = amplitude * 0.15;
+    // Use percentile for robust threshold (ignore outliers)
+    List<double> sortedSignal = List.from(signal)..sort();
+    int p90Index = (sortedSignal.length * 0.9).round();
+    double p90 = sortedSignal[p90Index];
+    
+    // Threshold: 50% of 90th percentile
+    double threshold = p90 * 0.5;
+
+    // Minimum peak separation: 350ms (171 BPM max)
+    int minSeparation = max(3, (samplingRate * 0.35).round());
+    
+    // Prominence: 20% of amplitude
+    double prominenceThreshold = amplitude * 0.2;
 
     List<int> peaks = [];
 
-    // Use wider window for peak detection (helps with noisy signal)
-    for (int i = 2; i < signal.length - 2; i++) {
-      // Check if it's a peak (compare with neighbors)
-      bool isPeak = signal[i] > threshold &&
-          signal[i] >= signal[i - 1] &&
-          signal[i] >= signal[i + 1] &&
-          signal[i] >= signal[i - 2] &&
-          signal[i] >= signal[i + 2];
+    // Peak detection
+    for (int i = 1; i < signal.length - 1; i++) {
+      if (signal[i] <= threshold) continue;
+      
+      bool isPeak = signal[i] > signal[i - 1] && signal[i] > signal[i + 1];
 
       if (isPeak) {
-        // Check prominence: peak must be significantly higher than neighbors
-        double leftValley = min(signal[i - 1], signal[i - 2]);
-        double rightValley = min(signal[i + 1], signal[i + 2]);
+        double leftValley = i >= 2 ? min(signal[i - 1], signal[i - 2]) : signal[i - 1];
+        double rightValley = i < signal.length - 2 ? min(signal[i + 1], signal[i + 2]) : signal[i + 1];
         double minValley = min(leftValley, rightValley);
         double prominence = signal[i] - minValley;
         
         if (prominence < prominenceThreshold) {
-          continue; // Skip low-prominence peaks (likely noise/dicrotic notch)
+          continue;
         }
         
-        // Check minimum separation
         if (peaks.isEmpty || (i - peaks.last) >= minSeparation) {
           peaks.add(i);
+        } else if (signal[i] > signal[peaks.last]) {
+          peaks[peaks.length - 1] = i;
         }
       }
     }
 
-    debugPrint('Detected ${peaks.length} peaks (threshold: ${threshold.toStringAsFixed(1)}, prominence: ${prominenceThreshold.toStringAsFixed(1)}, amplitude: ${amplitude.toStringAsFixed(1)}, mean: ${mean.toStringAsFixed(1)}, multiplier: $thresholdMultiplier)');
+    debugPrint('Detected ${peaks.length} peaks (threshold: ${threshold.toStringAsFixed(2)}, prominence: ${prominenceThreshold.toStringAsFixed(2)}, amplitude: ${amplitude.toStringAsFixed(2)}, p90: ${p90.toStringAsFixed(2)})');
     
-    // If too few peaks, try with lower threshold but keep prominence check
-    if (peaks.length < 5 && amplitude > 10) {
+    // If too few peaks, try with lower threshold
+    if (peaks.length < 5) {
       debugPrint('Too few peaks, retrying with lower threshold...');
-      threshold = mean + (amplitude * 0.05); // More sensitive
-      prominenceThreshold = amplitude * 0.12; // Slightly lower prominence
+      threshold = p90 * 0.3;
+      prominenceThreshold = amplitude * 0.15;
       peaks.clear();
       
-      for (int i = 2; i < signal.length - 2; i++) {
-        bool isPeak = signal[i] > threshold &&
-            signal[i] >= signal[i - 1] &&
-            signal[i] >= signal[i + 1];
+      for (int i = 1; i < signal.length - 1; i++) {
+        if (signal[i] <= threshold) continue;
+        
+        bool isPeak = signal[i] > signal[i - 1] && signal[i] > signal[i + 1];
 
         if (isPeak) {
-          // Still check prominence
-          double leftValley = min(signal[i - 1], signal[i - 2]);
-          double rightValley = min(signal[i + 1], signal[i + 2]);
+          double leftValley = i >= 2 ? min(signal[i - 1], signal[i - 2]) : signal[i - 1];
+          double rightValley = i < signal.length - 2 ? min(signal[i + 1], signal[i + 2]) : signal[i + 1];
           double minValley = min(leftValley, rightValley);
           double prominence = signal[i] - minValley;
           
           if (prominence >= prominenceThreshold) {
             if (peaks.isEmpty || (i - peaks.last) >= minSeparation) {
               peaks.add(i);
+            } else if (signal[i] > signal[peaks.last]) {
+              peaks[peaks.length - 1] = i;
             }
           }
         }
       }
-      debugPrint('Retry found ${peaks.length} peaks with threshold ${threshold.toStringAsFixed(1)}');
+      debugPrint('Retry found ${peaks.length} peaks with threshold ${threshold.toStringAsFixed(2)}');
     }
     
     return peaks;
@@ -118,8 +129,11 @@ class SignalProcessor {
 
     // Calculate inter-beat intervals (IBI) in milliseconds
     List<double> ibis = [];
+    List<double> allIbis = []; // Track all IBIs for debugging
+    
     for (int i = 1; i < peaks.length; i++) {
       double ibi = ((peaks[i] - peaks[i - 1]) / samplingRate) * 1000;
+      allIbis.add(ibi);
       
       // Filter out unrealistic IBIs (outside 250-2000ms = 30-240 BPM)
       if (ibi >= 250 && ibi <= 2000) {
@@ -127,8 +141,12 @@ class SignalProcessor {
       }
     }
 
+    // Debug: show all IBIs
+    debugPrint('All IBIs: ${allIbis.map((ibi) => ibi.toStringAsFixed(0)).join(", ")} ms');
+    debugPrint('Valid IBIs (250-2000ms): ${ibis.length} out of ${allIbis.length}');
+
     if (ibis.isEmpty) {
-      throw Exception('No valid inter-beat intervals found');
+      throw Exception('No valid inter-beat intervals found (all IBIs outside 250-2000ms range)');
     }
 
     // Calculate median IBI (more robust than mean)
@@ -230,8 +248,23 @@ class SignalProcessor {
       // Store raw signal
       rawSignal = intensityValues;
 
-      // Apply filter
-      filteredSignal = applyMovingAverageFilter(intensityValues);
+      // Apply band-pass filter to isolate heart rate frequencies
+      filteredSignal = applyBandPassFilter(intensityValues, samplingRate);
+
+      // Debug: Export signal statistics
+      double minVal = filteredSignal.reduce(min);
+      double maxVal = filteredSignal.reduce(max);
+      double mean = filteredSignal.reduce((a, b) => a + b) / filteredSignal.length;
+      double amplitude = maxVal - minVal;
+      
+      // Calculate variance
+      double variance = 0;
+      for (var val in filteredSignal) {
+        variance += (val - mean) * (val - mean);
+      }
+      variance /= filteredSignal.length;
+      
+      debugPrint('Signal stats: min=${minVal.toStringAsFixed(1)}, max=${maxVal.toStringAsFixed(1)}, mean=${mean.toStringAsFixed(1)}, amplitude=${amplitude.toStringAsFixed(1)}, variance=${variance.toStringAsFixed(2)}');
 
       // Detect peaks
       peakIndices = detectPeaks(filteredSignal, samplingRate);
@@ -250,6 +283,9 @@ class SignalProcessor {
         'bpm': bpm,
         'rmssd': rmssd,
         'peakCount': peakIndices.length,
+        'signalMean': mean,
+        'signalVariance': variance,
+        'signalAmplitude': amplitude,
       };
     } catch (e) {
       debugPrint('Signal processing error: $e');

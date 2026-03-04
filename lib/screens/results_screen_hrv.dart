@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import '../models/measurement_result.dart';
@@ -11,7 +12,20 @@ class ResultsScreenHRV extends StatelessWidget {
 
   Future<void> _saveResult() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('last_measurement', jsonEncode(result.toJson()));
+    final json = result.toJson();
+    await prefs.setString('last_measurement', jsonEncode(json));
+    
+    debugPrint('═══════════════════════════════════════════════════════');
+    debugPrint('💾 MEASUREMENT SAVED');
+    debugPrint('   ID: ${result.id}');
+    debugPrint('   BPM: ${result.bpm}');
+    debugPrint('   RMSSD: ${result.rmssd?.toStringAsFixed(1) ?? "N/A"} ms');
+    debugPrint('   Peaks: ${result.peakCount}');
+    debugPrint('   Samples: ${result.sampleCount}');
+    debugPrint('   FPS: ${result.samplingRate.toStringAsFixed(1)}');
+    debugPrint('   Signal: mean=${result.signalMean.toStringAsFixed(1)}, var=${result.signalVariance.toStringAsFixed(2)}, amp=${result.signalAmplitude.toStringAsFixed(1)}');
+    debugPrint('   Quality: ${result.quality.displayName} (${result.qualityScore}/100)');
+    debugPrint('═══════════════════════════════════════════════════════');
   }
 
   @override
@@ -252,6 +266,61 @@ class ResultsScreenHRV extends StatelessWidget {
               ),
             ),
 
+            const SizedBox(height: 16),
+
+            // Diagnostic Data (expandable)
+            ExpansionTile(
+              title: const Text(
+                'Technical Details',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              leading: const Icon(Icons.analytics_outlined),
+              children: [
+                Card(
+                  margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _buildDiagnosticRow('Peaks Detected', '${result.peakCount}'),
+                        const Divider(),
+                        _buildDiagnosticRow('Samples Collected', '${result.sampleCount}'),
+                        const Divider(),
+                        _buildDiagnosticRow('Sampling Rate', '${result.samplingRate.toStringAsFixed(1)} FPS'),
+                        const Divider(),
+                        _buildDiagnosticRow('Signal Mean', result.signalMean.toStringAsFixed(1)),
+                        const Divider(),
+                        _buildDiagnosticRow('Signal Variance', result.signalVariance.toStringAsFixed(2)),
+                        const Divider(),
+                        _buildDiagnosticRow('Signal Amplitude', result.signalAmplitude.toStringAsFixed(1)),
+                        const SizedBox(height: 12),
+                        Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: Colors.blue.withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Row(
+                            children: [
+                              const Icon(Icons.info_outline, size: 16, color: Colors.blue),
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: Text(
+                                  'Expected: 25-35 peaks for 30s, 50-70 peaks for 60s. Variance should be >20 for good signal.',
+                                  style: TextStyle(fontSize: 11, color: Colors.grey[700]),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
             const SizedBox(height: 32),
 
             // Action buttons
@@ -346,6 +415,29 @@ class ResultsScreenHRV extends StatelessWidget {
           Text(
             value,
             style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDiagnosticRow(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            label,
+            style: TextStyle(fontSize: 13, color: Colors.grey[700]),
+          ),
+          Text(
+            value,
+            style: const TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'monospace',
+            ),
           ),
         ],
       ),
