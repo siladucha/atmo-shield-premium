@@ -126,12 +126,9 @@ class MeasurementOrchestrator extends ChangeNotifier {
 
     final double meanBrightness = recentValues.reduce((a, b) => a + b) / recentValues.length;
     
-    // Calculate variance
-    double variance = 0;
-    for (final value in recentValues) {
-      variance += (value - meanBrightness) * (value - meanBrightness);
-    }
-    variance /= recentValues.length;
+    // Use variance from camera data (calculated from full ROI pixels)
+    // This is more accurate than variance of 10 mean values
+    final double cameraVariance = _latestIntensityData!['variance'] as double? ?? 0.0;
 
     // Get color channels from latest data
     final double? meanRed = _latestIntensityData!['meanRed'] as double?;
@@ -139,13 +136,13 @@ class MeasurementOrchestrator extends ChangeNotifier {
 
     // Log quality metrics for debugging
     if (_elapsedSeconds % 5 == 0) {
-      debugPrint('Quality check: brightness=${meanBrightness.toStringAsFixed(1)}, variance=${variance.toStringAsFixed(2)}, R=${meanRed?.toStringAsFixed(1)}, G=${meanBrightness.toStringAsFixed(1)}, B=${meanBlue?.toStringAsFixed(1)}');
+      debugPrint('Quality check: brightness=${meanBrightness.toStringAsFixed(1)}, variance=${cameraVariance.toStringAsFixed(2)}, R=${meanRed?.toStringAsFixed(1)}, G=${meanBrightness.toStringAsFixed(1)}, B=${meanBlue?.toStringAsFixed(1)}');
     }
 
     // Assess quality with color information
     _currentQuality = _qualityValidator.assessQuality(
       meanBrightness,
-      variance,
+      cameraVariance,
       redMean: meanRed,
       blueMean: meanBlue,
     );
