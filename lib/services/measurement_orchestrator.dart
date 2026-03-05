@@ -205,6 +205,7 @@ class MeasurementOrchestrator extends ChangeNotifier {
         _intensityValues,
         samplingRate,
         true, // Always calculate HRV
+        totalSeconds: totalSeconds,
       );
 
       if (result['success'] == true) {
@@ -253,20 +254,22 @@ class MeasurementOrchestrator extends ChangeNotifier {
     return _cachedResult;
   }
 
-  void cancelMeasurement() {
+  Future<void> cancelMeasurement() async {
     _measurementTimer?.cancel();
     _qualityTimer?.cancel();
-    _intensitySubscription?.cancel();
-    _cameraService.dispose();
+    await _intensitySubscription?.cancel();
+    _intensitySubscription = null;
+    await _cameraService.dispose();
     _setState(MeasurementState.idle);
   }
 
-  void _handleError(String message) {
+  Future<void> _handleError(String message) async {
     debugPrint('Error: $message');
     _measurementTimer?.cancel();
     _qualityTimer?.cancel();
-    _intensitySubscription?.cancel();
-    _cameraService.dispose();
+    await _intensitySubscription?.cancel();
+    _intensitySubscription = null;
+    await _cameraService.dispose();
     _setState(MeasurementState.error);
   }
 
@@ -280,6 +283,7 @@ class MeasurementOrchestrator extends ChangeNotifier {
     _measurementTimer?.cancel();
     _qualityTimer?.cancel();
     _intensitySubscription?.cancel();
+    _intensitySubscription = null;
     // Safe to call dispose - it has guard flag
     _cameraService.dispose();
     super.dispose();

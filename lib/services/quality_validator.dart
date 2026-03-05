@@ -1,3 +1,4 @@
+import 'dart:math';
 import '../models/quality_level.dart';
 
 class QualityValidator {
@@ -126,7 +127,7 @@ class QualityValidator {
         .map((x) => (x - mean) * (x - mean))
         .reduce((a, b) => a + b) / values.length;
     
-    return variance > 0 ? variance : 0.0; // Return variance, not sqrt
+    return variance > 0 ? sqrt(variance) : 0.0;
   }
 
   void reset() {

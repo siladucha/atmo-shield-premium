@@ -167,8 +167,8 @@ class SignalProcessor {
     return bpm;
   }
 
-  // Calculate RMSSD for HRV with relaxed filtering
-  double? calculateRMSSD(List<int> peaks, int samplingRate) {
+  // Calculate RMSSD for HRV with adaptive filtering based on measurement duration
+  double? calculateRMSSD(List<int> peaks, int samplingRate, {int? totalSeconds}) {
     if (peaks.length < 5) {
       debugPrint('Not enough peaks for RMSSD calculation (need at least 5)');
       return null;
@@ -186,8 +186,18 @@ class SignalProcessor {
       }
     }
 
-    if (ibis.length < 4) {
-      debugPrint('Not enough valid IBIs for RMSSD calculation (got ${ibis.length})');
+    // Adaptive threshold based on measurement duration
+    // For 30s: expect ~30-50 beats, require 30% valid
+    // For 60s: expect ~60-100 beats, require 40% valid
+    // For 120s: expect ~120-200 beats, require 50% valid
+    int minIbis = 4; // Absolute minimum
+    if (totalSeconds != null) {
+      final expectedBeats = (totalSeconds * 1.0).round(); // Assume ~60 BPM
+      minIbis = max(4, (expectedBeats * 0.3).round());
+    }
+
+    if (ibis.length < minIbis) {
+      debugPrint('Not enough valid IBIs for RMSSD calculation (got ${ibis.length}, need at least $minIbis)');
       return null;
     }
 
@@ -203,8 +213,10 @@ class SignalProcessor {
       return deviation < 0.3;
     }).toList();
 
-    if (filteredIbis.length < 15) {
-      debugPrint('Not enough IBIs after outlier filtering (got ${filteredIbis.length} from ${ibis.length}, need at least 15)');
+    // Adaptive threshold for filtered IBIs
+    int minFilteredIbis = max(4, (minIbis * 0.7).round());
+    if (filteredIbis.length < minFilteredIbis) {
+      debugPrint('Not enough IBIs after outlier filtering (got ${filteredIbis.length} from ${ibis.length}, need at least $minFilteredIbis)');
       return null;
     }
 
@@ -219,8 +231,10 @@ class SignalProcessor {
       }
     }
 
-    if (diffs.length < 10) {
-      debugPrint('Not enough valid successive differences (got ${diffs.length}, need at least 10)');
+    // Adaptive threshold for diffs
+    int minDiffs = max(3, (minFilteredIbis * 0.6).round());
+    if (diffs.length < minDiffs) {
+      debugPrint('Not enough valid successive differences (got ${diffs.length}, need at least $minDiffs)');
       return null;
     }
 
@@ -242,8 +256,9 @@ class SignalProcessor {
   Map<String, dynamic> processMeasurement(
     List<double> intensityValues,
     int samplingRate,
-    bool calculateHRV,
-  ) {
+    bool calculateHRV, {
+    int? totalSeconds,
+  }) {
     try {
       // Store raw signal
       rawSignal = intensityValues;
@@ -275,7 +290,7 @@ class SignalProcessor {
       // Calculate RMSSD if requested
       double? rmssd;
       if (calculateHRV) {
-        rmssd = calculateRMSSD(peakIndices, samplingRate);
+        rmssd = calculateRMSSD(peakIndices, samplingRate, totalSeconds: totalSeconds);
       }
 
       return {

@@ -5,14 +5,14 @@ Dart execution mode: JIT
 🍎 iOS AppDelegate запускается...
 [SynthData] ATMOHealthKitWriter plugin registered
 ✅ ATMOHealthKitWriter plugin registered
-flutter: The Dart VM service is listening on http://127.0.0.1:59672/fxbiMs-QuyE=/
+flutter: The Dart VM service is listening on http://127.0.0.1:51439/2MCu84dmZGU=/
 flutter: 📷 [CameraPermissionsManager] Loaded cached permission: true
 flutter: 📷 [CameraPermissionsManager] ✅ Has cached permission
-<0x1029eae40> Gesture: System gesture gate timed out.
+<0x104a26e40> Gesture: System gesture gate timed out.
 flutter: ═══════════════════════════════════════════════════════
 flutter: 🚀 STARTING MEASUREMENT: Quick Mode (30s)
 flutter: ═══════════════════════════════════════════════════════
-{"msg":"#Warning Error reading file", "file":"\/\/private\/var\/Managed Preferences\/mobile\/com.apple.CoreMotion.plist", "error":"Error Domain=NSCocoaErrorDomain Code=257 \"The file “com.apple.CoreMotion.plist” couldn’t be opened because you don’t have permission to view it.\" UserInfo={NSFilePath=\/\/private\/var\/Managed Preferences\/mobile\/com.apple.CoreMotion.plist, NSURL=file:\/\/\/\/private\/var\/Managed%20Preferences\/mobile\/com.apple.CoreMotion.plist, NSUnderlyingError=0x11a43da10 {Error Domain=NSPOSIXErrorDomain Code=1 \"Operation not permitted\"}}"}
+{"msg":"#Warning Error reading file", "file":"\/\/private\/var\/Managed Preferences\/mobile\/com.apple.CoreMotion.plist", "error":"Error Domain=NSCocoaErrorDomain Code=257 \"The file “com.apple.CoreMotion.plist” couldn’t be opened because you don’t have permission to view it.\" UserInfo={NSFilePath=\/\/private\/var\/Managed Preferences\/mobile\/com.apple.CoreMotion.plist, NSURL=file:\/\/\/\/private\/var\/Managed%20Preferences\/mobile\/com.apple.CoreMotion.plist, NSUnderlyingError=0x11a3cda40 {Error Domain=NSPOSIXErrorDomain Code=1 \"Operation not permitted\"}}"}
 <<<< FigXPCUtilities >>>> signalled err=-17281 at <>:308
 <<<< FigCaptureSourceRemote >>>> Fig assert: "err == 0 " at bail (FigCaptureSourceRemote.m:569) - (err=-17281)
 <<<< FigXPCUtilities >>>> signalled err=-17281 at <>:308
@@ -26,36 +26,36 @@ flutter: ═══════════════════════�
 flutter: Camera initialized successfully
 flutter: ✅ Camera initialized
 flutter: 📹 Starting capture...
-flutter: Camera: 72.4 green, 2.36 var, 7 FPS
-flutter: Camera: 72.8 green, 2.26 var, 24 FPS
-flutter: Camera: 70.5 green, 2.25 var, 24 FPS
+flutter: Camera: 68.8 green, 1.08 var, 11 FPS
+flutter: Camera: 69.0 green, 1.93 var, 12 FPS
+flutter: Camera: 70.9 green, 2.17 var, 24 FPS
 flutter: ⏱️  Progress: 5s / 30s (94 samples collected)
-flutter: Camera: 70.8 green, 2.09 var, 24 FPS
-flutter: Camera: 70.8 green, 2.13 var, 24 FPS
-flutter: Camera: 70.3 green, 2.28 var, 24 FPS
-flutter: Camera: 70.5 green, 2.15 var, 24 FPS
+flutter: Camera: 69.4 green, 2.19 var, 24 FPS
+flutter: Camera: 69.4 green, 2.14 var, 24 FPS
+flutter: Camera: 69.5 green, 2.17 var, 24 FPS
+flutter: Camera: 69.5 green, 2.06 var, 24 FPS
 flutter: ⏱️  Progress: 10s / 30s (214 samples collected)
-flutter: 📊 Quality @10s: brightness=70.5, variance=2.19, R=200.0, G=70.5, B=17.3
-flutter: Camera: 69.8 green, 2.34 var, 24 FPS
-flutter: Camera: 70.7 green, 2.17 var, 24 FPS
-flutter: Camera: 69.5 green, 2.36 var, 24 FPS
-flutter: Camera: 69.8 green, 2.33 var, 24 FPS
+flutter: 📊 Quality @10s: brightness=69.5, variance=2.04, R=197.6, G=69.5, B=16.3
+flutter: Camera: 69.3 green, 2.22 var, 24 FPS
+flutter: Camera: 69.7 green, 2.04 var, 24 FPS
+flutter: Camera: 69.9 green, 2.04 var, 24 FPS
+flutter: Camera: 69.6 green, 2.08 var, 24 FPS
 flutter: ⏱️  Progress: 15s / 30s (334 samples collected)
-flutter: Camera: 70.6 green, 2.22 var, 24 FPS
-flutter: Camera: 69.5 green, 2.45 var, 24 FPS
-flutter: Camera: 70.4 green, 2.25 var, 24 FPS
-flutter: Camera: 69.1 green, 2.50 var, 24 FPS
+flutter: Camera: 69.8 green, 2.03 var, 24 FPS
+flutter: Camera: 69.5 green, 2.12 var, 24 FPS
+flutter: Camera: 69.7 green, 2.12 var, 24 FPS
+flutter: Camera: 69.9 green, 2.14 var, 24 FPS
 flutter: ⏱️  Progress: 20s / 30s (454 samples collected)
-flutter: 📊 Quality @20s: brightness=69.4, variance=2.45, R=196.0, G=69.4, B=17.5
-flutter: Camera: 70.0 green, 2.15 var, 24 FPS
-flutter: Camera: 69.8 green, 2.35 var, 24 FPS
-flutter: Camera: 70.4 green, 2.22 var, 24 FPS
-flutter: Camera: 70.1 green, 2.35 var, 24 FPS
+flutter: 📊 Quality @20s: brightness=69.9, variance=2.16, R=198.8, G=69.9, B=15.9
+flutter: Camera: 69.5 green, 2.11 var, 24 FPS
+flutter: Camera: 69.9 green, 2.16 var, 24 FPS
+flutter: Camera: 69.8 green, 2.05 var, 24 FPS
+flutter: Camera: 69.6 green, 2.18 var, 24 FPS
 flutter: ⏱️  Progress: 25s / 30s (574 samples collected)
-flutter: Camera: 70.1 green, 2.20 var, 24 FPS
-flutter: Camera: 70.7 green, 2.08 var, 24 FPS
-flutter: Camera: 70.6 green, 2.20 var, 24 FPS
-flutter: Camera: 70.0 green, 2.15 var, 24 FPS
+flutter: Camera: 70.0 green, 2.11 var, 24 FPS
+flutter: Camera: 69.7 green, 2.06 var, 24 FPS
+flutter: Camera: 69.7 green, 2.09 var, 24 FPS
+flutter: Camera: 69.7 green, 2.09 var, 24 FPS
 flutter: ⏱️  Progress: 30s / 30s (694 samples collected)
 flutter: ⏱️  Time complete! Starting processing...
 flutter: ═══════════════════════════════════════════════════════
@@ -69,11 +69,11 @@ flutter: Camera disposed
 flutter: 📊 Collected 694 samples over 30 seconds
 flutter: 📊 Actual sampling rate: 23 FPS
 flutter: 📊 Final quality: Fair
-flutter: Signal stats: min=-3.7, max=160.4, mean=0.0, amplitude=164.1, variance=280.11
-flutter: Detected 1 peaks (threshold: -0.15, prominence: 32.82, amplitude: 164.10, p90: -0.31)
+flutter: Signal stats: min=-54.0, max=141.0, mean=0.0, amplitude=195.0, variance=123.75
+flutter: Detected 2 peaks (threshold: -0.50, prominence: 39.00, amplitude: 194.99, p90: -0.99)
 flutter: Too few peaks, retrying with lower threshold...
-flutter: Retry found 1 peaks with threshold -0.09
-flutter: Signal processing error: Exception: Not enough peaks detected (need at least 3, got 1)
+flutter: Retry found 2 peaks with threshold -0.30
+flutter: Signal processing error: Exception: Not enough peaks detected (need at least 3, got 2)
 flutter: ═══════════════════════════════════════════════════════
-flutter: ❌ PROCESSING FAILED: Exception: Not enough peaks detected (need at least 3, got 1)
+flutter: ❌ PROCESSING FAILED: Exception: Not enough peaks detected (need at least 3, got 2)
 flutter: ═══════════════════════════════════════════════════════

@@ -127,7 +127,7 @@ class CameraService {
           
           if (isBiplanar) {
             final int uvIndex = (y ~/ 2) * uPlane.bytesPerRow + (x ~/ 2) * 2;
-            if (uvIndex + 1 < uPlane.bytes.length) {
+            if (uvIndex >= 0 && uvIndex + 1 < uPlane.bytes.length) {
               uValue = uPlane.bytes[uvIndex] - 128;
               vValue = uPlane.bytes[uvIndex + 1] - 128;
               
@@ -138,6 +138,8 @@ class CameraService {
               sumRed += r;
               sumGreen += g;
               sumBlue += b;
+            } else if (uvIndex < 0 || uvIndex + 1 >= uPlane.bytes.length) {
+              debugPrint('⚠️ UV index out of bounds: $uvIndex (max: ${uPlane.bytes.length})');
             }
           }
         }
