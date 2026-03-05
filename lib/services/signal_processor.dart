@@ -10,23 +10,82 @@ class SignalProcessor {
   List<double> applyBandPassFilter(List<double> signal, int samplingRate) {
     if (signal.length < 10) return signal;
     
+    debugPrint('🔧 [FILTER] Starting band-pass filter on ${signal.length} samples');
+    
+    // 📊 DEBUG: Show raw signal statistics BEFORE filtering
+    double rawMean = signal.reduce((a, b) => a + b) / signal.length;
+    double rawMin = signal.reduce(min);
+    double rawMax = signal.reduce(max);
+    String first50Raw = signal.take(50).map((v) => v.toStringAsFixed(1)).join(', ');
+    debugPrint('📈 RAW signal stats: mean=${rawMean.toStringAsFixed(2)}, min=${rawMin.toStringAsFixed(1)}, max=${rawMax.toStringAsFixed(1)}, amplitude=${(rawMax - rawMin).toStringAsFixed(1)}');
+    debugPrint('📈 RAW signal first 50 values: $first50Raw');
+    
     // Step 1: Remove DC component (subtract mean)
-    double mean = signal.reduce((a, b) => a + b) / signal.length;
-    List<double> centered = signal.map((v) => v - mean).toList();
+    debugPrint('🔧 [FILTER] Original signal mean: ${rawMean.toStringAsFixed(2)}');
     
-    // Step 2: Light smoothing to remove high-frequency noise
-    // Very small window to preserve pulse
-    int windowSize = 3; // Minimal smoothing
-    List<double> smoothed = [];
+    List<double> centered = signal.map((v) => v - rawMean).toList();
     
-    for (int i = 0; i < centered.length; i++) {
-      int start = max(0, i - 1);
-      int end = min(centered.length, i + 2);
-      double sum = 0;
-      for (int j = start; j < end; j++) {
-        sum += centered[j];
+    // Show first 10 values before inversion
+    String first10Before = centered.take(10).map((v) => v.toStringAsFixed(1)).join(', ');
+    debugPrint('🔧 [FILTER] First 10 centered values BEFORE inversion: $first10Before');
+    
+    // 🎯 AUTO-INVERSION: Detect if signal is inverted (valleys instead of peaks)
+    // Check if negative values have more energy (larger absolute values)
+    double negativeEnergy = 0;
+    double positiveEnergy = 0;
+    
+    for (var v in centered) {
+      if (v < 0) {
+        negativeEnergy += v.abs();
+      } else {
+        positiveEnergy += v;
       }
-      smoothed.add(sum / (end - start));
+    }
+    
+    debugPrint('🔧 [FILTER] Energy analysis: negative=${negativeEnergy.toStringAsFixed(1)}, positive=${positiveEnergy.toStringAsFixed(1)}, ratio=${(negativeEnergy/positiveEnergy).toStringAsFixed(2)}');
+    
+    // If negative energy is larger (even slightly), signal is likely inverted
+    if (negativeEnergy > positiveEnergy * 1.02) {
+      debugPrint('🔄 [INVERSION] Signal auto-inverted: negative energy ${negativeEnergy.toStringAsFixed(1)} > positive ${positiveEnergy.toStringAsFixed(1)} (valleys → peaks)');
+      centered = centered.map((v) => -v).toList();
+      
+      // Show first 10 values after inversion
+      String first10After = centered.take(10).map((v) => v.toStringAsFixed(1)).join(', ');
+      debugPrint('🔄 [INVERSION] First 10 values AFTER inversion: $first10After');
+    } else {
+      debugPrint('✅ [INVERSION] No inversion needed (signal already has peaks)');
+    }
+    
+    // Step 2: MINIMAL smoothing - only if signal is very noisy
+    // Calculate variance to decide if smoothing is needed
+    double variance = 0;
+    for (var val in centered) {
+      variance += val * val;
+    }
+    variance /= centered.length;
+    
+    List<double> smoothed;
+    
+    if (variance > 100) {
+      // Very noisy signal - apply light smoothing
+      debugPrint('🔧 [FILTER] High variance ($variance) - applying light smoothing');
+      int windowSize = 3;
+      smoothed = [];
+      
+      for (int i = 0; i < centered.length; i++) {
+        int start = max(0, i - 1);
+        int end = min(centered.length, i + 2);
+        double sum = 0;
+        for (int j = start; j < end; j++) {
+          sum += centered[j];
+        }
+        smoothed.add(sum / (end - start));
+      }
+      debugPrint('🔧 [FILTER] Smoothing complete with window=$windowSize');
+    } else {
+      // Low variance - skip smoothing to preserve weak signal
+      debugPrint('🔧 [FILTER] Low variance ($variance) - skipping smoothing to preserve signal');
+      smoothed = centered;
     }
     
     return smoothed;
@@ -36,13 +95,17 @@ class SignalProcessor {
   List<int> detectPeaks(List<double> signal, int samplingRate) {
     if (signal.isEmpty) return [];
 
+    debugPrint('🎯 [PEAKS] Starting peak detection on ${signal.length} samples at $samplingRate FPS');
+
     // Signal is centered around 0 after filtering
     double maxVal = signal.reduce(max);
     double minVal = signal.reduce(min);
     double amplitude = maxVal - minVal;
     
+    debugPrint('🎯 [PEAKS] Signal range: min=${minVal.toStringAsFixed(2)}, max=${maxVal.toStringAsFixed(2)}, amplitude=${amplitude.toStringAsFixed(2)}');
+    
     if (amplitude < 1.0) {
-      debugPrint('Signal amplitude too small: ${amplitude.toStringAsFixed(2)}');
+      debugPrint('❌ [PEAKS] Signal amplitude too small: ${amplitude.toStringAsFixed(2)}');
       return [];
     }
     
@@ -75,8 +138,20 @@ class SignalProcessor {
     // Minimum peak separation: 350ms (171 BPM max)
     int minSeparation = max(3, (samplingRate * 0.35).round());
     
-    // Prominence: 15% of amplitude (adaptive)
-    double prominenceThreshold = amplitude * 0.15;
+    // 🎯 ADAPTIVE PROMINENCE based on signal variance
+    double prominenceThreshold;
+    if (variance > 500) {
+      // Noisy signal - require stronger peaks
+      prominenceThreshold = amplitude * 0.25;
+      debugPrint('📊 High variance ($variance) - using strict prominence: ${prominenceThreshold.toStringAsFixed(2)}');
+    } else if (variance < 50) {
+      // Weak signal - lower requirements
+      prominenceThreshold = amplitude * 0.08;
+      debugPrint('📊 Low variance ($variance) - using relaxed prominence: ${prominenceThreshold.toStringAsFixed(2)}');
+    } else {
+      // Normal signal
+      prominenceThreshold = amplitude * 0.15;
+    }
 
     List<int> peaks = [];
 
@@ -323,6 +398,16 @@ class SignalProcessor {
     try {
       // Store raw signal
       rawSignal = intensityValues;
+
+      // 🎯 SKIP FIRST 3 SECONDS to avoid finger placement artifact
+      int skipSamples = (samplingRate * 3).round(); // 3 seconds for stabilization
+      if (intensityValues.length > skipSamples + 120) { // Need at least 5s of data after skip
+        debugPrint('⏭️ Skipping first $skipSamples samples (3s) to avoid placement artifact');
+        intensityValues = intensityValues.sublist(skipSamples);
+        debugPrint('📊 Processing ${intensityValues.length} samples after skip');
+      } else {
+        debugPrint('⚠️ Signal too short to skip placement artifact (${intensityValues.length} samples)');
+      }
 
       // Apply band-pass filter to isolate heart rate frequencies
       filteredSignal = applyBandPassFilter(intensityValues, samplingRate);

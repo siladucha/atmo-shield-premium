@@ -5,14 +5,14 @@ Dart execution mode: JIT
 🍎 iOS AppDelegate запускается...
 [SynthData] ATMOHealthKitWriter plugin registered
 ✅ ATMOHealthKitWriter plugin registered
-flutter: The Dart VM service is listening on http://127.0.0.1:51439/2MCu84dmZGU=/
+flutter: The Dart VM service is listening on http://127.0.0.1:51728/nYl8IxT8p2c=/
 flutter: 📷 [CameraPermissionsManager] Loaded cached permission: true
 flutter: 📷 [CameraPermissionsManager] ✅ Has cached permission
-<0x104a26e40> Gesture: System gesture gate timed out.
+<0x1025faf80> Gesture: System gesture gate timed out.
 flutter: ═══════════════════════════════════════════════════════
 flutter: 🚀 STARTING MEASUREMENT: Quick Mode (30s)
 flutter: ═══════════════════════════════════════════════════════
-{"msg":"#Warning Error reading file", "file":"\/\/private\/var\/Managed Preferences\/mobile\/com.apple.CoreMotion.plist", "error":"Error Domain=NSCocoaErrorDomain Code=257 \"The file “com.apple.CoreMotion.plist” couldn’t be opened because you don’t have permission to view it.\" UserInfo={NSFilePath=\/\/private\/var\/Managed Preferences\/mobile\/com.apple.CoreMotion.plist, NSURL=file:\/\/\/\/private\/var\/Managed%20Preferences\/mobile\/com.apple.CoreMotion.plist, NSUnderlyingError=0x11a3cda40 {Error Domain=NSPOSIXErrorDomain Code=1 \"Operation not permitted\"}}"}
+{"msg":"#Warning Error reading file", "file":"\/\/private\/var\/Managed Preferences\/mobile\/com.apple.CoreMotion.plist", "error":"Error Domain=NSCocoaErrorDomain Code=257 \"The file “com.apple.CoreMotion.plist” couldn’t be opened because you don’t have permission to view it.\" UserInfo={NSFilePath=\/\/private\/var\/Managed Preferences\/mobile\/com.apple.CoreMotion.plist, NSURL=file:\/\/\/\/private\/var\/Managed%20Preferences\/mobile\/com.apple.CoreMotion.plist, NSUnderlyingError=0x11a464f90 {Error Domain=NSPOSIXErrorDomain Code=1 \"Operation not permitted\"}}"}
 <<<< FigXPCUtilities >>>> signalled err=-17281 at <>:308
 <<<< FigCaptureSourceRemote >>>> Fig assert: "err == 0 " at bail (FigCaptureSourceRemote.m:569) - (err=-17281)
 <<<< FigXPCUtilities >>>> signalled err=-17281 at <>:308
@@ -26,37 +26,52 @@ flutter: ═══════════════════════�
 flutter: Camera initialized successfully
 flutter: ✅ Camera initialized
 flutter: 📹 Starting capture...
-flutter: Camera: 68.8 green, 1.08 var, 11 FPS
-flutter: Camera: 69.0 green, 1.93 var, 12 FPS
-flutter: Camera: 70.9 green, 2.17 var, 24 FPS
-flutter: ⏱️  Progress: 5s / 30s (94 samples collected)
-flutter: Camera: 69.4 green, 2.19 var, 24 FPS
-flutter: Camera: 69.4 green, 2.14 var, 24 FPS
-flutter: Camera: 69.5 green, 2.17 var, 24 FPS
-flutter: Camera: 69.5 green, 2.06 var, 24 FPS
-flutter: ⏱️  Progress: 10s / 30s (214 samples collected)
-flutter: 📊 Quality @10s: brightness=69.5, variance=2.04, R=197.6, G=69.5, B=16.3
-flutter: Camera: 69.3 green, 2.22 var, 24 FPS
-flutter: Camera: 69.7 green, 2.04 var, 24 FPS
-flutter: Camera: 69.9 green, 2.04 var, 24 FPS
-flutter: Camera: 69.6 green, 2.08 var, 24 FPS
-flutter: ⏱️  Progress: 15s / 30s (334 samples collected)
-flutter: Camera: 69.8 green, 2.03 var, 24 FPS
-flutter: Camera: 69.5 green, 2.12 var, 24 FPS
-flutter: Camera: 69.7 green, 2.12 var, 24 FPS
-flutter: Camera: 69.9 green, 2.14 var, 24 FPS
-flutter: ⏱️  Progress: 20s / 30s (454 samples collected)
-flutter: 📊 Quality @20s: brightness=69.9, variance=2.16, R=198.8, G=69.9, B=15.9
-flutter: Camera: 69.5 green, 2.11 var, 24 FPS
-flutter: Camera: 69.9 green, 2.16 var, 24 FPS
-flutter: Camera: 69.8 green, 2.05 var, 24 FPS
-flutter: Camera: 69.6 green, 2.18 var, 24 FPS
-flutter: ⏱️  Progress: 25s / 30s (574 samples collected)
-flutter: Camera: 70.0 green, 2.11 var, 24 FPS
-flutter: Camera: 69.7 green, 2.06 var, 24 FPS
-flutter: Camera: 69.7 green, 2.09 var, 24 FPS
-flutter: Camera: 69.7 green, 2.09 var, 24 FPS
-flutter: ⏱️  Progress: 30s / 30s (694 samples collected)
+flutter: Camera: 77.7 green, 2.08 var, 9 FPS
+flutter: Camera: 72.5 green, 2.07 var, 24 FPS
+flutter: Camera: 70.9 green, 1.98 var, 24 FPS
+flutter: Camera: 70.9 green, 1.90 var, 24 FPS
+flutter: ⏱️  Progress: 5s / 30s (120 samples collected)
+flutter: Camera: 70.6 green, 1.96 var, 24 FPS
+flutter: Camera: 70.7 green, 1.96 var, 24 FPS
+flutter: Camera: 70.7 green, 1.96 var, 24 FPS
+flutter: Camera: 70.4 green, 2.02 var, 24 FPS
+flutter: ⏱️  Progress: 10s / 30s (240 samples collected)
+flutter: 📊 Quality @10s: brightness=147.8, variance=2.02, R=198.6, G=147.8, B=20.1
+flutter: 🔴 Using RED channel (green too weak: G=70.4528, R=198.532, var=1.9573721600000415)
+flutter: 🔴 Using RED channel (green too weak: G=70.618, R=198.932, var=1.9424759999999759)
+flutter: 🔴 Using RED channel (green too weak: G=70.7188, R=199.368, var=1.923726560000002)
+flutter: 🔴 Using RED channel (green too weak: G=70.7812, R=199.616, var=1.9701265600000024)
+flutter: 🔴 Using RED channel (green too weak: G=70.8388, R=199.836, var=1.9360145600000436)
+flutter: 🔴 Using RED channel (green too weak: G=70.8404, R=199.916, var=1.9021278399999975)
+flutter: 🔴 Using RED channel (green too weak: G=70.7192, R=199.632, var=1.938751360000074)
+flutter: 🔴 Using RED channel (green too weak: G=70.62, R=199.032, var=1.966800000000015)
+flutter: 🔴 Using RED channel (green too weak: G=70.7212, R=199.42, var=1.9778705599999722)
+flutter: 🔴 Using RED channel (green too weak: G=70.7488, R=199.464, var=1.9936985600000283)
+flutter: 🔴 Using RED channel (green too weak: G=70.7208, R=199.424, var=1.9804473599999761)
+flutter: 🔴 Using RED channel (green too weak: G=70.7328, R=199.54, var=1.887804160000074)
+flutter: 🔴 Using RED channel (green too weak: G=70.5596, R=199.064, var=1.988047839999993)
+flutter: 🔴 Using RED channel (green too weak: G=70.5744, R=199.164, var=1.9324646400000398)
+flutter: Camera: 70.7 green, 1.97 var, 24 FPS
+flutter: Camera: 70.5 green, 2.01 var, 24 FPS
+flutter: Camera: 70.6 green, 1.95 var, 24 FPS
+flutter: Camera: 70.6 green, 2.05 var, 24 FPS
+flutter: ⏱️  Progress: 15s / 30s (360 samples collected)
+flutter: Camera: 70.5 green, 2.07 var, 24 FPS
+flutter: Camera: 70.4 green, 2.12 var, 24 FPS
+flutter: Camera: 70.6 green, 2.07 var, 24 FPS
+flutter: Camera: 70.3 green, 2.00 var, 24 FPS
+flutter: ⏱️  Progress: 20s / 30s (480 samples collected)
+flutter: 📊 Quality @20s: brightness=83.4, variance=2.00, R=198.0, G=83.4, B=20.6
+flutter: 🔴 Using RED channel (green too weak: G=70.506, R=198.42, var=1.9931640000000654)
+flutter: Camera: 70.6 green, 2.07 var, 24 FPS
+flutter: Camera: 69.9 green, 2.20 var, 24 FPS
+flutter: Camera: 70.5 green, 2.08 var, 24 FPS
+flutter: Camera: 70.7 green, 2.08 var, 24 FPS
+flutter: ⏱️  Progress: 25s / 30s (600 samples collected)
+flutter: Camera: 70.5 green, 2.14 var, 24 FPS
+flutter: Camera: 70.6 green, 2.10 var, 24 FPS
+flutter: Camera: 70.5 green, 2.22 var, 13 FPS
+flutter: ⏱️  Progress: 30s / 30s (696 samples collected)
 flutter: ⏱️  Time complete! Starting processing...
 flutter: ═══════════════════════════════════════════════════════
 flutter: 🔄 PROCESSING MEASUREMENT
@@ -66,14 +81,70 @@ flutter: ═══════════════════════�
 <<<< FigXPCUtilities >>>> signalled err=-17281 at <>:308
 <<<< FigCaptureSourceRemote >>>> Fig assert: "err == 0 " at bail (FigCaptureSourceRemote.m:569) - (err=-17281)
 flutter: Camera disposed
-flutter: 📊 Collected 694 samples over 30 seconds
+flutter: 📊 Collected 696 samples over 30 seconds
 flutter: 📊 Actual sampling rate: 23 FPS
 flutter: 📊 Final quality: Fair
-flutter: Signal stats: min=-54.0, max=141.0, mean=0.0, amplitude=195.0, variance=123.75
-flutter: Detected 2 peaks (threshold: -0.50, prominence: 39.00, amplitude: 194.99, p90: -0.99)
-flutter: Too few peaks, retrying with lower threshold...
-flutter: Retry found 2 peaks with threshold -0.30
-flutter: Signal processing error: Exception: Not enough peaks detected (need at least 3, got 2)
+flutter: ⏭️ Skipping first 69 samples (3s) to avoid placement artifact
+flutter: 📊 Processing 627 samples after skip
+flutter: 🔧 [FILTER] Starting band-pass filter on 627 samples
+flutter: 📈 RAW signal stats: mean=109.40, min=69.9, max=201.6, amplitude=131.7
+flutter: 📈 RAW signal first 50 values: 71.4, 71.2, 71.1, 70.9, 70.8, 70.7, 70.6, 70.6, 70.5, 70.5, 70.5, 70.5, 70.5, 70.5, 70.5, 70.6, 70.6, 70.7, 70.7, 70.8, 70.9, 71.0, 71.1, 71.2, 71.2, 71.2, 71.2, 71.0, 70.9, 70.9, 70.8, 70.9, 70.8, 70.9, 70.9, 70.9, 70.9, 70.9, 70.9, 70.9, 70.9, 70.9, 70.9, 70.9, 70.8, 70.8, 70.8, 70.8, 70.8, 70.8
+flutter: 🔧 [FILTER] Original signal mean: 109.40
+flutter: 🔧 [FILTER] First 10 centered values BEFORE inversion: -38.0, -38.2, -38.3, -38.5, -38.6, -38.7, -38.8, -38.8, -38.9, -38.9
+flutter: 🔧 [FILTER] Energy analysis: negative=17005.9, positive=17005.9, ratio=1.00
+flutter: ✅ [INVERSION] No inversion needed (signal already has peaks)
+flutter: 🔧 [FILTER] High variance (3493.63460831323) - applying light smoothing
+flutter: 🔧 [FILTER] Smoothing complete with window=3
+flutter: Signal stats: min=-39.4, max=91.2, mean=-0.0, amplitude=130.7, variance=2579.25
+flutter: 🎯 [PEAKS] Starting peak detection on 627 samples at 23 FPS
+flutter: 🎯 [PEAKS] Signal range: min=-39.44, max=91.23, amplitude=130.67
+flutter: 📊 High variance (2579.24595128261) - using strict prominence: 32.67
+flutter:   ✅ Peak #1 detected at i=77, value=47.17, prominence=42.96
+flutter:   ⏭️ Peak at i=79 skipped: too close to previous peak at 77 (separation: 2 < 8)
+flutter:   ✅ Peak #2 detected at i=91, value=91.23, prominence=43.40
+flutter:   ✅ Peak #3 detected at i=105, value=90.21, prominence=42.99
+flutter:   ⏭️ Peak at i=109 skipped: too close to previous peak at 105 (separation: 4 < 8)
+flutter:   ✅ Peak #4 detected at i=115, value=89.61, prominence=42.88
+flutter:   ❌ Peak at i=127 rejected: prominence 0.57 < 32.67
+flutter:   ✅ Peak #5 detected at i=142, value=90.15, prominence=43.03
+flutter:   ❌ Peak at i=153 rejected: prominence 0.32 < 32.67
+flutter:   ❌ Peak at i=161 rejected: prominence 0.12 < 32.67
+flutter:   ✅ Peak #6 detected at i=177, value=90.39, prominence=86.24
+flutter:   ✅ Peak #7 detected at i=188, value=90.07, prominence=85.87
+flutter:   ⏭️ Peak at i=195 skipped: too close to previous peak at 188 (separation: 7 < 8)
+flutter:   ✅ Peak #8 detected at i=199, value=90.03, prominence=42.98
+flutter:   ⏭️ Peak at i=206 skipped: too close to previous peak at 199 (separation: 7 < 8)
+flutter:   ✅ Peak #9 detected at i=211, value=90.24, prominence=43.18
+flutter:   ✅ Peak #10 detected at i=224, value=90.62, prominence=43.31
+flutter:   ✅ Peak #11 detected at i=233, value=89.92, prominence=85.73
+flutter:   ✅ Peak #12 detected at i=246, value=47.12, prominence=42.85
+flutter:   ✅ Peak #13 detected at i=259, value=89.91, prominence=42.89
+flutter:   🔄 Peak at i=263 replaces peak at 259 (better value: 90.42 > 89.91)
+flutter:   🔄 Peak at i=270 replaces peak at 263 (better value: 90.48 > 90.42)
+flutter:   ✅ Peak #14 detected at i=280, value=90.31, prominence=43.12
+flutter:   ✅ Peak #15 detected at i=295, value=90.37, prominence=43.19
+flutter:   ✅ Peak #16 detected at i=306, value=47.08, prominence=42.94
+flutter:   ✅ Peak #17 detected at i=328, value=89.89, prominence=85.95
+flutter:   ⏭️ Peak at i=330 skipped: too close to previous peak at 328 (separation: 2 < 8)
+flutter:   ✅ Peak #18 detected at i=342, value=90.52, prominence=86.10
+flutter:   ✅ Peak #19 detected at i=355, value=89.68, prominence=42.93
+flutter:   ⏭️ Peak at i=359 skipped: too close to previous peak at 355 (separation: 4 < 8)
+flutter:   ⏭️ Peak at i=361 skipped: too close to previous peak at 355 (separation: 6 < 8)
+flutter:   ✅ Peak #20 detected at i=365, value=90.88, prominence=43.42
+flutter:   ✅ Peak #21 detected at i=377, value=46.75, prominence=42.85
+flutter:   ✅ Peak #22 detected at i=400, value=47.05, prominence=43.11
+flutter: Peak detection stats: aboveThreshold=187, isPeak=34, hasProminence=31, passedSeparation=22
+flutter: Detected 22 peaks (threshold: 31.36, prominence: 32.67, amplitude: 130.67, variance: 2579.25, min: -39.44, max: 91.23)
+flutter: First 20 signal values: -38.1, -38.2, -38.3, -38.5, -38.6, -38.7, -38.8, -38.8, -38.9, -38.9, -38.9, -38.9, -38.9, -38.9, -38.9, -38.8, -38.8, -38.7, -38.6, -38.6
+flutter: All IBIs: 609, 609, 435, 1174, 1522, 478, 478, 522, 565, 391, 565, 1043, 435, 652, 478, 957, 609, 565, 435, 522, 1000 ms
+flutter: Valid IBIs (250-2000ms): 21 out of 21
+flutter: Calculated BPM: 106 from 22 peaks (21 valid IBIs)
+flutter: Calculated RMSSD: 98.7 ms (from 13 diffs, 15 filtered IBIs out of 19 total)
 flutter: ═══════════════════════════════════════════════════════
-flutter: ❌ PROCESSING FAILED: Exception: Not enough peaks detected (need at least 3, got 2)
+flutter: ✅ MEASUREMENT COMPLETE
+flutter:    BPM: 106
+flutter:    RMSSD: 98.7 ms
+flutter:    Peaks: 22
+flutter:    Quality: Fair
 flutter: ═══════════════════════════════════════════════════════
+flutter: ⚠️ Camera already disposed, skipping
