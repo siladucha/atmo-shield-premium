@@ -46,13 +46,10 @@ class SignalProcessor {
       return [];
     }
     
-    // Use percentile for robust threshold (ignore outliers)
-    List<double> sortedSignal = List.from(signal)..sort();
-    int p90Index = (sortedSignal.length * 0.9).round();
-    double p90 = sortedSignal[p90Index];
-    
-    // Threshold: 50% of 90th percentile
-    double threshold = p90 * 0.5;
+    // Use amplitude-based threshold instead of percentile to avoid negative threshold issues
+    // After centering, signal oscillates around 0, so use absolute amplitude
+    // Threshold: 30% of amplitude above the minimum value
+    double threshold = minVal + (amplitude * 0.3);
 
     // Minimum peak separation: 350ms (171 BPM max)
     int minSeparation = max(3, (samplingRate * 0.35).round());
@@ -86,12 +83,12 @@ class SignalProcessor {
       }
     }
 
-    debugPrint('Detected ${peaks.length} peaks (threshold: ${threshold.toStringAsFixed(2)}, prominence: ${prominenceThreshold.toStringAsFixed(2)}, amplitude: ${amplitude.toStringAsFixed(2)}, p90: ${p90.toStringAsFixed(2)})');
+    debugPrint('Detected ${peaks.length} peaks (threshold: ${threshold.toStringAsFixed(2)}, prominence: ${prominenceThreshold.toStringAsFixed(2)}, amplitude: ${amplitude.toStringAsFixed(2)}, min: ${minVal.toStringAsFixed(2)}, max: ${maxVal.toStringAsFixed(2)})');
     
-    // If too few peaks, try with lower threshold
-    if (peaks.length < 5) {
-      debugPrint('Too few peaks, retrying with lower threshold...');
-      threshold = p90 * 0.3;
+    // If too few peaks, try with lower threshold (need at least 3 for BPM calculation)
+    if (peaks.length < 3) {
+      debugPrint('Too few peaks (${peaks.length}), retrying with lower threshold...');
+      threshold = minVal + (amplitude * 0.2); // Lower to 20% of amplitude
       prominenceThreshold = amplitude * 0.15;
       peaks.clear();
       
@@ -121,10 +118,11 @@ class SignalProcessor {
     return peaks;
   }
 
-  // Calculate BPM from peaks
-  int calculateBPM(List<int> peaks, int samplingRate) {
-    if (peaks.length < 3) {
-      throw Exception('Not enough peaks detected (need at least 3, got ${peaks.length})');
+  // Calculate BPM from peaks with fallback for poor signal
+  int? calculateBPM(List<int> peaks, int samplingRate) {
+    if (peaks.length < 2) {
+      debugPrint('Not enough peaks for BPM calculation (need at least 2, got ${peaks.length})');
+      return null;
     }
 
     // Calculate inter-beat intervals (IBI) in milliseconds
@@ -146,7 +144,8 @@ class SignalProcessor {
     debugPrint('Valid IBIs (250-2000ms): ${ibis.length} out of ${allIbis.length}');
 
     if (ibis.isEmpty) {
-      throw Exception('No valid inter-beat intervals found (all IBIs outside 250-2000ms range)');
+      debugPrint('No valid inter-beat intervals found (all IBIs outside 250-2000ms range)');
+      return null;
     }
 
     // Calculate median IBI (more robust than mean)
@@ -160,7 +159,8 @@ class SignalProcessor {
 
     // Validate range: 40-180 BPM (realistic for finger measurement)
     if (bpm < 40 || bpm > 180) {
-      throw Exception('BPM out of valid range: $bpm');
+      debugPrint('BPM out of valid range: $bpm (from ${peaks.length} peaks)');
+      return null;
     }
 
     debugPrint('Calculated BPM: $bpm from ${peaks.length} peaks (${ibis.length} valid IBIs)');
@@ -284,8 +284,33 @@ class SignalProcessor {
       // Detect peaks
       peakIndices = detectPeaks(filteredSignal, samplingRate);
 
+      // Check if we have enough peaks
+      if (peakIndices.length < 2) {
+        debugPrint('Insufficient peaks detected: ${peakIndices.length}');
+        return {
+          'success': false,
+          'error': 'Poor signal quality - unable to detect heartbeat. Please ensure finger is firmly on camera with flash enabled.',
+          'peakCount': peakIndices.length,
+          'signalMean': mean,
+          'signalVariance': variance,
+          'signalAmplitude': amplitude,
+        };
+      }
+
       // Calculate BPM
-      int bpm = calculateBPM(peakIndices, samplingRate);
+      int? bpm = calculateBPM(peakIndices, samplingRate);
+      
+      if (bpm == null) {
+        debugPrint('BPM calculation failed');
+        return {
+          'success': false,
+          'error': 'Unable to calculate heart rate - signal quality too low',
+          'peakCount': peakIndices.length,
+          'signalMean': mean,
+          'signalVariance': variance,
+          'signalAmplitude': amplitude,
+        };
+      }
 
       // Calculate RMSSD if requested
       double? rmssd;

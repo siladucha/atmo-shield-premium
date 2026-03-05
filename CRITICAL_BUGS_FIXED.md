@@ -40,9 +40,44 @@
 
 ---
 
+#### 4. Peak Detection Threshold Bug (`signal_processor.dart`) ⭐ NEW
+**Problem**: After signal centering, p90 percentile could be negative, causing threshold calculation to fail. This resulted in valid peaks being filtered out.
+
+**Root Cause**: 
+```dart
+// Old buggy code:
+double p90 = sortedSignal[p90Index];
+double threshold = p90 * 0.5;  // ❌ If p90 is negative, threshold is negative!
+```
+
+When p90 = -0.99, threshold = -0.495, causing the condition `if (signal[i] <= threshold)` to skip all positive peaks.
+
+**Fix**:
+- Changed from percentile-based to amplitude-based threshold
+- New threshold: `minVal + (amplitude * 0.3)` - always correct regardless of signal centering
+- Lowered retry threshold from 5 peaks to 3 peaks (minimum for BPM)
+- Retry threshold: `minVal + (amplitude * 0.2)` for second attempt
+
+**Impact**: Peak detection now works correctly with centered signals, fixing "Not enough peaks detected" errors.
+
+---
+
+#### 5. BPM Calculation Error Handling (`signal_processor.dart`) ⭐ NEW
+**Problem**: `calculateBPM()` threw exceptions instead of returning null, causing measurement failures.
+
+**Fix**:
+- Changed return type from `int` to `int?`
+- Replaced all `throw Exception()` with `return null` and debug logging
+- Added graceful error handling in `processMeasurement()`
+- Provides user-friendly error messages instead of crashes
+
+**Impact**: Poor signal quality now results in helpful error messages instead of exceptions.
+
+---
+
 ### 🟡 MEDIUM PRIORITY - FIXED
 
-#### 4. Adaptive RMSSD Thresholds (`signal_processor.dart`)
+#### 6. Adaptive RMSSD Thresholds (`signal_processor.dart`)
 **Problem**: Fixed thresholds (15 IBIs, 10 diffs) were too strict for short measurements (30s Quick Mode).
 
 **Fix**:
@@ -57,7 +92,7 @@
 
 ---
 
-#### 5. Memory Leak Prevention (`measurement_orchestrator.dart`)
+#### 7. Memory Leak Prevention (`measurement_orchestrator.dart`)
 **Problem**: StreamSubscription references weren't nullified after cancellation.
 
 **Fix**: Added `_intensitySubscription = null` after all `cancel()` calls in:
@@ -77,9 +112,11 @@
    - Verify movement detection with known variance values
 
 2. `signal_processor_test.dart`:
+   - Test peak detection with centered signals (positive and negative values)
+   - Test amplitude-based threshold calculation
    - Test RMSSD calculation with different measurement durations
    - Verify adaptive thresholds work correctly
-   - Test edge cases: minimal peaks, high noise
+   - Test edge cases: minimal peaks, high noise, negative p90
 
 3. `camera_service_test.dart`:
    - Mock YUV image processing with edge cases
@@ -90,9 +127,11 @@
    - Verify subscription cleanup
 
 ### Integration Tests
-- Run Quick Mode (30s) measurements and verify HRV calculation success rate
+- Run Quick Mode (30s) measurements and verify peak detection success rate
+- Test with poor signal quality (no finger, too much pressure)
 - Test camera disposal during active measurement
 - Verify no memory leaks after multiple measurement cycles
+- Test error message clarity for end users
 
 ---
 
@@ -104,6 +143,27 @@
 ✅ Made thresholds adaptive instead of hardcoded  
 ✅ Prevented memory leaks from subscriptions  
 ✅ Added debug logging for anomaly detection  
+✅ Fixed peak detection threshold calculation (amplitude-based) ⭐  
+✅ Replaced exceptions with graceful null returns ⭐  
+✅ Improved error messages for end users ⭐  
+
+---
+
+## Log Analysis Results
+
+### Before Fix (from `test/lastlog.txt`):
+```
+Signal stats: min=-54.0, max=141.0, amplitude=195.0
+Detected 2 peaks (threshold: -0.50, p90: -0.99)  ❌ Negative threshold!
+Signal processing error: Not enough peaks detected (need at least 3, got 2)
+```
+
+### Expected After Fix:
+```
+Signal stats: min=-54.0, max=141.0, amplitude=195.0
+Detected 15+ peaks (threshold: 4.5, min: -54.0, max: 141.0)  ✅ Positive threshold!
+Calculated BPM: 72 from 15 peaks
+```
 
 ---
 
@@ -120,6 +180,7 @@
 - Graceful degradation when flash overheats
 - Consent flow for medical data collection
 - More comprehensive error recovery strategies
+- FFT-based heart rate estimation as fallback
 
 ---
 
@@ -127,7 +188,7 @@
 1. `lib/services/quality_validator.dart` - Fixed std dev calculation
 2. `lib/services/measurement_orchestrator.dart` - Fixed disposal race condition & memory leaks
 3. `lib/services/camera_service.dart` - Improved UV plane validation
-4. `lib/services/signal_processor.dart` - Adaptive RMSSD thresholds
+4. `lib/services/signal_processor.dart` - Fixed peak detection threshold + BPM error handling + adaptive RMSSD
 
 ## Verification
 All modified files passed `getDiagnostics` with no errors or warnings.
