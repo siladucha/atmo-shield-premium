@@ -35,7 +35,7 @@ double maxVal = signal.reduce(max);
 double minVal = signal.reduce(min);
 double amplitude = maxVal - minVal;
 
-// Threshold: 30% of amplitude above the minimum value
+// Threshold: 30% of amplitude above the minimum value (15% on retry)
 double threshold = minVal + (amplitude * 0.3);
 ```
 
@@ -46,9 +46,10 @@ This approach:
 
 ### Additional Improvements
 
-1. **Lowered retry threshold**: Changed from 5 peaks to 3 peaks (minimum needed for BPM)
-2. **Better retry logic**: Uses 20% of amplitude instead of percentile-based calculation
-3. **Improved logging**: Shows min/max values instead of p90 for debugging
+1. **Lowered prominence threshold**: Changed from 20% to 15% (10% on retry) to detect more peaks
+2. **Lowered retry threshold**: Changed from 5 peaks to 3 peaks (minimum needed for BPM)
+3. **Better retry logic**: Uses 15% of amplitude (10% prominence) instead of percentile-based calculation
+4. **Improved logging**: Shows min/max values instead of p90 for debugging
 
 ## 📊 Expected Results
 
@@ -56,6 +57,7 @@ This approach:
 ```
 p90: -0.99
 threshold: -0.50  ❌ Negative!
+prominence: 39.0  ❌ Too high (20% of 195)
 Detected: 2 peaks (insufficient)
 Result: Exception thrown
 ```
@@ -64,8 +66,13 @@ Result: Exception thrown
 ```
 min: -54.0, max: 141.0
 threshold: 4.5  ✅ Positive! (= -54 + 195*0.3)
+prominence: 29.25  ✅ Lower (15% of 195)
 Detected: 15+ peaks (sufficient)
 Result: BPM calculated successfully
+
+If still < 3 peaks, retry with:
+threshold: -24.75  ✅ (= -54 + 195*0.15)
+prominence: 19.5  ✅ (10% of 195)
 ```
 
 ## 🔧 Related Changes

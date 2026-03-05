@@ -1,24 +1,24 @@
 # Product Overview
 
-## ATMO Shield Premium
+## Camera-Based HRV Measurement (PPG)
 
-A proactive stress monitoring system that transforms ATMO from a reactive wellness app into a predictive nervous system guardian. Uses HRV (Heart Rate Variability) data analysis to detect stress patterns 15-60 minutes before peak impact and provides targeted NeuroYoga interventions.
+A Flutter-based proof of concept for measuring heart rate (BPM) and heart rate variability (HRV/RMSSD) using smartphone camera and flash (photoplethysmography - PPG technique).
 
-## Core Value Proposition
-"We detect stress patterns 15-60 minutes before peak impact and provide targeted interventions."
+## Core Functionality
+Real-time heart rate and HRV measurement through finger-on-camera PPG signal processing.
 
 ## Project Status
-- Requirements specification complete (v1.5.0)
-- Ready for Proof of Concept phase
-- Target: Premium integration into main ATMO app for App Store release
-- Timeline: 18 weeks development (4.5 months)
+- Camera-based PPG POC complete with critical bug fixes applied
+- Signal processing algorithms validated and optimized
+- Peak detection and HRV calculation working reliably
+- Ready for integration testing and user trials
 
 ## Key Characteristics
-- **Proactive Health Monitoring**: HRV-based stress detection before conscious awareness
-- **NeuroYoga Integration**: Scientifically-backed breathing protocols from existing ATMO library
+- **PPG Signal Processing**: Real-time blood flow detection via camera green channel
+- **Dual Metrics**: BPM (heart rate) and RMSSD (HRV measure)
+- **Quality Feedback**: Real-time signal quality assessment with user guidance
 - **Privacy-First**: 100% on-device processing, no cloud data transmission
-- **Cross-Platform**: iOS (HealthKit) and Android (Health Connect/Google Fit)
-- **Premium Positioning**: $19.99 app or $9.99 upgrade for existing users
+- **Cross-Platform**: iOS and Android support
 
 ## Medical Disclaimer
-ATMO Shield is designed for wellness purposes only and is not intended to diagnose, treat, cure, or prevent any medical condition.
+This application is designed for wellness and research purposes only and is not intended to diagnose, treat, cure, or prevent any medical condition.

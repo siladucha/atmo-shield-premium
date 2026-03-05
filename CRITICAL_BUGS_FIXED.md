@@ -75,6 +75,23 @@ When p90 = -0.99, threshold = -0.495, causing the condition `if (signal[i] <= th
 
 ---
 
+#### 6. UI Error State Not Handled (`measurement_screen.dart`) ⭐ NEW
+**Problem**: When measurement failed, UI remained frozen on measurement screen with no user feedback.
+
+**Root Cause**: UI only handled `MeasurementState.complete` but not `MeasurementState.error`, leaving users stuck on a frozen screen.
+
+**Fix**:
+- Added error state handling in `Consumer<MeasurementOrchestrator>` builder
+- Shows user-friendly dialog with:
+  - Clear error message
+  - Specific tips to improve signal quality
+  - Two options: OK (exit) or RETRY (try again)
+- Dialog is non-dismissible to ensure user acknowledgment
+
+**Impact**: Users now get clear feedback when measurements fail, with actionable guidance and retry option.
+
+---
+
 ### 🟡 MEDIUM PRIORITY - FIXED
 
 #### 6. Adaptive RMSSD Thresholds (`signal_processor.dart`)

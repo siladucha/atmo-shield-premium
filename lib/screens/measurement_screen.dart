@@ -81,9 +81,49 @@ class _MeasurementScreenState extends State<MeasurementScreen>
         body: SafeArea(
           child: Consumer<MeasurementOrchestrator>(
             builder: (context, orchestrator, child) {
+              // Handle completion
               if (orchestrator.state == MeasurementState.complete) {
                 WidgetsBinding.instance.addPostFrameCallback((_) {
                   _onComplete();
+                });
+              }
+              
+              // Handle error state
+              if (orchestrator.state == MeasurementState.error) {
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  if (mounted) {
+                    showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (context) => AlertDialog(
+                        title: const Text('Measurement Failed'),
+                        content: const Text(
+                          'Poor signal quality - unable to detect heartbeat.\n\n'
+                          'Please ensure:\n'
+                          '• Finger is firmly on camera\n'
+                          '• Flash is enabled\n'
+                          '• Hand is steady\n'
+                          '• Not pressing too hard',
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop(); // Close dialog
+                              Navigator.of(context).pop(); // Close measurement screen
+                            },
+                            child: const Text('OK'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop(); // Close dialog
+                              _startMeasurement(); // Retry
+                            },
+                            child: const Text('RETRY'),
+                          ),
+                        ],
+                      ),
+                    );
+                  }
                 });
               }
 

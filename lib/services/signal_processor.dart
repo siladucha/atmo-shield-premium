@@ -54,8 +54,8 @@ class SignalProcessor {
     // Minimum peak separation: 350ms (171 BPM max)
     int minSeparation = max(3, (samplingRate * 0.35).round());
     
-    // Prominence: 20% of amplitude
-    double prominenceThreshold = amplitude * 0.2;
+    // Prominence: 15% of amplitude (lowered from 20% to detect more peaks)
+    double prominenceThreshold = amplitude * 0.15;
 
     List<int> peaks = [];
 
@@ -88,8 +88,8 @@ class SignalProcessor {
     // If too few peaks, try with lower threshold (need at least 3 for BPM calculation)
     if (peaks.length < 3) {
       debugPrint('Too few peaks (${peaks.length}), retrying with lower threshold...');
-      threshold = minVal + (amplitude * 0.2); // Lower to 20% of amplitude
-      prominenceThreshold = amplitude * 0.15;
+      threshold = minVal + (amplitude * 0.15); // Lower to 15% of amplitude
+      prominenceThreshold = amplitude * 0.10; // Lower to 10% for retry
       peaks.clear();
       
       for (int i = 1; i < signal.length - 1; i++) {
