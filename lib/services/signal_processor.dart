@@ -145,12 +145,12 @@ class SignalProcessor {
       prominenceThreshold = amplitude * 0.25;
       debugPrint('📊 High variance ($variance) - using strict prominence: ${prominenceThreshold.toStringAsFixed(2)}');
     } else if (variance < 50) {
-      // Weak signal - lower requirements
-      prominenceThreshold = amplitude * 0.08;
+      // Weak signal - much lower requirements
+      prominenceThreshold = amplitude * 0.05; // Снижено с 0.08 до 0.05
       debugPrint('📊 Low variance ($variance) - using relaxed prominence: ${prominenceThreshold.toStringAsFixed(2)}');
     } else {
       // Normal signal
-      prominenceThreshold = amplitude * 0.15;
+      prominenceThreshold = amplitude * 0.10; // Снижено с 0.15 до 0.10
     }
 
     List<int> peaks = [];
