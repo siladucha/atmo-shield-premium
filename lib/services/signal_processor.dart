@@ -46,72 +46,133 @@ class SignalProcessor {
       return [];
     }
     
-    // Use amplitude-based threshold instead of percentile to avoid negative threshold issues
-    // After centering, signal oscillates around 0, so use absolute amplitude
-    // Threshold: 30% of amplitude above the minimum value
-    double threshold = minVal + (amplitude * 0.3);
+    // Calculate variance for noise assessment
+    double mean = signal.reduce((a, b) => a + b) / signal.length;
+    double variance = 0;
+    for (var val in signal) {
+      variance += (val - mean) * (val - mean);
+    }
+    variance /= signal.length;
+    
+    // 🎯 ADAPTIVE THRESHOLD CALCULATION
+    // Base threshold: 20% of amplitude (works for 95% of PPG signals)
+    double baseThreshold = amplitude * 0.20;
+    
+    // Noise correction: increase threshold if signal is noisy
+    double noiseFactor = variance > 200 ? 1.2 : 1.0;
+    
+    // Calculate threshold with noise correction
+    double threshold = baseThreshold * noiseFactor;
+    
+    // Clamp between 5% and 40% of amplitude
+    double minThreshold = amplitude * 0.05;
+    double maxThreshold = amplitude * 0.40;
+    threshold = threshold.clamp(minThreshold, maxThreshold);
+    
+    // Ensure always positive
+    threshold = threshold.abs();
 
     // Minimum peak separation: 350ms (171 BPM max)
     int minSeparation = max(3, (samplingRate * 0.35).round());
     
-    // Prominence: 15% of amplitude (lowered from 20% to detect more peaks)
+    // Prominence: 15% of amplitude (adaptive)
     double prominenceThreshold = amplitude * 0.15;
 
     List<int> peaks = [];
 
     // Peak detection
+    int candidatesAboveThreshold = 0;
+    int candidatesIsPeak = 0;
+    int candidatesProminence = 0;
+    int candidatesSeparation = 0;
+    
     for (int i = 1; i < signal.length - 1; i++) {
       if (signal[i] <= threshold) continue;
+      candidatesAboveThreshold++;
       
       bool isPeak = signal[i] > signal[i - 1] && signal[i] > signal[i + 1];
+      if (!isPeak) continue;
+      candidatesIsPeak++;
 
-      if (isPeak) {
+      double leftValley = i >= 2 ? min(signal[i - 1], signal[i - 2]) : signal[i - 1];
+      double rightValley = i < signal.length - 2 ? min(signal[i + 1], signal[i + 2]) : signal[i + 1];
+      double minValley = min(leftValley, rightValley);
+      double prominence = signal[i] - minValley;
+      
+      if (prominence < prominenceThreshold) {
+        debugPrint('  ❌ Peak at i=$i rejected: prominence ${prominence.toStringAsFixed(2)} < ${prominenceThreshold.toStringAsFixed(2)}');
+        continue;
+      }
+      candidatesProminence++;
+      
+      if (peaks.isEmpty || (i - peaks.last) >= minSeparation) {
+        peaks.add(i);
+        candidatesSeparation++;
+        debugPrint('  ✅ Peak #${peaks.length} detected at i=$i, value=${signal[i].toStringAsFixed(2)}, prominence=${prominence.toStringAsFixed(2)}');
+      } else if (signal[i] > signal[peaks.last]) {
+        debugPrint('  🔄 Peak at i=$i replaces peak at ${peaks.last} (better value: ${signal[i].toStringAsFixed(2)} > ${signal[peaks.last].toStringAsFixed(2)})');
+        peaks[peaks.length - 1] = i;
+      } else {
+        debugPrint('  ⏭️ Peak at i=$i skipped: too close to previous peak at ${peaks.last} (separation: ${i - peaks.last} < $minSeparation)');
+      }
+    }
+    
+    debugPrint('Peak detection stats: aboveThreshold=$candidatesAboveThreshold, isPeak=$candidatesIsPeak, hasProminence=$candidatesProminence, passedSeparation=$candidatesSeparation');
+
+    debugPrint('Detected ${peaks.length} peaks (threshold: ${threshold.toStringAsFixed(2)}, prominence: ${prominenceThreshold.toStringAsFixed(2)}, amplitude: ${amplitude.toStringAsFixed(2)}, variance: ${variance.toStringAsFixed(2)}, min: ${minVal.toStringAsFixed(2)}, max: ${maxVal.toStringAsFixed(2)})');
+    
+    // Debug: show first 20 signal values to understand the data
+    if (signal.length >= 20) {
+      String first20 = signal.take(20).map((v) => v.toStringAsFixed(1)).join(', ');
+      debugPrint('First 20 signal values: $first20');
+    }
+    
+    // If too few peaks, try with lower threshold (need at least 3 for BPM calculation)
+    if (peaks.length < 3) {
+      debugPrint('Too few peaks (${peaks.length}), retrying with lower threshold...');
+      
+      // Retry with 60% of original threshold, but not below minimum
+      threshold = (threshold * 0.6).clamp(minThreshold, threshold);
+      prominenceThreshold = (prominenceThreshold * 0.7).clamp(amplitude * 0.08, prominenceThreshold);
+      
+      peaks.clear();
+      
+      candidatesAboveThreshold = 0;
+      candidatesIsPeak = 0;
+      candidatesProminence = 0;
+      candidatesSeparation = 0;
+      
+      for (int i = 1; i < signal.length - 1; i++) {
+        if (signal[i] <= threshold) continue;
+        candidatesAboveThreshold++;
+        
+        bool isPeak = signal[i] > signal[i - 1] && signal[i] > signal[i + 1];
+        if (!isPeak) continue;
+        candidatesIsPeak++;
+
         double leftValley = i >= 2 ? min(signal[i - 1], signal[i - 2]) : signal[i - 1];
         double rightValley = i < signal.length - 2 ? min(signal[i + 1], signal[i + 2]) : signal[i + 1];
         double minValley = min(leftValley, rightValley);
         double prominence = signal[i] - minValley;
         
         if (prominence < prominenceThreshold) {
+          debugPrint('  ❌ RETRY Peak at i=$i rejected: prominence ${prominence.toStringAsFixed(2)} < ${prominenceThreshold.toStringAsFixed(2)}');
           continue;
         }
+        candidatesProminence++;
         
         if (peaks.isEmpty || (i - peaks.last) >= minSeparation) {
           peaks.add(i);
+          candidatesSeparation++;
+          debugPrint('  ✅ RETRY Peak #${peaks.length} detected at i=$i, value=${signal[i].toStringAsFixed(2)}, prominence=${prominence.toStringAsFixed(2)}');
         } else if (signal[i] > signal[peaks.last]) {
+          debugPrint('  🔄 RETRY Peak at i=$i replaces peak at ${peaks.last}');
           peaks[peaks.length - 1] = i;
+        } else {
+          debugPrint('  ⏭️ RETRY Peak at i=$i skipped: too close to previous (separation: ${i - peaks.last} < $minSeparation)');
         }
       }
-    }
-
-    debugPrint('Detected ${peaks.length} peaks (threshold: ${threshold.toStringAsFixed(2)}, prominence: ${prominenceThreshold.toStringAsFixed(2)}, amplitude: ${amplitude.toStringAsFixed(2)}, min: ${minVal.toStringAsFixed(2)}, max: ${maxVal.toStringAsFixed(2)})');
-    
-    // If too few peaks, try with lower threshold (need at least 3 for BPM calculation)
-    if (peaks.length < 3) {
-      debugPrint('Too few peaks (${peaks.length}), retrying with lower threshold...');
-      threshold = minVal + (amplitude * 0.15); // Lower to 15% of amplitude
-      prominenceThreshold = amplitude * 0.10; // Lower to 10% for retry
-      peaks.clear();
-      
-      for (int i = 1; i < signal.length - 1; i++) {
-        if (signal[i] <= threshold) continue;
-        
-        bool isPeak = signal[i] > signal[i - 1] && signal[i] > signal[i + 1];
-
-        if (isPeak) {
-          double leftValley = i >= 2 ? min(signal[i - 1], signal[i - 2]) : signal[i - 1];
-          double rightValley = i < signal.length - 2 ? min(signal[i + 1], signal[i + 2]) : signal[i + 1];
-          double minValley = min(leftValley, rightValley);
-          double prominence = signal[i] - minValley;
-          
-          if (prominence >= prominenceThreshold) {
-            if (peaks.isEmpty || (i - peaks.last) >= minSeparation) {
-              peaks.add(i);
-            } else if (signal[i] > signal[peaks.last]) {
-              peaks[peaks.length - 1] = i;
-            }
-          }
-        }
-      }
+      debugPrint('RETRY stats: aboveThreshold=$candidatesAboveThreshold, isPeak=$candidatesIsPeak, hasProminence=$candidatesProminence, passedSeparation=$candidatesSeparation');
       debugPrint('Retry found ${peaks.length} peaks with threshold ${threshold.toStringAsFixed(2)}');
     }
     

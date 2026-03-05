@@ -65,6 +65,7 @@ class MeasurementOrchestrator extends ChangeNotifier {
       _currentMode = mode;
       _intensityValues.clear();
       _elapsedSeconds = 0;
+      _consecutivePoorQualitySeconds = 0; // Reset poor quality counter
       _qualityValidator.reset();
       _cachedResult = null; // Clear cached result
 
@@ -106,7 +107,26 @@ class MeasurementOrchestrator extends ChangeNotifier {
 
   void _onIntensityData(Map<String, dynamic> data) {
     final double meanGreen = data['meanGreen'] as double;
-    _intensityValues.add(meanGreen);
+    final double meanRed = data['meanRed'] as double? ?? 0.0;
+    final double variance = data['variance'] as double? ?? 0.0;
+    
+    // 🎯 ADAPTIVE CHANNEL SELECTION
+    // Default: Green channel (gold standard for PPG)
+    // Fallback: Red channel if green signal is too weak
+    double selectedIntensity = meanGreen;
+    
+    // If green signal is weak (low variance or low intensity), try red
+    if (_elapsedSeconds > 5 && (variance < 2.0 || meanGreen < 50)) {
+      // Red channel penetrates tissue better in transmission mode
+      if (meanRed > meanGreen * 1.5) {
+        selectedIntensity = meanRed;
+        if (_elapsedSeconds % 10 == 0) {
+          debugPrint('🔴 Using RED channel (green too weak: G=$meanGreen, R=$meanRed, var=$variance)');
+        }
+      }
+    }
+    
+    _intensityValues.add(selectedIntensity);
     
     // Store latest data for quality check
     _latestIntensityData = data;
@@ -115,6 +135,8 @@ class MeasurementOrchestrator extends ChangeNotifier {
   }
 
   Map<String, dynamic>? _latestIntensityData;
+  int _consecutivePoorQualitySeconds = 0;
+  static const int _maxConsecutivePoorSeconds = 10; // Прервать после 10 секунд плохого качества
 
   void _onTimerTick(Timer timer) {
     _elapsedSeconds++;
@@ -174,6 +196,24 @@ class MeasurementOrchestrator extends ChangeNotifier {
       cameraVariance,
       meanBrightness,
     );
+    
+    // 🚨 EARLY TERMINATION: Track consecutive poor quality
+    if (_currentQuality == QualityLevel.poor && _elapsedSeconds > 5) {
+      _consecutivePoorQualitySeconds++;
+      debugPrint('⚠️  Poor quality detected: ${_consecutivePoorQualitySeconds}s consecutive');
+      
+      if (_consecutivePoorQualitySeconds >= _maxConsecutivePoorSeconds) {
+        debugPrint('❌ Aborting measurement: Poor quality for ${_consecutivePoorQualitySeconds}s');
+        _handleError('Poor signal quality detected for ${_consecutivePoorQualitySeconds} seconds. Please ensure finger is firmly on camera with flash enabled.');
+        return;
+      }
+    } else {
+      // Reset counter if quality improves
+      if (_consecutivePoorQualitySeconds > 0) {
+        debugPrint('✅ Quality improved, resetting poor quality counter');
+      }
+      _consecutivePoorQualitySeconds = 0;
+    }
     
     notifyListeners();
   }
